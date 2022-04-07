@@ -1,0 +1,27 @@
+#navbarstart{
+    padding-left: 3%;
+}
+
+#titletext{
+    font-size: 400%;
+}
+
+#subtitletext{
+    font-size: 200%;
+}
+
+#addapplication, #sortbutton{
+    font-size: 15px;
+}
+
+#index-body{
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-top: 10%;
+    padding-bottom: 10%;
+}
+
+#application-body{
+    padding-left: 10%;
+    padding-right: 10%;
+}

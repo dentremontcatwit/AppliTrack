@@ -46,24 +46,22 @@ window.onload = function WindowLoad(event) {
     var viewLink = document.createElement("p");
     viewLink.classList.add("card-footer-item");
     var viewLinkButton = document.createElement("a");
-    viewLinkButton.href = "";
+    viewLinkButton.addEventListener("click", () => {
+      console.log("view " + currentDisplay[0]);
+    });
     viewLinkButton.classList.add("has-text-gray");
     viewLinkText = document.createTextNode("View");
     viewLinkButton.appendChild(viewLinkText);
     viewLink.appendChild(viewLinkButton);
 
-    var editLink = document.createElement("p");
-    editLink.classList.add("card-footer-item");
-    var editLinkButton = document.createElement("a");
-    editLinkButton.href = "";
-    editLinkButton.classList.add("has-text-gray");
-    editLinkText = document.createTextNode("Edit");
-    editLinkButton.appendChild(editLinkText);
-    editLink.appendChild(editLinkButton);
-
     var deleteLink = document.createElement("p");
     deleteLink.classList.add("card-footer-item");
     var deleteLinkButton = document.createElement("a");
+    deleteLinkButton.addEventListener("click", () => {
+      var id = currentDisplay[0].replace(/\s/g, "");
+      document.cookie =
+        "" + id + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    });
     deleteLinkButton.href = "";
     deleteLinkButton.classList.add("has-text-gray");
     deleteLinkText = document.createTextNode("Delete");
@@ -71,7 +69,6 @@ window.onload = function WindowLoad(event) {
     deleteLink.appendChild(deleteLinkButton);
 
     cardFooter.appendChild(viewLink);
-    cardFooter.appendChild(editLink);
     cardFooter.appendChild(deleteLink);
 
     newCard.appendChild(cardContent);

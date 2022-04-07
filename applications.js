@@ -1,5 +1,83 @@
+const cardList = document.querySelector("#cards");
+
 window.onload = function WindowLoad(event) {
   //Load and display cookies
+  var cookies = document.cookie.split(";");
+  var cookiesToDisplay = [];
+
+  //Add cookie strings to array
+  /*
+  0 - Company Name
+  1 - Position
+  2 - Position Type
+  3 - Status
+  4 - Date Applied
+  5 - Notes
+  */
+  for (var i = 0, element; (element = cookies[i++]); ) {
+    const current = element.split("=");
+    const currentDisplay = JSON.parse(current[1]);
+
+    //Create HTML element
+    //Card div
+    var newCard = document.createElement("div");
+    newCard.classList.add("card");
+    var cardID = currentDisplay[0].replace(/\s/g, "");
+    newCard.setAttribute("id", cardID);
+
+    //Card content
+    var cardContent = document.createElement("div");
+    cardContent.classList.add("card-content");
+    var cardContentTop = document.createElement("p");
+    var text = document.createTextNode(currentDisplay[1]);
+    cardContentTop.appendChild(text);
+    var cardContentBottom = document.createElement("p");
+    cardContentBottom.classList.add("title");
+    cardContentBottom.classList.add("is-size-5");
+    text = document.createTextNode(currentDisplay[0]);
+    cardContentBottom.appendChild(text);
+    cardContent.appendChild(cardContentTop);
+    cardContent.appendChild(cardContentBottom);
+
+    //Footer content
+    var cardFooter = document.createElement("footer");
+    cardFooter.classList.add("card-footer");
+
+    var viewLink = document.createElement("p");
+    viewLink.classList.add("card-footer-item");
+    var viewLinkButton = document.createElement("a");
+    viewLinkButton.href = "";
+    viewLinkButton.classList.add("has-text-gray");
+    viewLinkText = document.createTextNode("View");
+    viewLinkButton.appendChild(viewLinkText);
+    viewLink.appendChild(viewLinkButton);
+
+    var editLink = document.createElement("p");
+    editLink.classList.add("card-footer-item");
+    var editLinkButton = document.createElement("a");
+    editLinkButton.href = "";
+    editLinkButton.classList.add("has-text-gray");
+    editLinkText = document.createTextNode("Edit");
+    editLinkButton.appendChild(editLinkText);
+    editLink.appendChild(editLinkButton);
+
+    var deleteLink = document.createElement("p");
+    deleteLink.classList.add("card-footer-item");
+    var deleteLinkButton = document.createElement("a");
+    deleteLinkButton.href = "";
+    deleteLinkButton.classList.add("has-text-gray");
+    deleteLinkText = document.createTextNode("Delete");
+    deleteLinkButton.appendChild(deleteLinkText);
+    deleteLink.appendChild(deleteLinkButton);
+
+    cardFooter.appendChild(viewLink);
+    cardFooter.appendChild(editLink);
+    cardFooter.appendChild(deleteLink);
+
+    newCard.appendChild(cardContent);
+    newCard.appendChild(cardFooter);
+    cardList.appendChild(newCard);
+  }
 };
 
 //modal

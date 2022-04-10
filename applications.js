@@ -37,8 +37,10 @@ window.onload = function WindowLoad(event) {
   */
   for (var i = 0, element; (element = cookies[i++]); ) {
     console.log("" + element + ": " + typeof element);
+    if (!element.includes("[")) {
+      continue;
+    }
 
-    /*
     const current = element.split("=");
     const currentDisplay = JSON.parse(current[1]);
 
@@ -206,7 +208,6 @@ window.onload = function WindowLoad(event) {
     newCard.appendChild(cardContent);
     newCard.appendChild(cardFooter);
     cardList.appendChild(newCard);
-    */
   }
 };
 

@@ -37,7 +37,7 @@ window.onload = function WindowLoad(event) {
   */
   for (var i = 0, element; (element = cookies[i++]); ) {
     console.log("" + element + ": " + typeof element);
-    if (!element.includes("[")) {
+    if (!element.includes(",")) {
       continue;
     }
 

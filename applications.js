@@ -36,6 +36,7 @@ window.onload = function WindowLoad(event) {
   5 - Notes
   */
   for (var i = 0, element; (element = cookies[i++]); ) {
+    console.log("" + element + ": " + typeof element);
     const current = element.split("=");
     const currentDisplay = JSON.parse(current[1]);
 

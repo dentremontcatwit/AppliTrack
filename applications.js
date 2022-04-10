@@ -50,7 +50,7 @@ window.onload = function WindowLoad(event) {
     var cardContent = document.createElement("div");
     cardContent.classList.add("card-content");
     var cardContentTop = document.createElement("p");
-    var text = document.createTextNode(currentDisplay[1]);
+    var text = document.createTextNode(currentDisplay[1] + " @");
     cardContentTop.appendChild(text);
     var cardContentBottom = document.createElement("p");
     cardContentBottom.classList.add("title");
@@ -292,7 +292,7 @@ function loadFile() {
   if (file) {
     reader.readAsText(file);
   }
-
+  alert("Data has been succesfully uploaded.");
   location.reload();
 }
 

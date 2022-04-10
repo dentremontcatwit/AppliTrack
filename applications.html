@@ -1,98 +1,101 @@
 <html lang="en">
+
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AppliTrack</title>
-    <script
-      src="https://kit.fontawesome.com/d36d0a95a4.js"
-      crossorigin="anonymous"
-    ></script>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
-    />
+    <script src="https://kit.fontawesome.com/d36d0a95a4.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" />
     <link rel="stylesheet" href="stylesheet.css">
   </head>
+
   <body class="has-background-light">
     <div class="hero-head">
       <nav class="navbar has-shadow is-dark">
         <div class="container">
           <div class="navbar-brand">
             <a href="index.html" class="navbar-item">
-              <img
-                src="https://cdn.discordapp.com/attachments/863090320538075177/950568923290542141/logo.png"
-                alt="AppliTrack"
-              />
+              <img src="https://cdn.discordapp.com/attachments/863090320538075177/950568923290542141/logo.png"
+                alt="AppliTrack" />
             </a>
           </div>
 
-          
-            <div class="navbar-start" id="navbarstart">
-              <a href="applications.html" class="navbar-item"
-                >Applications</a
-              >
-            </div>
+
+          <div class="navbar-start" id="navbarstart">
+            <a href="applications.html" class="navbar-item">Applications</a>
+            <a href="changelog.html" class="navbar-item">Changelog</a>
+          </div>
+
+          <div class="navbar-end">
+            <a href="https://github.com/dentremontcatwit/AppliTrack" target="_blank" class="navbar-item">
+              <span class="icon is-medium">
+                <i class="fab fa-lg fa-github"></i>
+              </span>
+            </a>
           </div>
         </div>
-      </nav>
+    </div>
+    </nav>
     </div>
 
     <div class="hero-body" id="application-body">
-        <h1 class="title">
-            Your Applications
-        </h1>
-        
-        <div id="top-buttons">
-            <button class="button is-primary" id="addapplication">
-                <span class="icon is-small">
-                    <i class="fas fa-plus"></i>
-                </span>
-                <span>Add Application</span>
-            </button>
+      <h1 class="title">
+        Your Applications
+      </h1>
 
-            <button class="button is-primary" id="uploaddata">
-              <span class="icon is-small">
-                  <i class="fas fa-upload"></i>
-              </span>
-              <input type="file" id="fileinput" accept=".txt" onchange="loadFile()" hidden>
-              <span>Upload</span>
-          </button>
-
-          <button class="button is-danger" id="downloaddata">
-            <span class="icon is-small">
-                <i class="fas fa-download"></i>
-            </span>
-            <span>Download</span>
+      <div id="top-buttons">
+        <button class="button is-primary" id="addapplication">
+          <span class="icon is-small">
+            <i class="fas fa-plus"></i>
+          </span>
+          <span>Add Application</span>
         </button>
 
-            <div class="dropdown is-hoverable" id="sortbutton">
-                <div class="dropdown-trigger">
-                    <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
-                        <span class="icon is-small">
-                            <i class="fas fa-sort"></i>
-                        </span>
-                        <span>Sort</span>
-                    </button>
-                </div>
-                <div class="dropdown-menu" id="sort-menu" role="menu">
-                    <div class="dropdown-content">
-                        <a href="#" class="dropdown-item">
-                            Most Recent
-                        </a>
-                        <a href="#" class="dropdown-item">
-                            Date Applied
-                        </a>
-                        <a href="#" class="dropdown-item">
-                            Company A-Z
-                        </a>
-                    </div>
-                </div>
+        <button class="button is-primary" id="uploaddata">
+          <span class="icon is-small">
+            <i class="fas fa-upload"></i>
+          </span>
+          <input type="file" id="fileinput" accept=".txt" onchange="loadFile()" hidden>
+          <span>Upload</span>
+        </button>
+
+        <button class="button is-danger" id="downloaddata">
+          <span class="icon is-small">
+            <i class="fas fa-download"></i>
+          </span>
+          <span>Download</span>
+        </button>
+
+        <!--
+          <div class="dropdown is-hoverable" id="sortbutton">
+          <div class="dropdown-trigger">
+            <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+              <span class="icon is-small">
+                <i class="fas fa-sort"></i>
+              </span>
+              <span>Sort</span>
+            </button>
+          </div>
+          <div class="dropdown-menu" id="sort-menu" role="menu">
+            <div class="dropdown-content">
+              <a href="#" class="dropdown-item">
+                Most Recent
+              </a>
+              <a href="#" class="dropdown-item">
+                Date Applied
+              </a>
+              <a href="#" class="dropdown-item">
+                Company A-Z
+              </a>
             </div>
+          </div>
         </div>
-        
-        <div id="cards">
-          <!-- 
+        -->
+      </div>
+
+      <div id="cards">
+        <!-- 
             <div class="card">
               <div class="card-content">
                 <p>Software Engineer</p>
@@ -111,78 +114,80 @@
             </footer>
            </div>
           -->
-        </div>
-        
-        <div class="modal" id="formModal">
-            <div class="modal-background" id="formModalBg"></div>
-            <div class="modal-content has-background-white py-5 px-5">
-                <h3 class="title mb-6 has-text-weight-bold">New Application</h3>
-                <h5 class="subtitle is-6">* = required</h5>
-                <div hidden class="notification is-danger" id="invalidinput">
-                  Please fill all required fields.
-                </div>
-                <form method="POST" action="/addapplication" id="applicationform">
-                    <div class="field">
-                        <label class="label">Company Name *</label>
-                        <div class="control">
-                          <input class="input" type="text" name="companyname" required>
-                        </div>
-                    </div>
-                    <div class="field">
-                        <label class="label">Position *</label>
-                        <div class="control">
-                          <input class="input" type="text" name="position" required>
-                        </div>
-                    </div>
-                    <div class="control">
-                        <label class="label">Position Type *</label>
-                        <div class="select is-rounded">
-                          <select name="positiontype">
-                            <option>Internship/Co-Op</option>
-                            <option>Part-Time</option>
-                            <option>Full-Time</option>
-                          </select>
-                        </div>
-                    </div>
-                    <br />
-                    <div class="control">
-                        <label class="label">Status *</label>
-                        <div class="select is-rounded">
-                          <select name="jobstatus">
-                            <option>Applied</option>
-                            <option>Interviewed</option>
-                            <option>Rejected</option>
-                            <option>Offered</option>
-                          </select>
-                        </div>
-                    </div>
-                    <br />
-                    <div class="field">
-                        <label class="label">Date Applied</label>
-                        <div class="control">
-                          <input class="input" type="date" name="dateapplied">
-                        </div>
-                    </div>
-                    <br />
-                    <div class="field">
-                        <label class="label">Notes</label>
-                        <div class="control">
-                          <textarea name="notes" class="textarea"></textarea>
-                        </div>
-                    </div>
-                    
-                    <br />
-                    <button class="button is-block is-primary is-medium is-fullwidth" type="submit" id="formsubmit">Create</button>
-                </form>
-            </div>
-        </div>
+      </div>
 
-        <div class="modal" id="viewModal">
-          <div class="modal-background" id="viewModalBg"></div>
-          <div class="modal-content has-background-white py-5 px-5" id="viewModalContent">
+      <div class="modal" id="formModal">
+        <div class="modal-background" id="formModalBg"></div>
+        <div class="modal-content has-background-white py-5 px-5">
+          <h3 class="title mb-6 has-text-weight-bold">New Application</h3>
+          <h5 class="subtitle is-6">* = required</h5>
+          <div hidden class="notification is-danger" id="invalidinput">
+            Please fill all required fields.
           </div>
+          <form method="POST" action="/addapplication" id="applicationform">
+            <div class="field">
+              <label class="label">Company Name *</label>
+              <div class="control">
+                <input class="input" type="text" name="companyname" required>
+              </div>
+            </div>
+            <div class="field">
+              <label class="label">Position *</label>
+              <div class="control">
+                <input class="input" type="text" name="position" required>
+              </div>
+            </div>
+            <div class="control">
+              <label class="label">Position Type *</label>
+              <div class="select is-rounded">
+                <select name="positiontype">
+                  <option>Internship/Co-Op</option>
+                  <option>Part-Time</option>
+                  <option>Full-Time</option>
+                </select>
+              </div>
+            </div>
+            <br />
+            <div class="control">
+              <label class="label">Status *</label>
+              <div class="select is-rounded">
+                <select name="jobstatus">
+                  <option>Applied</option>
+                  <option>Interviewed</option>
+                  <option>Rejected</option>
+                  <option>Offered</option>
+                </select>
+              </div>
+            </div>
+            <br />
+            <div class="field">
+              <label class="label">Date Applied</label>
+              <div class="control">
+                <input class="input" type="date" name="dateapplied">
+              </div>
+            </div>
+            <br />
+            <div class="field">
+              <label class="label">Notes</label>
+              <div class="control">
+                <textarea name="notes" class="textarea"></textarea>
+              </div>
+            </div>
+
+            <br />
+            <button class="button is-block is-primary is-medium is-fullwidth" type="submit"
+              id="formsubmit">Create</button>
+          </form>
         </div>
+      </div>
+
+      <div class="modal" id="viewModal">
+        <div class="modal-background" id="viewModalBg"></div>
+        <div class="modal-content has-background-white py-5 px-5" id="viewModalContent">
+        </div>
+      </div>
     </div>
   </body>
   <script type="text/javascript" src="applications.js"></script>
+
 </html>

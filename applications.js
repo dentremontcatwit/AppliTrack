@@ -1,9 +1,9 @@
 const cardList = document.querySelector("#cards");
 
 //upload/download buttons
-const uploadButton = document.querySelector('#uploaddata');
-const fileInput = document.querySelector('#fileinput');
-const downloadButton = document.querySelector('#downloaddata');
+const uploadButton = document.querySelector("#uploaddata");
+const fileInput = document.querySelector("#fileinput");
+const downloadButton = document.querySelector("#downloaddata");
 
 //form modal
 const newAppButton = document.querySelector("#addapplication");
@@ -231,7 +231,14 @@ formSubmitButton.addEventListener("click", () => {
       formElements.push(element.value);
     }
     var date = new Date();
-    var idNum = "" + (date.getMonth() + 1) + date.getDate() + date.getFullYear() + date.getHours() + date.getMinutes() + date.getSeconds();;
+    var idNum =
+      "" +
+      (date.getMonth() + 1) +
+      date.getDate() +
+      date.getFullYear() +
+      date.getHours() +
+      date.getMinutes() +
+      date.getSeconds();
     var id = "" + elements[0].value.replace(/\s/g, "") + idNum;
     const finalElements =
       "" +
@@ -250,23 +257,45 @@ formSubmitButton.addEventListener("click", () => {
 });
 
 downloadButton.addEventListener("click", () => {
-    const a = document.createElement("a");
-    const file = new Blob([document.cookie], {type: "text/plain"});
-    a.href = URL.createObjectURL(file);
+  const a = document.createElement("a");
+  const file = new Blob([document.cookie], { type: "text/plain" });
+  a.href = URL.createObjectURL(file);
 
-    var date = new Date();
-    var fileName = "AppliTrack" + (date.getMonth() + 1) + date.getDate() + date.getFullYear() + date.getHours() + date.getMinutes() + date.getSeconds();
+  var date = new Date();
+  var fileName =
+    "AppliTrack" +
+    (date.getMonth() + 1) +
+    date.getDate() +
+    date.getFullYear() +
+    date.getHours() +
+    date.getMinutes() +
+    date.getSeconds();
 
-    a.download = fileName;
-    a.click();
+  a.download = fileName;
+  a.click();
 });
 
-fileInput.addEventListener("change", (event) => {
-    const fileList = event.target.files;
-    const reader = new FileReader();
-    console.log(fileList);
-});
+function loadFile() {
+  const [file] = document.querySelector("input[type=file]").files;
+  const reader = new FileReader();
+  reader.addEventListener(
+    "load",
+    () => {
+      const cookies = reader.result.split(";");
+      for (var i = 0, cookie; (cookie = cookies[i++]); ) {
+        document.cookie = cookie;
+      }
+    },
+    false
+  );
+
+  if (file) {
+    reader.readAsText(file);
+  }
+
+  location.reload();
+}
 
 uploadButton.addEventListener("click", () => {
-    document.getElementById('fileinput').click();
+  document.getElementById("fileinput").click();
 });

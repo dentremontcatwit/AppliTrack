@@ -98,10 +98,10 @@
           -->
         </div>
         
-        <div class="modal">
-            <div class="modal-background"></div>
+        <div class="modal" id="formModal">
+            <div class="modal-background" id="formModalBg"></div>
             <div class="modal-content has-background-white py-5 px-5">
-                <h3 class="title mb-6">New Application</h3>
+                <h3 class="title mb-6 has-text-weight-bold">New Application</h3>
                 <h5 class="subtitle is-6">* = required</h5>
                 <div hidden class="notification is-danger" id="invalidinput">
                   Please fill all required fields.
@@ -160,6 +160,12 @@
                     <button class="button is-block is-primary is-medium is-fullwidth" type="submit" id="formsubmit">Create</button>
                 </form>
             </div>
+        </div>
+
+        <div class="modal" id="viewModal">
+          <div class="modal-background" id="viewModalBg"></div>
+          <div class="modal-content has-background-white py-5 px-5" id="viewModalContent">
+          </div>
         </div>
     </div>
   </body>

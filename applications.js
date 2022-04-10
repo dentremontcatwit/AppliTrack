@@ -1,5 +1,10 @@
 const cardList = document.querySelector("#cards");
 
+//upload/download buttons
+const uploadButton = document.querySelector('#uploaddata');
+const fileInput = document.querySelector('#fileinput');
+const downloadButton = document.querySelector('#downloaddata');
+
 //form modal
 const newAppButton = document.querySelector("#addapplication");
 const testViewButton = document.querySelector("#testview");
@@ -225,7 +230,8 @@ formSubmitButton.addEventListener("click", () => {
     for (var i = 0, element; (element = elements[i++]); ) {
       formElements.push(element.value);
     }
-    var idNum = Math.floor(Math.random() * 90000) + 10000;
+    var date = new Date();
+    var idNum = "" + (date.getMonth() + 1) + date.getDate() + date.getFullYear() + date.getHours() + date.getMinutes() + date.getSeconds();;
     var id = "" + elements[0].value.replace(/\s/g, "") + idNum;
     const finalElements =
       "" +
@@ -241,4 +247,26 @@ formSubmitButton.addEventListener("click", () => {
     invalidInput.style.display = "none";
     location.reload();
   }
+});
+
+downloadButton.addEventListener("click", () => {
+    const a = document.createElement("a");
+    const file = new Blob([document.cookie], {type: "text/plain"});
+    a.href = URL.createObjectURL(file);
+
+    var date = new Date();
+    var fileName = "AppliTrack" + (date.getMonth() + 1) + date.getDate() + date.getFullYear() + date.getHours() + date.getMinutes() + date.getSeconds();
+
+    a.download = fileName;
+    a.click();
+});
+
+fileInput.addEventListener("change", (event) => {
+    const fileList = event.target.files;
+    const reader = new FileReader();
+    console.log(fileList);
+});
+
+uploadButton.addEventListener("click", () => {
+    document.getElementById('fileinput').click();
 });

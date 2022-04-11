@@ -36,7 +36,6 @@ window.onload = function WindowLoad(event) {
   5 - Notes
   */
   for (var i = 0, element; (element = cookies[i++]); ) {
-    console.log("" + element + ": " + typeof element);
     if (!element.includes(",")) {
       continue;
     }

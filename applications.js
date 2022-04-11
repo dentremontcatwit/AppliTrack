@@ -267,7 +267,7 @@ downloadButton.addEventListener("click", () => {
   var filesToDownload = "";
   for (var i = 0, element; (element = cookies[i++]); ) {
     if (element.includes("[")) {
-      filesToDownload += element;
+      filesToDownload += element + ";";
     }
   }
   const file = new Blob([filesToDownload], { type: "text/plain" });

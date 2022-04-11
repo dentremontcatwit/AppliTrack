@@ -11,7 +11,9 @@
 }
 
 #addapplication,
-#sortbutton {
+#sortbutton,
+#uploaddata,
+#downloaddata {
   font-size: 15px;
 }
 

@@ -40,6 +40,8 @@ window.onload = function WindowLoad(event) {
       continue;
     }
 
+    console.log("adding " + element);
+
     const current = element.split("=");
     const currentDisplay = JSON.parse(current[1]);
 

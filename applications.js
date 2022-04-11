@@ -262,7 +262,15 @@ formSubmitButton.addEventListener("click", () => {
 
 downloadButton.addEventListener("click", () => {
   const a = document.createElement("a");
-  const file = new Blob([document.cookie], { type: "text/plain" });
+  //Only download cookies containing application data
+  var cookies = document.cookie.split(";");
+  var filesToDownload = "";
+  for (var i = 0, element; (element = cookies[i++]); ) {
+    if (element.includes("[")) {
+      filesToDownload += element;
+    }
+  }
+  const file = new Blob([filesToDownload], { type: "text/plain" });
   a.href = URL.createObjectURL(file);
 
   var date = new Date();

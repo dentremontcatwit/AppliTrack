@@ -1,3 +1,8 @@
+html {
+  background-size: cover;
+  background-color: rgb(241, 241, 241);
+}
+
 @media (max-width: 1542px) {
   #excard {
     display: block;
@@ -29,7 +34,7 @@
   }
 
   #cards > .card {
-    display: contents;
+    display: table;
   }
 }
 

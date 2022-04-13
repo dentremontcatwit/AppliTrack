@@ -1,3 +1,38 @@
+@media (max-width: 1542px) {
+  #excard {
+    display: block;
+    margin-left: 10%;
+    width: 80%;
+  }
+
+  .navbar-item {
+    color: white;
+  }
+
+  #head-body {
+    font-size: 80%;
+  }
+
+  #example-body {
+    height: 80%;
+    padding-top: 0px;
+    margin-bottom: 0px;
+  }
+
+  #bottom-body {
+    padding-top: 0px;
+    padding-bottom: 0px;
+  }
+
+  .button {
+    margin: 1%;
+  }
+
+  #cards > .card {
+    display: contents;
+  }
+}
+
 #navbarstart {
   padding-left: 3%;
 }

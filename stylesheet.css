@@ -3,7 +3,7 @@ html {
   background-color: rgb(241, 241, 241);
 }
 
-@media (max-width: 1542px) {
+@media (max-width: 1024px) {
   #excard {
     display: block;
     margin-left: 10%;
@@ -29,8 +29,31 @@ html {
     padding-bottom: 0px;
   }
 
-  .button {
-    margin: 1%;
+  #cards > .card {
+    display: table;
+  }
+}
+
+@media (max-width: 1542px) {
+  .navbar-item {
+    color: white;
+  }
+
+  #head-body {
+    font-size: 80%;
+  }
+
+  #example-body {
+    height: 80%;
+    padding-top: 0px;
+    margin-bottom: 0px;
+    padding-left: 20%;
+    padding-right: 20%;
+  }
+
+  #bottom-body {
+    padding-top: 0px;
+    padding-bottom: 0px;
   }
 
   #cards > .card {
@@ -65,8 +88,8 @@ html {
 }
 
 #example-body {
-  padding-left: 15%;
-  padding-right: 15%;
+  padding-left: 5%;
+  padding-right: 5%;
   padding-bottom: 10%;
 }
 

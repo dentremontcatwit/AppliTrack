@@ -1,6 +1,6 @@
 const cardList = document.querySelector("#cards");
 
-//upload/download buttons
+//upload/download/sort buttons
 const uploadButton = document.querySelector("#uploaddata");
 const fileInput = document.querySelector("#fileinput");
 const downloadButton = document.querySelector("#downloaddata");
@@ -21,11 +21,37 @@ const viewModal = document.querySelector("#viewModal");
 const viewModalBg = document.querySelector("#viewModalBg");
 const viewModalContent = document.querySelector("#viewModalContent");
 
-window.onload = function WindowLoad(event) {
-  //Load and display cookies
-  var cookies = document.cookie.split(";");
-  var cookiesToDisplay = [];
+var cookies = document.cookie.split(";");
+var cookiesToDisplay = [];
 
+function sortByAZ(a, b) {
+  var aData = JSON.parse(a.split("=")[1]);
+  var bData = JSON.parse(b.split("=")[1]);
+
+  if (aData[0] < bData[0]) {
+    return -1;
+  }
+  if (bData[0] < aData[0]) {
+    return 1;
+  }
+  return 0;
+}
+
+function sortByDate(a, b) {
+  var aData = JSON.parse(a.split("=")[1]);
+  var bData = JSON.parse(b.split("=")[1]);
+
+  if (aData[4] < bData[4]) {
+    return -1;
+  }
+  if (bData[4] < aData[4]) {
+    return 1;
+  }
+  return 0;
+}
+
+//Load and display cookies
+window.onload = function WindowLoad(event) {
   //Add cookie strings to array
   /*
   0 - Company Name
@@ -35,13 +61,34 @@ window.onload = function WindowLoad(event) {
   4 - Date Applied
   5 - Notes
   */
+
+  //Fill cookie array with correct cookies
   for (var i = 0, element; (element = cookies[i++]); ) {
     if (!element.includes(",")) {
       continue;
     }
 
-    console.log("adding " + element);
+    cookiesToDisplay.push(element);
+  }
 
+  //var data = JSON.parse(cookiesToDisplay[2].split("=")[1]);
+  //console.log(data[0]);
+
+  //See if cookies need to be sorted
+  let cookie = {};
+  document.cookie.split(";").forEach(function (el) {
+    let [key, value] = el.split("=");
+    cookie[key.trim()] = value;
+  });
+
+  if (cookie["sort"] == "az") {
+    cookiesToDisplay = cookiesToDisplay.sort(sortByAZ);
+  }
+  if (cookie["sort"] == "date") {
+    cookiesToDisplay = cookiesToDisplay.sort(sortByDate);
+  }
+
+  for (var i = 0, element; (element = cookiesToDisplay[i++]); ) {
     const current = element.split("=");
     const currentDisplay = JSON.parse(current[1]);
 
@@ -222,6 +269,21 @@ modalBg.addEventListener("click", () => {
   invalidInput.style.display = "none";
 });
 
+function sortAlphabetically() {
+  document.cookie = "sort=az";
+  location.reload();
+}
+
+function sortDate() {
+  document.cookie = "sort=date";
+  location.reload();
+}
+
+function sortRecent() {
+  document.cookie = "sort=recent";
+  location.reload();
+}
+
 formSubmitButton.addEventListener("click", () => {
   var elements = document.getElementById("applicationform").elements;
 
@@ -263,30 +325,34 @@ formSubmitButton.addEventListener("click", () => {
 });
 
 downloadButton.addEventListener("click", () => {
-  const a = document.createElement("a");
-  //Only download cookies containing application data
-  var cookies = document.cookie.split(";");
-  var filesToDownload = "";
-  for (var i = 0, element; (element = cookies[i++]); ) {
-    if (element.includes("[")) {
-      filesToDownload += element + ";";
+  if (cookiesToDisplay.length < 1) {
+    alert("Please add at least 1 application before downloading.");
+  } else {
+    const a = document.createElement("a");
+    //Only download cookies containing application data
+    var cookies = document.cookie.split(";");
+    var filesToDownload = "";
+    for (var i = 0, element; (element = cookies[i++]); ) {
+      if (element.includes("[")) {
+        filesToDownload += element + ";";
+      }
     }
+    const file = new Blob([filesToDownload], { type: "text/plain" });
+    a.href = URL.createObjectURL(file);
+
+    var date = new Date();
+    var fileName =
+      "AppliTrack" +
+      (date.getMonth() + 1) +
+      date.getDate() +
+      date.getFullYear() +
+      date.getHours() +
+      date.getMinutes() +
+      date.getSeconds();
+
+    a.download = fileName;
+    a.click();
   }
-  const file = new Blob([filesToDownload], { type: "text/plain" });
-  a.href = URL.createObjectURL(file);
-
-  var date = new Date();
-  var fileName =
-    "AppliTrack" +
-    (date.getMonth() + 1) +
-    date.getDate() +
-    date.getFullYear() +
-    date.getHours() +
-    date.getMinutes() +
-    date.getSeconds();
-
-  a.download = fileName;
-  a.click();
 });
 
 function loadFile() {

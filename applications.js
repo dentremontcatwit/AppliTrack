@@ -24,71 +24,13 @@ const viewModalContent = document.querySelector("#viewModalContent");
 var cookies = document.cookie.split(";");
 var cookiesToDisplay = [];
 
-function sortByAZ(a, b) {
-  var aData = JSON.parse(a.split("=")[1]);
-  var bData = JSON.parse(b.split("=")[1]);
-
-  if (aData[0] < bData[0]) {
-    return -1;
+//Function to display cookies as cards on screen
+function DisplayCookies(cookies) {
+  while (cardList.firstChild) {
+    cardList.removeChild(cardList.firstChild);
   }
-  if (bData[0] < aData[0]) {
-    return 1;
-  }
-  return 0;
-}
 
-function sortByDate(a, b) {
-  var aData = JSON.parse(a.split("=")[1]);
-  var bData = JSON.parse(b.split("=")[1]);
-
-  if (aData[4] < bData[4]) {
-    return -1;
-  }
-  if (bData[4] < aData[4]) {
-    return 1;
-  }
-  return 0;
-}
-
-//Load and display cookies
-window.onload = function WindowLoad(event) {
-  //Add cookie strings to array
-  /*
-  0 - Company Name
-  1 - Position
-  2 - Position Type
-  3 - Status
-  4 - Date Applied
-  5 - Notes
-  */
-
-  //Fill cookie array with correct cookies
   for (var i = 0, element; (element = cookies[i++]); ) {
-    if (!element.includes(",")) {
-      continue;
-    }
-
-    cookiesToDisplay.push(element);
-  }
-
-  //var data = JSON.parse(cookiesToDisplay[2].split("=")[1]);
-  //console.log(data[0]);
-
-  //See if cookies need to be sorted
-  let cookie = {};
-  document.cookie.split(";").forEach(function (el) {
-    let [key, value] = el.split("=");
-    cookie[key.trim()] = value;
-  });
-
-  if (cookie["sort"] == "az") {
-    cookiesToDisplay = cookiesToDisplay.sort(sortByAZ);
-  }
-  if (cookie["sort"] == "date") {
-    cookiesToDisplay = cookiesToDisplay.sort(sortByDate);
-  }
-
-  for (var i = 0, element; (element = cookiesToDisplay[i++]); ) {
     const current = element.split("=");
     const currentDisplay = JSON.parse(current[1]);
 
@@ -257,6 +199,70 @@ window.onload = function WindowLoad(event) {
     newCard.appendChild(cardFooter);
     cardList.appendChild(newCard);
   }
+}
+
+function sortByAZ(a, b) {
+  var aData = JSON.parse(a.split("=")[1]);
+  var bData = JSON.parse(b.split("=")[1]);
+
+  if (aData[0] < bData[0]) {
+    return -1;
+  }
+  if (bData[0] < aData[0]) {
+    return 1;
+  }
+  return 0;
+}
+
+function sortByDate(a, b) {
+  var aData = JSON.parse(a.split("=")[1]);
+  var bData = JSON.parse(b.split("=")[1]);
+
+  if (aData[4] < bData[4]) {
+    return -1;
+  }
+  if (bData[4] < aData[4]) {
+    return 1;
+  }
+  return 0;
+}
+
+//Load and display cookies
+window.onload = function WindowLoad(event) {
+  //Add cookie strings to array
+  /*
+  0 - Company Name
+  1 - Position
+  2 - Position Type
+  3 - Status
+  4 - Date Applied
+  5 - Notes
+  */
+
+  //Fill cookie array with correct cookies
+  for (var i = 0, element; (element = cookies[i++]); ) {
+    if (!element.includes(",")) {
+      continue;
+    }
+
+    cookiesToDisplay.push(element);
+  }
+
+  //Get sort cookie and see if cookies need to be sorted
+  let cookie = {};
+  document.cookie.split(";").forEach(function (el) {
+    let [key, value] = el.split("=");
+    cookie[key.trim()] = value;
+  });
+
+  if (cookie["sort"] == "az") {
+    cookiesToDisplay = cookiesToDisplay.sort(sortByAZ);
+  }
+  if (cookie["sort"] == "date") {
+    cookiesToDisplay = cookiesToDisplay.sort(sortByDate);
+  }
+
+  DisplayCookies(cookiesToDisplay);
 };
 
 newAppButton.addEventListener("click", () => {
@@ -379,3 +385,19 @@ function loadFile() {
 uploadButton.addEventListener("click", () => {
   document.getElementById("fileinput").click();
 });
+
+function search_applications() {
+  let input = document.getElementById("appsearchbar").value.toLowerCase();
+  if (input == "") {
+    DisplayCookies(cookiesToDisplay);
+  } else {
+    let newCookies = [];
+    for (var i = 0, element; (element = cookiesToDisplay[i++]); ) {
+      let temp = JSON.parse(element.split("=")[1]);
+      if (temp[0].substring(0, input.length).toLowerCase().includes(input)) {
+        newCookies.push(element);
+      }
+    }
+    DisplayCookies(newCookies);
+  }
+}

@@ -3,6 +3,12 @@ html {
   background-color: rgb(241, 241, 241);
 }
 
+@media (min-width: 1024px) {
+  #top-buttons {
+    display: inline-flex;
+  }
+}
+
 @media (max-width: 1024px) {
   #excard {
     display: block;
@@ -76,8 +82,10 @@ html {
 #addapplication,
 #sortbutton,
 #uploaddata,
-#downloaddata {
+#downloaddata,
+#searchbar {
   font-size: 15px;
+  margin: 5px;
 }
 
 #head-body {
@@ -108,4 +116,8 @@ html {
   float: left;
   margin-right: 1%;
   margin-top: 1%;
+}
+
+#searchbar {
+  width: 30%;
 }

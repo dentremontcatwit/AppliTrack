@@ -1,4 +1,4 @@
-# ![AppliTrack](images/logo.png)
+# ![AppliTrack](images/logo.png) V1.1
 
 AppliTrack is a web application that allows you to keep track of your job applications throughout your job search.
 

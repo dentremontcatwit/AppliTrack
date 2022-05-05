@@ -16,8 +16,8 @@ AppliTrack is a web application that allows you to keep track of your job applic
 - Add edit functionality
 - ~~Let users download/upload their data~~
 - ~~Add sort functionality~~
-- Add filter functionality
+- ~~Add search functionality~~
 - Pretty up home page
 - Add reminder for job follow ups 2 weeks after
 - Test for invalid file upload
-- Prevent download for zero entries
+- ~~Prevent download for zero entries~~

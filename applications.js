@@ -205,10 +205,10 @@ function sortByAZ(a, b) {
   var aData = JSON.parse(a.split("=")[1]);
   var bData = JSON.parse(b.split("=")[1]);
 
-  if (aData[0] < bData[0]) {
+  if (aData[0].toLowerCase() < bData[0].toLowerCase()) {
     return -1;
   }
-  if (bData[0] < aData[0]) {
+  if (bData[0].toLowerCase() < aData[0].toLowerCase()) {
     return 1;
   }
   return 0;

@@ -7,6 +7,8 @@ const downloadButton = document.querySelector("#downloaddata");
 
 //form modal
 const newAppButton = document.querySelector("#addapplication");
+let isFormSubmit = true;
+const newAppTitle = document.querySelector("#newAppTitle");
 const testViewButton = document.querySelector("#testview");
 const modalBg = document.querySelector("#formModalBg");
 const modal = document.querySelector("#formModal");
@@ -20,6 +22,9 @@ const invalidInput = document.querySelector("#invalidinput");
 const viewModal = document.querySelector("#viewModal");
 const viewModalBg = document.querySelector("#viewModalBg");
 const viewModalContent = document.querySelector("#viewModalContent");
+const modalCardHead = document.querySelector("#modalCardHead");
+var editModalButton;
+let cookieID;
 
 var cookies = document.cookie.split(";");
 var cookiesToDisplay = [];
@@ -64,42 +69,64 @@ function DisplayCookies(cookies) {
     var viewLinkButton = document.createElement("a");
     viewLinkButton.addEventListener("click", () => {
       //Title
-      var modalTitle = document.createElement("h3");
-      modalTitle.classList.add("title");
+      var modalTitle = document.createElement("header");
+      modalTitle.classList.add("modal-card-head");
+      modalTitle.classList.add("is-size-5");
       modalTitle.classList.add("has-text-weight-bold");
-      modalTitle.classList.add("mb-6");
+      modalTitle.classList.add("mb-2");
       modalTitle.appendChild(
         document.createTextNode(
           "" + currentDisplay[1] + " @ " + currentDisplay[0]
         )
       );
+      //Edit button
+      var editButton = document.createElement("a");
+      editButton.setAttribute("id", "editIcon");
+      editButton.setAttribute("href", "#");
+      editButton.setAttribute("onClick", "javascript:editCard()");
+      var editSpan = document.createElement("span");
+      editSpan.classList.add("icon");
+      editSpan.classList.add("is-medium");
+      var editIcon = document.createElement("i");
+      editIcon.classList.add("fas");
+      editIcon.classList.add("fa-pen");
+      editSpan.appendChild(editIcon);
+      editButton.appendChild(editSpan);
+      modalTitle.appendChild(editButton);
+      editModalButton = editButton;
 
       //Company Name
       var viewCompanyNameTitle = document.createElement("h5");
+      viewCompanyNameTitle.setAttribute("name", current[0].replace(/\s/g, ""));
       viewCompanyNameTitle.classList.add("subtitle");
       viewCompanyNameTitle.classList.add("is-4");
+      viewCompanyNameTitle.classList.add("px-4");
       viewCompanyNameTitle.classList.add("mb-1");
       viewCompanyNameTitle.classList.add("has-text-weight-bold");
       viewCompanyNameTitle.appendChild(document.createTextNode("Company"));
       var viewCompanyName = document.createElement("p");
       viewCompanyName.classList.add("mb-3");
+      viewCompanyName.classList.add("px-4");
       viewCompanyName.appendChild(document.createTextNode(currentDisplay[0]));
 
       //Position
       var viewPositionTitle = document.createElement("h5");
       viewPositionTitle.classList.add("subtitle");
       viewPositionTitle.classList.add("is-4");
+      viewPositionTitle.classList.add("px-4");
       viewPositionTitle.classList.add("mb-1");
       viewPositionTitle.classList.add("has-text-weight-bold");
       viewPositionTitle.appendChild(document.createTextNode("Position"));
       var viewPosition = document.createElement("p");
       viewPosition.classList.add("mb-3");
+      viewPosition.classList.add("px-4");
       viewPosition.appendChild(document.createTextNode(currentDisplay[1]));
 
       //Position Type
       var viewPositionTypeTitle = document.createElement("h5");
       viewPositionTypeTitle.classList.add("subtitle");
       viewPositionTypeTitle.classList.add("is-4");
+      viewPositionTypeTitle.classList.add("px-4");
       viewPositionTypeTitle.classList.add("mb-1");
       viewPositionTypeTitle.classList.add("has-text-weight-bold");
       viewPositionTypeTitle.appendChild(
@@ -107,12 +134,14 @@ function DisplayCookies(cookies) {
       );
       var viewPositionType = document.createElement("p");
       viewPositionType.classList.add("mb-3");
+      viewPositionType.classList.add("px-4");
       viewPositionType.appendChild(document.createTextNode(currentDisplay[2]));
 
       //Status
       var viewStatusTitle = document.createElement("h5");
       viewStatusTitle.classList.add("subtitle");
       viewStatusTitle.classList.add("is-4");
+      viewStatusTitle.classList.add("px-4");
       viewStatusTitle.classList.add("mb-1");
       viewStatusTitle.classList.add("has-text-weight-bold");
       viewStatusTitle.appendChild(
@@ -120,17 +149,20 @@ function DisplayCookies(cookies) {
       );
       var viewStatus = document.createElement("p");
       viewStatus.classList.add("mb-3");
+      viewStatus.classList.add("px-4");
       viewStatus.appendChild(document.createTextNode(currentDisplay[3]));
 
       //Date Applied
       var viewDateAppliedTitle = document.createElement("h5");
       viewDateAppliedTitle.classList.add("subtitle");
       viewDateAppliedTitle.classList.add("is-4");
+      viewDateAppliedTitle.classList.add("px-4");
       viewDateAppliedTitle.classList.add("mb-1");
       viewDateAppliedTitle.classList.add("has-text-weight-bold");
       viewDateAppliedTitle.appendChild(document.createTextNode("Date Applied"));
       var viewDateApplied = document.createElement("p");
       viewDateApplied.classList.add("mb-3");
+      viewDateApplied.classList.add("px-4");
       if (currentDisplay[4].length == 0) {
         viewDateApplied.appendChild(document.createTextNode("N/A"));
       } else {
@@ -141,11 +173,13 @@ function DisplayCookies(cookies) {
       var viewNotesTitle = document.createElement("h5");
       viewNotesTitle.classList.add("subtitle");
       viewNotesTitle.classList.add("is-4");
+      viewNotesTitle.classList.add("px-4");
       viewNotesTitle.classList.add("mb-1");
       viewNotesTitle.classList.add("has-text-weight-bold");
       viewNotesTitle.appendChild(document.createTextNode("Notes"));
       var viewNotes = document.createElement("p");
       viewNotes.classList.add("mb-3");
+      viewNotes.classList.add("px-4");
       if (currentDisplay[5].length == 0) {
         viewNotes.appendChild(document.createTextNode("N/A"));
       } else {
@@ -267,6 +301,9 @@ window.onload = function WindowLoad(event) {
 
 newAppButton.addEventListener("click", () => {
   modal.classList.add("is-active");
+  isFormSubmit = true;
+  newAppTitle.textContent = "New Application";
+  formSubmitButton.textContent = "Create";
 });
 
 modalBg.addEventListener("click", () => {
@@ -291,42 +328,72 @@ function sortRecent() {
 }
 
 formSubmitButton.addEventListener("click", () => {
-  var elements = document.getElementById("applicationform").elements;
+  if (isFormSubmit) {
+    var elements = document.getElementById("applicationform").elements;
 
-  if (elements[0].value.length < 1 || elements[1].value.length < 1) {
-    invalidInput.style.display = "block";
-  } else {
-    invalidInput.style.display = "none";
-    applicationForm.submit();
+    if (elements[0].value.length < 1 || elements[1].value.length < 1) {
+      invalidInput.style.display = "block";
+    } else {
+      invalidInput.style.display = "none";
+      applicationForm.submit();
 
-    //Build element array and create cookie
-    const formElements = [];
-    for (var i = 0, element; (element = elements[i++]); ) {
-      formElements.push(element.value);
+      //Build element array and create cookie
+      const formElements = [];
+      for (var i = 0, element; (element = elements[i++]); ) {
+        formElements.push(element.value);
+      }
+      var date = new Date();
+      var idNum =
+        "" +
+        (date.getMonth() + 1) +
+        date.getDate() +
+        date.getFullYear() +
+        date.getHours() +
+        date.getMinutes() +
+        date.getSeconds();
+      var id = "" + elements[0].value.replace(/\s/g, "") + idNum;
+      const finalElements =
+        "" +
+        id +
+        "=" +
+        JSON.stringify(formElements) +
+        "; expires=Sun, 01 Jan 2023 00:00:00 UTC; path=/;";
+      document.cookie = finalElements;
+
+      //Reset form once successfully submitted
+      modal.classList.remove("is-active");
+      applicationForm.reset();
+      invalidInput.style.display = "none";
+      location.reload();
     }
-    var date = new Date();
-    var idNum =
-      "" +
-      (date.getMonth() + 1) +
-      date.getDate() +
-      date.getFullYear() +
-      date.getHours() +
-      date.getMinutes() +
-      date.getSeconds();
-    var id = "" + elements[0].value.replace(/\s/g, "") + idNum;
-    const finalElements =
-      "" +
-      id +
-      "=" +
-      JSON.stringify(formElements) +
-      "; expires=Sun, 01 Jan 2023 00:00:00 UTC; path=/;";
-    document.cookie = finalElements;
+  } else {
+    var elements = document.getElementById("applicationform").elements;
 
-    //Reset form once successfully submitted
-    modal.classList.remove("is-active");
-    applicationForm.reset();
-    invalidInput.style.display = "none";
-    location.reload();
+    if (elements[0].value.length < 1 || elements[1].value.length < 1) {
+      invalidInput.style.display = "block";
+    } else {
+      invalidInput.style.display = "none";
+      applicationForm.submit();
+
+      //Build element array and create cookie
+      const formElements = [];
+      for (var i = 0, element; (element = elements[i++]); ) {
+        formElements.push(element.value);
+      }
+      const finalElements =
+        "" +
+        cookieID +
+        "=" +
+        JSON.stringify(formElements) +
+        "; expires=Sun, 01 Jan 2023 00:00:00 UTC; path=/;";
+      document.cookie = finalElements;
+
+      //Reset form once successfully submitted
+      modal.classList.remove("is-active");
+      applicationForm.reset();
+      invalidInput.style.display = "none";
+      location.reload();
+    }
   }
 });
 
@@ -400,4 +467,43 @@ function search_applications() {
     }
     DisplayCookies(newCookies);
   }
+}
+
+function editCard() {
+  isFormSubmit = false;
+  //Collect already existing info & remove modal
+  let values = [];
+  let editParent = editModalButton.parentElement.parentElement;
+  editParent.removeChild(editParent.firstChild);
+  while (editParent.firstChild) {
+    if (editParent.firstChild.nodeName == "P") {
+      values.push(editParent.firstChild.textContent);
+    }
+    if (editParent.firstChild.hasAttribute("name")) {
+      cookieID = editParent.firstChild.getAttribute("name");
+    }
+    editParent.removeChild(editParent.firstChild);
+  }
+  console.log(cookieID);
+  while (viewModalContent.firstChild) {
+    viewModalContent.removeChild(viewModalContent.firstChild);
+  }
+  viewModal.classList.remove("is-active");
+  //Add form modal and fill in pre-existing info
+
+  modal.classList.add("is-active");
+  console.log(values);
+  document.querySelector("#companyNameField").value = values[0];
+  document.querySelector("#positionField").value = values[1];
+  document.querySelector("#positionTypeField").value = values[2];
+  document.querySelector("#positionStatusField").value = values[3];
+  if (values[4] != "N/A") {
+    document.querySelector("#dateAppliedField").value = values[4];
+  }
+  if (values[5] != "N/A") {
+    document.querySelector("#notesField").value = values[5];
+  }
+  //formSubmitButton.textContent = "Submit Changes";
+  newAppTitle.textContent = "Editing " + values[0];
+  formSubmitButton.textContent = "Submit Changes";
 }

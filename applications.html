@@ -124,7 +124,7 @@
       <div class="modal" id="formModal">
         <div class="modal-background" id="formModalBg"></div>
         <div class="modal-content has-background-white py-5 px-5">
-          <h3 class="title mb-6 has-text-weight-bold">New Application</h3>
+          <h3 class="title mb-6 has-text-weight-bold" id="newAppTitle">New Application</h3>
           <h5 class="subtitle is-6">* = required</h5>
           <div hidden class="notification is-danger" id="invalidinput">
             Please fill all required fields.
@@ -133,19 +133,19 @@
             <div class="field">
               <label class="label">Company Name *</label>
               <div class="control">
-                <input class="input" type="text" name="companyname" required>
+                <input id="companyNameField" class="input" type="text" name="companyname" required>
               </div>
             </div>
             <div class="field">
               <label class="label">Position *</label>
               <div class="control">
-                <input class="input" type="text" name="position" required>
+                <input id="positionField" class="input" type="text" name="position" required>
               </div>
             </div>
             <div class="control">
               <label class="label">Position Type *</label>
               <div class="select is-rounded">
-                <select name="positiontype">
+                <select id="positionTypeField" name="positiontype">
                   <option>Internship/Co-Op</option>
                   <option>Part-Time</option>
                   <option>Full-Time</option>
@@ -156,7 +156,7 @@
             <div class="control">
               <label class="label">Status *</label>
               <div class="select is-rounded">
-                <select name="jobstatus">
+                <select id="positionStatusField" name="jobstatus">
                   <option>Applied</option>
                   <option>Interviewed</option>
                   <option>Rejected</option>
@@ -168,19 +168,19 @@
             <div class="field">
               <label class="label">Date Applied</label>
               <div class="control">
-                <input class="input" type="date" name="dateapplied">
+                <input id="dateAppliedField" class="input" type="date" name="dateapplied">
               </div>
             </div>
             <br />
             <div class="field">
               <label class="label">Notes</label>
               <div class="control">
-                <textarea name="notes" class="textarea"></textarea>
+                <textarea id="notesField" name="notes" class="textarea"></textarea>
               </div>
             </div>
 
             <br />
-            <button class="button is-block is-primary is-medium is-fullwidth" type="submit"
+            <button class="button is-block is-primary is-medium is-fullwidth" type="button"
               id="formsubmit">Create</button>
           </form>
         </div>
@@ -188,7 +188,7 @@
 
       <div class="modal" id="viewModal">
         <div class="modal-background" id="viewModalBg"></div>
-        <div class="modal-content has-background-white py-5 px-5" id="viewModalContent">
+        <div class="modal-content has-background-white" id="viewModalContent">
         </div>
       </div>
     </div>

@@ -9,7 +9,7 @@ AppliTrack is a web application that allows you to keep track of your job applic
 
 ![applications screenshot](images/applications.jpg)
 
-## Todo
+## To-do
 
 - ~~Add view functionality~~
 - ~~Add delete functionality~~

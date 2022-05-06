@@ -46,12 +46,26 @@ function DisplayCookies(cookies) {
     var cardID = "" + current[0];
     newCard.setAttribute("id", cardID);
 
+    /*var followUpWarning = document.createElement("span");
+    followUpWarning.classList.add("icon");
+    followUpWarning.classList.add("has-text-danger");
+    followUpWarning.setAttribute(
+      "title",
+      "Follow up! It's been more than two weeks since you've applied."
+    );
+    var followUpIcon = document.createElement("i");
+    followUpIcon.classList.add("fas");
+    followUpIcon.classList.add("fa-clock");
+    followUpIcon.classList.add("followUpWarning");
+    followUpWarning.appendChild(followUpIcon);*/
+
     //Card content
     var cardContent = document.createElement("div");
     cardContent.classList.add("card-content");
     var cardContentTop = document.createElement("p");
     var text = document.createTextNode(currentDisplay[1] + " @");
     cardContentTop.appendChild(text);
+    cardContentTop.appendChild(followUpWarning);
     var cardContentBottom = document.createElement("p");
     cardContentBottom.classList.add("title");
     cardContentBottom.classList.add("is-size-5");
@@ -105,6 +119,7 @@ function DisplayCookies(cookies) {
       viewCompanyNameTitle.classList.add("has-text-weight-bold");
       viewCompanyNameTitle.appendChild(document.createTextNode("Company"));
       var viewCompanyName = document.createElement("p");
+      viewCompanyName.classList.add("pText");
       viewCompanyName.classList.add("mb-3");
       viewCompanyName.classList.add("px-4");
       viewCompanyName.appendChild(document.createTextNode(currentDisplay[0]));
@@ -118,6 +133,7 @@ function DisplayCookies(cookies) {
       viewPositionTitle.classList.add("has-text-weight-bold");
       viewPositionTitle.appendChild(document.createTextNode("Position"));
       var viewPosition = document.createElement("p");
+      viewPosition.classList.add("pText");
       viewPosition.classList.add("mb-3");
       viewPosition.classList.add("px-4");
       viewPosition.appendChild(document.createTextNode(currentDisplay[1]));
@@ -133,6 +149,7 @@ function DisplayCookies(cookies) {
         document.createTextNode("Position Type")
       );
       var viewPositionType = document.createElement("p");
+      viewPositionType.classList.add("pText");
       viewPositionType.classList.add("mb-3");
       viewPositionType.classList.add("px-4");
       viewPositionType.appendChild(document.createTextNode(currentDisplay[2]));
@@ -148,6 +165,7 @@ function DisplayCookies(cookies) {
         document.createTextNode("Application Status")
       );
       var viewStatus = document.createElement("p");
+      viewStatus.classList.add("pText");
       viewStatus.classList.add("mb-3");
       viewStatus.classList.add("px-4");
       viewStatus.appendChild(document.createTextNode(currentDisplay[3]));
@@ -161,6 +179,7 @@ function DisplayCookies(cookies) {
       viewDateAppliedTitle.classList.add("has-text-weight-bold");
       viewDateAppliedTitle.appendChild(document.createTextNode("Date Applied"));
       var viewDateApplied = document.createElement("p");
+      viewDateApplied.classList.add("pText");
       viewDateApplied.classList.add("mb-3");
       viewDateApplied.classList.add("px-4");
       if (currentDisplay[4].length == 0) {
@@ -168,6 +187,20 @@ function DisplayCookies(cookies) {
       } else {
         viewDateApplied.appendChild(document.createTextNode(currentDisplay[4]));
       }
+
+      //Followed Up
+      var viewFollowedUpTitle = document.createElement("h5");
+      viewFollowedUpTitle.classList.add("subtitle");
+      viewFollowedUpTitle.classList.add("is-4");
+      viewFollowedUpTitle.classList.add("px-4");
+      viewFollowedUpTitle.classList.add("mb-1");
+      viewFollowedUpTitle.classList.add("has-text-weight-bold");
+      viewFollowedUpTitle.appendChild(document.createTextNode("Followed Up"));
+      var viewFollowedUp = document.createElement("p");
+      viewFollowedUp.classList.add("pText");
+      viewFollowedUp.classList.add("mb-3");
+      viewFollowedUp.classList.add("px-4");
+      viewFollowedUp.appendChild(document.createTextNode(currentDisplay[5]));
 
       //Notes
       var viewNotesTitle = document.createElement("h5");
@@ -178,12 +211,13 @@ function DisplayCookies(cookies) {
       viewNotesTitle.classList.add("has-text-weight-bold");
       viewNotesTitle.appendChild(document.createTextNode("Notes"));
       var viewNotes = document.createElement("p");
+      viewNotes.classList.add("pText");
       viewNotes.classList.add("mb-3");
       viewNotes.classList.add("px-4");
-      if (currentDisplay[5].length == 0) {
+      if (currentDisplay[6].length == 0) {
         viewNotes.appendChild(document.createTextNode("N/A"));
       } else {
-        viewNotes.appendChild(document.createTextNode(currentDisplay[5]));
+        viewNotes.appendChild(document.createTextNode(currentDisplay[6]));
       }
 
       viewModalContent.appendChild(modalTitle);
@@ -197,6 +231,8 @@ function DisplayCookies(cookies) {
       viewModalContent.appendChild(viewStatus);
       viewModalContent.appendChild(viewDateAppliedTitle);
       viewModalContent.appendChild(viewDateApplied);
+      viewModalContent.appendChild(viewFollowedUpTitle);
+      viewModalContent.appendChild(viewFollowedUp);
       viewModalContent.appendChild(viewNotesTitle);
       viewModalContent.appendChild(viewNotes);
       viewModal.classList.add("is-active");
@@ -270,7 +306,8 @@ window.onload = function WindowLoad(event) {
   2 - Position Type
   3 - Status
   4 - Date Applied
-  5 - Notes
+  5 - Followed Up
+  6 - Notes
   */
 
   //Fill cookie array with correct cookies
@@ -500,8 +537,9 @@ function editCard() {
   if (values[4] != "N/A") {
     document.querySelector("#dateAppliedField").value = values[4];
   }
-  if (values[5] != "N/A") {
-    document.querySelector("#notesField").value = values[5];
+  document.querySelector("#followedUpField").value = values[5];
+  if (values[6] != "N/A") {
+    document.querySelector("#notesField").value = values[6];
   }
   //formSubmitButton.textContent = "Submit Changes";
   newAppTitle.textContent = "Editing " + values[0];

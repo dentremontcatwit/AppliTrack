@@ -134,3 +134,11 @@ html {
 #editIcon {
   float: right;
 }
+
+.pText {
+  font-size: 120%;
+}
+
+.homeLink {
+  pointer-events: none;
+}

@@ -65,7 +65,7 @@ function DisplayCookies(cookies) {
     var cardContentTop = document.createElement("p");
     var text = document.createTextNode(currentDisplay[1] + " @");
     cardContentTop.appendChild(text);
-    cardContentTop.appendChild(followUpWarning);
+    //cardContentTop.appendChild(followUpWarning);
     var cardContentBottom = document.createElement("p");
     cardContentBottom.classList.add("title");
     cardContentBottom.classList.add("is-size-5");

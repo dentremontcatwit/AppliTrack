@@ -139,7 +139,7 @@ html {
   font-size: 120%;
 }
 
-p {
+.pTopText {
   white-space: nowrap;
 }
 
@@ -165,6 +165,7 @@ p {
   bottom: 100%;
   left: 50%;
   margin-left: -60px;
+  white-space: normal;
 }
 
 .tooltip:hover .tooltiptext {

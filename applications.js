@@ -66,6 +66,7 @@ function DisplayCookies(cookies) {
     var cardContent = document.createElement("div");
     cardContent.classList.add("card-content");
     var cardContentTop = document.createElement("p");
+    cardContentTop.classList.add("pTopText");
     var text = document.createTextNode(currentDisplay[1] + " @");
     cardContentTop.appendChild(text);
     //Check if it's been more than two weeks since Applied Date & add warning if so

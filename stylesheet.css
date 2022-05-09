@@ -139,6 +139,10 @@ html {
   font-size: 120%;
 }
 
+p {
+  white-space: nowrap;
+}
+
 .homeLink {
   pointer-events: none;
 }

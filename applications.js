@@ -406,12 +406,14 @@ formSubmitButton.addEventListener("click", () => {
         date.getMinutes() +
         date.getSeconds();
       var id = "" + elements[0].value.replace(/\s/g, "") + idNum;
+      var daysToExpire = new Date(2147483647 * 1000).toUTCString();
       const finalElements =
         "" +
         id +
         "=" +
         JSON.stringify(formElements) +
-        "; expires=Sun, 01 Jan 2023 00:00:00 UTC; path=/;";
+        "; expires=" +
+        daysToExpire;
       document.cookie = finalElements;
 
       //Reset form once successfully submitted
@@ -491,8 +493,8 @@ function loadFile() {
       if (file.name.substr(file.name.lastIndexOf(".") + 1) == "txt") {
         const cookies = reader.result.split(";");
         for (var i = 0, cookie; (cookie = cookies[i++]); ) {
-          var tempCookie =
-            cookie + "; expires=Sun, 01 Jan 2023 00:00:00 UTC; path=/;";
+          var daysToExpire = new Date(2147483647 * 1000).toUTCString();
+          var tempCookie = cookie + "; expires=" + daysToExpire;
           document.cookie = tempCookie;
         }
       } else {

@@ -29,6 +29,17 @@ let cookieID;
 var cookies = document.cookie.split(";");
 var cookiesToDisplay = [];
 
+function isTwoWeeksAgo(date) {
+  const twoWeeks = 15 * 24 * 60 * 60 * 1000;
+  const twoWeeksTime = new Date().getTime() - twoWeeks;
+
+  if (twoWeeksTime > date) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 //Function to display cookies as cards on screen
 function DisplayCookies(cookies) {
   while (cardList.firstChild) {
@@ -46,26 +57,32 @@ function DisplayCookies(cookies) {
     var cardID = "" + current[0];
     newCard.setAttribute("id", cardID);
 
-    /*var followUpWarning = document.createElement("span");
-    followUpWarning.classList.add("icon");
-    followUpWarning.classList.add("has-text-danger");
-    followUpWarning.setAttribute(
-      "title",
-      "Follow up! It's been more than two weeks since you've applied."
-    );
-    var followUpIcon = document.createElement("i");
-    followUpIcon.classList.add("fas");
-    followUpIcon.classList.add("fa-clock");
-    followUpIcon.classList.add("followUpWarning");
-    followUpWarning.appendChild(followUpIcon);*/
-
     //Card content
     var cardContent = document.createElement("div");
     cardContent.classList.add("card-content");
     var cardContentTop = document.createElement("p");
     var text = document.createTextNode(currentDisplay[1] + " @");
     cardContentTop.appendChild(text);
-    //cardContentTop.appendChild(followUpWarning);
+    //Check if it's been more than two weeks since Applied Date & add warning if so
+    if (
+      isTwoWeeksAgo(new Date(currentDisplay[4])) &&
+      currentDisplay[5] == "No"
+    ) {
+      var followUpWarning = document.createElement("span");
+      followUpWarning.classList.add("icon");
+      followUpWarning.classList.add("has-text-danger");
+      var followUpIcon = document.createElement("i");
+      followUpIcon.classList.add("fas");
+      followUpIcon.classList.add("fa-clock");
+      followUpIcon.classList.add("tooltip");
+      followUpWarning.appendChild(followUpIcon);
+      var followUpText = document.createElement("span");
+      followUpText.classList.add("tooltiptext");
+      followUpText.textContent =
+        "It's been more than 2 weeks since you've applied, consider following up!";
+      followUpIcon.appendChild(followUpText);
+      cardContentTop.appendChild(followUpWarning);
+    }
     var cardContentBottom = document.createElement("p");
     cardContentBottom.classList.add("title");
     cardContentBottom.classList.add("is-size-5");
@@ -471,9 +488,15 @@ function loadFile() {
   reader.addEventListener(
     "load",
     () => {
-      const cookies = reader.result.split(";");
-      for (var i = 0, cookie; (cookie = cookies[i++]); ) {
-        document.cookie = cookie;
+      if (file.name.substr(file.name.lastIndexOf(".") + 1) == "txt") {
+        const cookies = reader.result.split(";");
+        for (var i = 0, cookie; (cookie = cookies[i++]); ) {
+          var tempCookie =
+            cookie + "; expires=Sun, 01 Jan 2023 00:00:00 UTC; path=/;";
+          document.cookie = tempCookie;
+        }
+      } else {
+        alert("Please upload a .txt file.");
       }
     },
     false
@@ -499,6 +522,10 @@ function search_applications() {
     for (var i = 0, element; (element = cookiesToDisplay[i++]); ) {
       let temp = JSON.parse(element.split("=")[1]);
       if (temp[0].substring(0, input.length).toLowerCase().includes(input)) {
+        newCookies.push(element);
+      } else if (
+        temp[1].substring(0, input.length).toLowerCase().includes(input)
+      ) {
         newCookies.push(element);
       }
     }

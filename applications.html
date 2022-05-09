@@ -88,14 +88,125 @@
           </div>
         </div>
 
-        <div class="field" f id="searchbar">
-          <p class="control has-icons-left">
-            <input type="text" id="appsearchbar" class="input" placeholder="Search applications"
-              onkeyup="search_applications()">
-            <span class="icon is-small is-left">
-              <i class="fas fa-search"></i>
-            </span>
+        <div class="field has-addons" f id="searchbar">
+          <div class="dropdown is-hoverable">
+            <div class="dropdown-trigger">
+              <button class="button" aria-haspopup="true" aria-controls="dropdown-menu3">
+                <span class="icon is-small is-left">
+                  <i class="fas fa-search"></i>
+                </span>
+                <span id="searchText">Company Name</span>
+                <span class="icon is-small">
+                  <i class="fas fa-angle-down" aria-hidden="true"></i>
+                </span>
+              </button>
+            </div>
+            <div class="dropdown-menu" id="dropdown-menu3" role="menu">
+              <div class="dropdown-content">
+                <a onclick="selectSearch('Company Name')" class="dropdown-item">
+                  Company Name
+                </a>
+                <a onclick="selectSearch('Position Name')" class="dropdown-item">
+                  Position Name
+                </a>
+                <a onclick="selectSearch('Position Type')" class="dropdown-item">
+                  Position Type
+                </a>
+                <a onclick="selectSearch('Position Status')" class="dropdown-item">
+                  Position Status
+                </a>
+                <a onclick="selectSearch('Date Applied <=')" class="dropdown-item">
+                  Date Applied (<=) </a>
+                    <a onclick="selectSearch('Date Applied >')" class="dropdown-item">
+                      Date Applied (>) </a>
+                    <a onclick="selectSearch('Followed Up')" class="dropdown-item">
+                      Followed Up
+                    </a>
+                    <a onclick="selectSearch('Notes')" class="dropdown-item">
+                      Notes
+                    </a>
+              </div>
+            </div>
+          </div>
+          <p class="control">
+            <input type="text" id="appsearchbar" class="input" onkeyup="search_applications()">
           </p>
+
+          <p class="control">
+            <input type="date" id="appsearchdatebar" class="input" onchange="search_applications()">
+          </p>
+
+          <div class="dropdown is-hoverable" id="appsearchbarptype">
+            <div class="dropdown-trigger">
+              <button class="button" aria-haspopup="true" aria-controls="dropdown-menu3">
+                <span id="searchPTypeText">Select</span>
+                <span class="icon is-small">
+                  <i class="fas fa-angle-down" aria-hidden="true"></i>
+                </span>
+              </button>
+            </div>
+            <div class="dropdown-menu" role="menu">
+              <div class="dropdown-content">
+                <a onclick="search_applications('Internship/Co-Op')" class="dropdown-item">
+                  Internship/Co-Op
+                </a>
+                <a onclick="search_applications('Part-Time')" class="dropdown-item">
+                  Part-Time
+                </a>
+                <a onclick="search_applications('Full-Time')" class="dropdown-item">
+                  Full-Time
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="dropdown is-hoverable" id="appsearchbarpstatus">
+            <div class="dropdown-trigger">
+              <button class="button" aria-haspopup="true" aria-controls="dropdown-menu3">
+                <span id="searchPStatusText">Select</span>
+                <span class="icon is-small">
+                  <i class="fas fa-angle-down" aria-hidden="true"></i>
+                </span>
+              </button>
+            </div>
+            <div class="dropdown-menu" role="menu">
+              <div class="dropdown-content">
+                <a onclick="search_applications('Applied')" class="dropdown-item">
+                  Applied
+                </a>
+                <a onclick="search_applications('Interviewed')" class="dropdown-item">
+                  Interviewed
+                </a>
+                <a onclick="search_applications('Rejected')" class="dropdown-item">
+                  Rejected
+                </a>
+                <a onclick="search_applications('Offered')" class="dropdown-item">
+                  Offered
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="dropdown is-hoverable" id="appsearchbarfup">
+            <div class="dropdown-trigger">
+              <button class="button" aria-haspopup="true" aria-controls="dropdown-menu3">
+                <span id="searchfUpText">Select</span>
+                <span class="icon is-small">
+                  <i class="fas fa-angle-down" aria-hidden="true"></i>
+                </span>
+              </button>
+            </div>
+            <div class="dropdown-menu" role="menu">
+              <div class="dropdown-content">
+                <a onclick="search_applications('Yes')" class="dropdown-item">
+                  Yes
+                </a>
+                <a onclick="search_applications('No')" class="dropdown-item">
+                  No
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 

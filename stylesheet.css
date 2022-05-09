@@ -119,7 +119,7 @@ html {
 }
 
 #searchbar {
-  width: 30%;
+  width: 40%;
 }
 
 #footer {
@@ -165,4 +165,11 @@ html {
 
 .tooltip:hover .tooltiptext {
   visibility: visible;
+}
+
+#appsearchbarptype,
+#appsearchbarpstatus,
+#appsearchbarfup,
+#appsearchdatebar {
+  display: none;
 }

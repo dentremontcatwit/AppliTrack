@@ -4,6 +4,11 @@ const cardList = document.querySelector("#cards");
 const uploadButton = document.querySelector("#uploaddata");
 const fileInput = document.querySelector("#fileinput");
 const downloadButton = document.querySelector("#downloaddata");
+const searchTextBar = document.querySelector("#appsearchbar");
+const searchPType = document.querySelector("#appsearchbarptype");
+const searchPStatus = document.querySelector("#appsearchbarpstatus");
+const searchFUp = document.querySelector("#appsearchbarfup");
+const searchDate = document.querySelector("#appsearchdatebar");
 
 //form modal
 const newAppButton = document.querySelector("#addapplication");
@@ -515,23 +520,234 @@ uploadButton.addEventListener("click", () => {
   document.getElementById("fileinput").click();
 });
 
-function search_applications() {
-  let input = document.getElementById("appsearchbar").value.toLowerCase();
-  if (input == "") {
+function selectSearch(value) {
+  var spanText = document.getElementById("searchText");
+  var searchBar = document.getElementById("appsearchbar");
+  spanText.textContent = value;
+
+  if (value == "Company Name") {
+    document.getElementById("appsearchbar").value = "";
     DisplayCookies(cookiesToDisplay);
-  } else {
+    searchBar.type = "text";
+    searchPType.style.display = "none";
+    searchPStatus.style.display = "none";
+    searchFUp.style.display = "none";
+    searchDate.style.display = "none";
+    searchTextBar.style.display = "block";
+  } else if (value == "Position Name") {
+    document.getElementById("appsearchbar").value = "";
+    DisplayCookies(cookiesToDisplay);
+    searchBar.type = "text";
+    searchPType.style.display = "none";
+    searchPStatus.style.display = "none";
+    searchFUp.style.display = "none";
+    searchDate.style.display = "none";
+    searchTextBar.style.display = "block";
+  } else if (value == "Position Type") {
+    search_applications(document.getElementById("searchPTypeText").textContent);
+    searchPStatus.style.display = "none";
+    searchTextBar.style.display = "none";
+    searchFUp.style.display = "none";
+    searchDate.style.display = "none";
+    searchPType.style.display = "block";
+  } else if (value == "Position Status") {
+    search_applications(
+      document.getElementById("searchPStatusText").textContent
+    );
+    searchPType.style.display = "none";
+    searchTextBar.style.display = "none";
+    searchFUp.style.display = "none";
+    searchDate.style.display = "none";
+    searchPStatus.style.display = "block";
+  } else if (value == "Date Applied <=" || value == "Date Applied >") {
+    searchDate.value = "";
+    DisplayCookies(cookiesToDisplay);
+    searchBar.type = "date";
+    searchPType.style.display = "none";
+    searchPStatus.style.display = "none";
+    searchFUp.style.display = "none";
+    searchTextBar.style.display = "none";
+    searchDate.style.display = "block";
+  } else if (value == "Followed Up") {
+    search_applications(document.getElementById("searchfUpText").textContent);
+    searchPType.style.display = "none";
+    searchPStatus.style.display = "none";
+    searchTextBar.style.display = "none";
+    searchDate.style.display = "none";
+    searchFUp.style.display = "block";
+  } else if (value == "Notes") {
+    document.getElementById("appsearchbar").value = "";
+    DisplayCookies(cookiesToDisplay);
+    searchBar.type = "text";
+    searchPType.style.display = "none";
+    searchPStatus.style.display = "none";
+    searchFUp.style.display = "none";
+    searchDate.style.display = "none";
+    searchTextBar.style.display = "block";
+  }
+}
+
+function search_applications(selectValue) {
+  var spanText = document.getElementById("searchText");
+  if (spanText.textContent == "Company Name") {
+    let input = document.getElementById("appsearchbar").value.toLowerCase();
+    if (input == "") {
+      DisplayCookies(cookiesToDisplay);
+    } else {
+      let newCookies = [];
+      for (var i = 0, element; (element = cookiesToDisplay[i++]); ) {
+        let temp = JSON.parse(element.split("=")[1]);
+        if (temp[0].substring(0, input.length).toLowerCase().includes(input)) {
+          newCookies.push(element);
+        }
+      }
+      DisplayCookies(newCookies);
+    }
+  } else if (spanText.textContent == "Position Name") {
+    let input = document.getElementById("appsearchbar").value.toLowerCase();
+    if (input == "") {
+      DisplayCookies(cookiesToDisplay);
+    } else {
+      let newCookies = [];
+      for (var i = 0, element; (element = cookiesToDisplay[i++]); ) {
+        let temp = JSON.parse(element.split("=")[1]);
+        if (temp[1].substring(0, input.length).toLowerCase().includes(input)) {
+          newCookies.push(element);
+        }
+      }
+      DisplayCookies(newCookies);
+    }
+  } else if (spanText.textContent == "Position Type") {
+    if (selectValue == "Internship/Co-Op") {
+      document.getElementById("searchPTypeText").textContent =
+        "Internship/Co-Op";
+      let newCookies = [];
+      for (var i = 0, element; (element = cookiesToDisplay[i++]); ) {
+        let temp = JSON.parse(element.split("=")[1]);
+        if (temp[2] == "Internship/Co-Op") {
+          newCookies.push(element);
+        }
+      }
+      DisplayCookies(newCookies);
+    } else if (selectValue == "Part-Time") {
+      document.getElementById("searchPTypeText").textContent = "Part-Time";
+      let newCookies = [];
+      for (var i = 0, element; (element = cookiesToDisplay[i++]); ) {
+        let temp = JSON.parse(element.split("=")[1]);
+        if (temp[2] == "Part-Time") {
+          newCookies.push(element);
+        }
+      }
+      DisplayCookies(newCookies);
+    } else if (selectValue == "Full-Time") {
+      document.getElementById("searchPTypeText").textContent = "Full-Time";
+      let newCookies = [];
+      for (var i = 0, element; (element = cookiesToDisplay[i++]); ) {
+        let temp = JSON.parse(element.split("=")[1]);
+        if (temp[2] == "Full-Time") {
+          newCookies.push(element);
+        }
+      }
+      DisplayCookies(newCookies);
+    }
+  } else if (spanText.textContent == "Position Status") {
+    if (selectValue == "Applied") {
+      document.getElementById("searchPStatusText").textContent = "Applied";
+      let newCookies = [];
+      for (var i = 0, element; (element = cookiesToDisplay[i++]); ) {
+        let temp = JSON.parse(element.split("=")[1]);
+        if (temp[3] == "Applied") {
+          newCookies.push(element);
+        }
+      }
+      DisplayCookies(newCookies);
+    } else if (selectValue == "Interviewed") {
+      document.getElementById("searchPStatusText").textContent = "Interviewed";
+      let newCookies = [];
+      for (var i = 0, element; (element = cookiesToDisplay[i++]); ) {
+        let temp = JSON.parse(element.split("=")[1]);
+        if (temp[3] == "Interviewed") {
+          newCookies.push(element);
+        }
+      }
+      DisplayCookies(newCookies);
+    } else if (selectValue == "Rejected") {
+      document.getElementById("searchPStatusText").textContent = "Rejected";
+      let newCookies = [];
+      for (var i = 0, element; (element = cookiesToDisplay[i++]); ) {
+        let temp = JSON.parse(element.split("=")[1]);
+        if (temp[3] == "Rejected") {
+          newCookies.push(element);
+        }
+      }
+      DisplayCookies(newCookies);
+    } else if ((selectValue = "Offered")) {
+      document.getElementById("searchPStatusText").textContent = "Offered";
+      let newCookies = [];
+      for (var i = 0, element; (element = cookiesToDisplay[i++]); ) {
+        let temp = JSON.parse(element.split("=")[1]);
+        if (temp[3] == "Offered") {
+          newCookies.push(element);
+        }
+      }
+      DisplayCookies(newCookies);
+    }
+  } else if (spanText.textContent == "Date Applied <=") {
+    let input = document.getElementById("appsearchdatebar").value;
     let newCookies = [];
     for (var i = 0, element; (element = cookiesToDisplay[i++]); ) {
       let temp = JSON.parse(element.split("=")[1]);
-      if (temp[0].substring(0, input.length).toLowerCase().includes(input)) {
-        newCookies.push(element);
-      } else if (
-        temp[1].substring(0, input.length).toLowerCase().includes(input)
-      ) {
+      if (new Date(temp[4]) <= new Date(input)) {
         newCookies.push(element);
       }
     }
     DisplayCookies(newCookies);
+  } else if (spanText.textContent == "Date Applied >") {
+    let input = document.getElementById("appsearchdatebar").value;
+    let newCookies = [];
+    for (var i = 0, element; (element = cookiesToDisplay[i++]); ) {
+      let temp = JSON.parse(element.split("=")[1]);
+      if (new Date(temp[4]) > new Date(input)) {
+        newCookies.push(element);
+      }
+    }
+    DisplayCookies(newCookies);
+  } else if (spanText.textContent == "Followed Up") {
+    if (selectValue == "Yes") {
+      document.getElementById("searchfUpText").textContent = "Yes";
+      let newCookies = [];
+      for (var i = 0, element; (element = cookiesToDisplay[i++]); ) {
+        let temp = JSON.parse(element.split("=")[1]);
+        if (temp[5] == "Yes") {
+          newCookies.push(element);
+        }
+      }
+      DisplayCookies(newCookies);
+    } else if (selectValue == "No") {
+      document.getElementById("searchfUpText").textContent = "No";
+      let newCookies = [];
+      for (var i = 0, element; (element = cookiesToDisplay[i++]); ) {
+        let temp = JSON.parse(element.split("=")[1]);
+        if (temp[5] == "No") {
+          newCookies.push(element);
+        }
+      }
+      DisplayCookies(newCookies);
+    }
+  } else if (spanText.textContent == "Notes") {
+    let input = document.getElementById("appsearchbar").value.toLowerCase();
+    if (input == "") {
+      DisplayCookies(cookiesToDisplay);
+    } else {
+      let newCookies = [];
+      for (var i = 0, element; (element = cookiesToDisplay[i++]); ) {
+        let temp = JSON.parse(element.split("=")[1]);
+        if (temp[6].substring(0, input.length).toLowerCase().includes(input)) {
+          newCookies.push(element);
+        }
+      }
+      DisplayCookies(newCookies);
+    }
   }
 }
 
@@ -550,7 +766,6 @@ function editCard() {
     }
     editParent.removeChild(editParent.firstChild);
   }
-  console.log(cookieID);
   while (viewModalContent.firstChild) {
     viewModalContent.removeChild(viewModalContent.firstChild);
   }
@@ -558,7 +773,6 @@ function editCard() {
   //Add form modal and fill in pre-existing info
 
   modal.classList.add("is-active");
-  console.log(values);
   document.querySelector("#companyNameField").value = values[0];
   document.querySelector("#positionField").value = values[1];
   document.querySelector("#positionTypeField").value = values[2];

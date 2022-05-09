@@ -341,6 +341,9 @@ window.onload = function WindowLoad(event) {
     cookiesToDisplay.push(element);
   }
 
+  document.getElementById("appTitle").textContent =
+    "Your Applications (" + cookiesToDisplay.length + ")";
+
   //Get sort cookie and see if cookies need to be sorted
   let cookie = {};
   document.cookie.split(";").forEach(function (el) {

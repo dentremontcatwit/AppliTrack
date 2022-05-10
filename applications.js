@@ -1,6 +1,6 @@
 const cardList = document.querySelector("#cards");
 
-//upload/download/sort buttons
+//Top Menu Elements
 const uploadButton = document.querySelector("#uploaddata");
 const fileInput = document.querySelector("#fileinput");
 const downloadButton = document.querySelector("#downloaddata");
@@ -10,7 +10,7 @@ const searchPStatus = document.querySelector("#appsearchbarpstatus");
 const searchFUp = document.querySelector("#appsearchbarfup");
 const searchDate = document.querySelector("#appsearchdatebar");
 
-//form modal
+//Application Form Modal
 const newAppButton = document.querySelector("#addapplication");
 let isFormSubmit = true;
 const newAppTitle = document.querySelector("#newAppTitle");
@@ -18,12 +18,12 @@ const testViewButton = document.querySelector("#testview");
 const modalBg = document.querySelector("#formModalBg");
 const modal = document.querySelector("#formModal");
 
-//form
+//Application Form
 const applicationForm = document.querySelector("#applicationform");
 const formSubmitButton = document.querySelector("#formsubmit");
 const invalidInput = document.querySelector("#invalidinput");
 
-//view modal
+//Application View Modal
 const viewModal = document.querySelector("#viewModal");
 const viewModalBg = document.querySelector("#viewModalBg");
 const viewModalContent = document.querySelector("#viewModalContent");
@@ -34,6 +34,10 @@ let cookieID;
 var cookies = document.cookie.split(";");
 var cookiesToDisplay = [];
 
+/**
+ * A function to check if a given date is two weeks or more away
+ * from the current date.
+ */
 function isTwoWeeksAgo(date) {
   const twoWeeks = 15 * 24 * 60 * 60 * 1000;
   const twoWeeksTime = new Date().getTime() - twoWeeks;
@@ -45,7 +49,18 @@ function isTwoWeeksAgo(date) {
   }
 }
 
-//Function to display cookies as cards on screen
+/**
+ * Function that displays application cards on screen through given
+ * cookies.
+ *
+ * The function creates HTML card elements to display each application
+ * cookie and applies necessary style classes. The function also
+ * checks if the date on an application is more than two weeks ago,
+ * and displays a follow-up warning if so.
+ *
+ *
+ * @param {*} cookies
+ */
 function DisplayCookies(cookies) {
   while (cardList.firstChild) {
     cardList.removeChild(cardList.firstChild);
@@ -294,6 +309,13 @@ function DisplayCookies(cookies) {
   }
 }
 
+/**
+ * Comparator function to sort the application cards alphabetically.
+ *
+ * @param {*} a First title to compare.
+ * @param {*} b Second title to compare.
+ * @returns Comparison result.
+ */
 function sortByAZ(a, b) {
   var aData = JSON.parse(a.split("=")[1]);
   var bData = JSON.parse(b.split("=")[1]);
@@ -307,6 +329,13 @@ function sortByAZ(a, b) {
   return 0;
 }
 
+/**
+ * Comparator function to sort the application cards by date.
+ *
+ * @param {*} a First date to compare.
+ * @param {*} b Second date to compare.
+ * @returns Comparison result.
+ */
 function sortByDate(a, b) {
   var aData = JSON.parse(a.split("=")[1]);
   var bData = JSON.parse(b.split("=")[1]);
@@ -320,7 +349,16 @@ function sortByDate(a, b) {
   return 0;
 }
 
-//Load and display cookies
+/**
+ * A function that runs when the page is loaded and displays
+ * application cards through browser cookies.
+ *
+ * The function ignores any non-application cookies so that the
+ * cards are added properly, and also sorts the cards based on
+ * separate cookie determined by sortCards() function below.
+ *
+ * @param {*} event
+ */
 window.onload = function WindowLoad(event) {
   //Add cookie strings to array
   /*
@@ -362,6 +400,9 @@ window.onload = function WindowLoad(event) {
   DisplayCookies(cookiesToDisplay);
 };
 
+/**
+ * Shows application form for user to submit data.
+ */
 newAppButton.addEventListener("click", () => {
   modal.classList.add("is-active");
   isFormSubmit = true;
@@ -369,27 +410,37 @@ newAppButton.addEventListener("click", () => {
   formSubmitButton.textContent = "Create";
 });
 
+/**
+ * Clears application form and disables it when user clicks away.
+ */
 modalBg.addEventListener("click", () => {
   modal.classList.remove("is-active");
   applicationForm.reset();
   invalidInput.style.display = "none";
 });
 
-function sortAlphabetically() {
-  document.cookie = "sort=az";
+/**
+ * A function that sorts the application cards by a given criteria.
+ *
+ * The function uses the given parameter to determine how to
+ * sort the cards, either alphabetically or by date.
+ *
+ * @param {*} method A parameter to determine how to sort the cards.
+ */
+function sortCards(method) {
+  if (method == "az") {
+    document.cookie = "sort=az";
+  } else if (method == "date") {
+    document.cookie = "sort=date";
+  }
   location.reload();
 }
 
-function sortDate() {
-  document.cookie = "sort=date";
-  location.reload();
-}
-
-function sortRecent() {
-  document.cookie = "sort=recent";
-  location.reload();
-}
-
+/**
+ * A function that parses through the application form results
+ * and creates a cookie with the given information, and adds
+ * the cookie to the browser.
+ */
 formSubmitButton.addEventListener("click", () => {
   if (isFormSubmit) {
     var elements = document.getElementById("applicationform").elements;
@@ -462,6 +513,10 @@ formSubmitButton.addEventListener("click", () => {
   }
 });
 
+/**
+ * A function that creates a new .txt file and adds the browser's
+ * cookies to the file with same cookie format.
+ */
 downloadButton.addEventListener("click", () => {
   if (cookiesToDisplay.length < 1) {
     alert("Please add at least 1 application before downloading.");
@@ -493,6 +548,13 @@ downloadButton.addEventListener("click", () => {
   }
 });
 
+/**
+ * A function that parses through an uploaded file and merges it's
+ * cookies with the browser's cookies.
+ *
+ * The function makes sure that the file uploaded has the .txt
+ * extension so that it can properly parse through it.
+ */
 function loadFile() {
   const [file] = document.querySelector("input[type=file]").files;
   const reader = new FileReader();
@@ -524,6 +586,16 @@ uploadButton.addEventListener("click", () => {
   document.getElementById("fileinput").click();
 });
 
+/**
+ * A function to properly apply changes to the display structure of
+ * the search dropdown.
+ *
+ * The function takes in a parameter and uses it to determine which
+ * search criteria to show the corresponding search box/dropdown for.
+ *
+ * @param {*} value The String to let the dropdown know which search
+ * criteria is selected so it can act accordingly
+ */
 function selectSearch(value) {
   var spanText = document.getElementById("searchText");
   var searchBar = document.getElementById("appsearchbar");
@@ -591,6 +663,17 @@ function selectSearch(value) {
   }
 }
 
+/**
+ * A function to search through the list of cookies given a certain
+ * criteria.
+ *
+ * The function determines which criteria to search for through the
+ * 'searchText' element, and loops through every cookie and filters
+ * with the corresponding criteria.
+ *
+ * @param {*} selectValue An optional parameter that lets the function know
+ * which criteria to search for in certain conditions
+ */
 function search_applications(selectValue) {
   var spanText = document.getElementById("searchText");
   if (spanText.textContent == "Company Name") {
@@ -755,6 +838,14 @@ function search_applications(selectValue) {
   }
 }
 
+/**
+ * A function that allows the user to edit an existing application
+ * card.
+ *
+ * The function converts the information modal to the editable form
+ * modal and allows the user to edit the existing information and
+ * submit the changes to override the already existing cookie.
+ */
 function editCard() {
   isFormSubmit = false;
   //Collect already existing info & remove modal

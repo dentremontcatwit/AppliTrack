@@ -84,26 +84,6 @@ function DisplayCookies(cookies) {
     cardContentTop.classList.add("pTopText");
     var text = document.createTextNode(currentDisplay[1] + " @");
     cardContentTop.appendChild(text);
-    //Check if it's been more than two weeks since Applied Date & add warning if so
-    if (
-      isTwoWeeksAgo(new Date(currentDisplay[4])) &&
-      currentDisplay[5] == "No"
-    ) {
-      var followUpWarning = document.createElement("span");
-      followUpWarning.classList.add("icon");
-      followUpWarning.classList.add("has-text-danger");
-      var followUpIcon = document.createElement("i");
-      followUpIcon.classList.add("fas");
-      followUpIcon.classList.add("fa-clock");
-      followUpIcon.classList.add("tooltip");
-      followUpWarning.appendChild(followUpIcon);
-      var followUpText = document.createElement("span");
-      followUpText.classList.add("tooltiptext");
-      followUpText.textContent =
-        "It's been more than 2 weeks since you've applied, consider following up!";
-      followUpIcon.appendChild(followUpText);
-      cardContentTop.appendChild(followUpWarning);
-    }
     var cardContentBottom = document.createElement("p");
     cardContentBottom.classList.add("title");
     cardContentBottom.classList.add("is-size-5");
@@ -285,6 +265,26 @@ function DisplayCookies(cookies) {
     viewLinkText = document.createTextNode("View");
     viewLinkButton.appendChild(viewLinkText);
     viewLink.appendChild(viewLinkButton);
+    //Check if it's been more than two weeks since Applied Date & add warning if so
+    if (
+      isTwoWeeksAgo(new Date(currentDisplay[4])) &&
+      currentDisplay[5] == "No"
+    ) {
+      var followUpWarning = document.createElement("span");
+      followUpWarning.classList.add("icon");
+      followUpWarning.classList.add("has-text-danger");
+      var followUpIcon = document.createElement("i");
+      followUpIcon.classList.add("fas");
+      followUpIcon.classList.add("fa-clock");
+      followUpIcon.classList.add("tooltip");
+      followUpWarning.appendChild(followUpIcon);
+      var followUpText = document.createElement("span");
+      followUpText.classList.add("tooltiptext");
+      followUpText.textContent =
+        "It's been more than 2 weeks since you've applied, consider following up!";
+      followUpIcon.appendChild(followUpText);
+      viewLinkButton.appendChild(followUpWarning);
+    }
 
     var deleteLink = document.createElement("p");
     deleteLink.classList.add("card-footer-item");

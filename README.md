@@ -11,3 +11,23 @@ AppliTrack is a web application that allows you to keep track of your job applic
 - Sort your applications by either their applied date or alphabetically.
 
 ![applications screenshot](images/applications.jpg)
+
+## Changelog
+### May 8th, 2022
+- Overhauled application search (can filter by any field now)
+- Added warning to follow up with employers two weeks after applying
+- Fixed bug where uploaded applications disappear
+
+### May 5th, 2022
+- Added the ability to edit existing applications
+
+### April 27th, 2022
+- Added option to sort applications by either A-Z or date
+- Added search box to easily filter out applications by company name
+- (Mostly) Optimized layout on different size screens
+
+### April 10th, 2022
+- AppliTrack launch
+- Create job applications through form
+- View existing job application information
+- Upload/Download job application data for easy transfer

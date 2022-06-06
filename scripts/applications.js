@@ -82,12 +82,20 @@ function DisplayCookies(cookies) {
     cardContent.classList.add("card-content");
     var cardContentTop = document.createElement("p");
     cardContentTop.classList.add("pTopText");
-    var text = document.createTextNode(currentDisplay[1] + " @");
+    if(currentDisplay[1].length <= 30){
+      var text = document.createTextNode(currentDisplay[1] + " @");
+    }else{
+      var text = document.createTextNode(currentDisplay[1].substring(0, 30) + "... @");
+    }
     cardContentTop.appendChild(text);
     var cardContentBottom = document.createElement("p");
     cardContentBottom.classList.add("title");
     cardContentBottom.classList.add("is-size-5");
-    text = document.createTextNode(currentDisplay[0]);
+    if(currentDisplay[0].length <= 20){
+      text = document.createTextNode(currentDisplay[0]);
+    }else{
+      text = document.createTextNode(currentDisplay[0].substring(0, 20) + "...");
+    }
     cardContentBottom.appendChild(text);
     cardContent.appendChild(cardContentTop);
     cardContent.appendChild(cardContentBottom);
@@ -106,11 +114,16 @@ function DisplayCookies(cookies) {
       modalTitle.classList.add("is-size-5");
       modalTitle.classList.add("has-text-weight-bold");
       modalTitle.classList.add("mb-2");
-      modalTitle.appendChild(
-        document.createTextNode(
-          "" + currentDisplay[1] + " @ " + currentDisplay[0]
-        )
-      );
+      if(currentDisplay[1].length + currentDisplay[0].length <= 50){
+        modalTitle.appendChild(
+          document.createTextNode(
+            "" + currentDisplay[1] + " @ " + currentDisplay[0]
+          )
+        );
+      }else{
+        var titleString = "" + currentDisplay[1] + " @ " + currentDisplay[0];
+        modalTitle.appendChild(document.createTextNode(titleString.substring(0, 50) + "..."));
+      }
       //Edit button
       var editButton = document.createElement("a");
       editButton.setAttribute("id", "editIcon");

@@ -246,7 +246,7 @@ function DisplayCookies(cookies) {
       viewNotes.classList.add("mb-3");
       viewNotes.classList.add("px-4");
       if (currentDisplay[6].length == 0) {
-        viewNotes.appendChild(document.createTextNode("N/A"));
+        viewNotes.appendChild(document.createTextNode("-"));
       } else {
         viewNotes.appendChild(document.createTextNode(currentDisplay[6]));
       }

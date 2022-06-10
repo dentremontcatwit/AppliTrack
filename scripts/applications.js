@@ -106,8 +106,8 @@ function DisplayCookies(cookies) {
 
     var viewLink = document.createElement("p");
     viewLink.classList.add("card-footer-item");
-    var viewLinkButton = document.createElement("a");
-    viewLinkButton.addEventListener("click", () => {
+    viewLink.classList.add("application-card");
+    viewLink.addEventListener("click", () => {
       //Title
       var modalTitle = document.createElement("header");
       modalTitle.classList.add("modal-card-head");
@@ -274,10 +274,8 @@ function DisplayCookies(cookies) {
       }
       viewModal.classList.remove("is-active");
     });
-    viewLinkButton.classList.add("has-text-gray");
     viewLinkText = document.createTextNode("View");
-    viewLinkButton.appendChild(viewLinkText);
-    viewLink.appendChild(viewLinkButton);
+    viewLink.appendChild(viewLinkText);
     //Check if it's been more than two weeks since Applied Date & add warning if so
     if (
       isTwoWeeksAgo(new Date(currentDisplay[4])) &&
@@ -296,22 +294,21 @@ function DisplayCookies(cookies) {
       followUpText.textContent =
         "It's been more than 2 weeks since you've applied, consider following up!";
       followUpIcon.appendChild(followUpText);
-      viewLinkButton.appendChild(followUpWarning);
+      viewLink.appendChild(followUpWarning);
     }
 
     var deleteLink = document.createElement("p");
     deleteLink.classList.add("card-footer-item");
-    var deleteLinkButton = document.createElement("a");
-    deleteLinkButton.addEventListener("click", () => {
+    deleteLink.classList.add("application-card");
+    deleteLink.addEventListener("click", () => {
       var id = "" + current[0];
       document.cookie =
         "" + id + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      location.reload();
     });
-    deleteLinkButton.href = "";
-    deleteLinkButton.classList.add("has-text-gray");
+    deleteLink.href = "";
     deleteLinkText = document.createTextNode("Delete");
-    deleteLinkButton.appendChild(deleteLinkText);
-    deleteLink.appendChild(deleteLinkButton);
+    deleteLink.appendChild(deleteLinkText);
 
     cardFooter.appendChild(viewLink);
     cardFooter.appendChild(deleteLink);

@@ -178,3 +178,8 @@ html {
 #appsearchdatebar {
   display: none;
 }
+
+.card-footer-item.application-card:hover {
+  background-color: lightgray;
+  cursor: pointer;
+}

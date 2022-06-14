@@ -82,10 +82,10 @@ function DisplayCookies(cookies) {
     cardContent.classList.add("card-content");
     var cardContentTop = document.createElement("p");
     cardContentTop.classList.add("pTopText");
-    if(currentDisplay[1].length <= 30){
+    if(currentDisplay[1].length <= 23){
       var text = document.createTextNode(currentDisplay[1] + " @");
     }else{
-      var text = document.createTextNode(currentDisplay[1].substring(0, 30) + "... @");
+      var text = document.createTextNode(currentDisplay[1].substring(0, 23) + "... @");
     }
     cardContentTop.appendChild(text);
     var cardContentBottom = document.createElement("p");

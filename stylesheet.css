@@ -183,3 +183,9 @@ html {
   background-color: lightgray;
   cursor: pointer;
 }
+
+#cards {
+  overflow: hidden;
+  padding-top: 0%;
+  padding-left: 10%;
+}

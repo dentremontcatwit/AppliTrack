@@ -91,10 +91,12 @@ function DisplayCookies(cookies) {
     var cardContentBottom = document.createElement("p");
     cardContentBottom.classList.add("title");
     cardContentBottom.classList.add("is-size-5");
-    if(currentDisplay[0].length <= 20){
-      text = document.createTextNode(currentDisplay[0]);
-    }else{
+    if(screen.width < 1600 && currentDisplay[0].length > 19){
+      text = document.createTextNode(currentDisplay[0].substring(0, 19) + "...");
+    }else if(currentDisplay[0].length > 20){
       text = document.createTextNode(currentDisplay[0].substring(0, 20) + "...");
+    }else{
+      text = document.createTextNode(currentDisplay[0]);
     }
     cardContentBottom.appendChild(text);
     cardContent.appendChild(cardContentTop);

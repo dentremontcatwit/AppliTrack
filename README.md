@@ -1,4 +1,4 @@
-# ![AppliTrack](images/logo.png) V1.3
+# ![AppliTrack](dist/images/logo.png) V1.4
 
 AppliTrack is a web application that allows you to keep track of your job applications throughout your job search.
 
@@ -10,9 +10,13 @@ AppliTrack is a web application that allows you to keep track of your job applic
 - Search for your applications by certain criteria.
 - Sort your applications by either their applied date or alphabetically.
 
-![applications screenshot](images/applications.jpg)
+![applications screenshot](dist/images/applications.jpg)
 
 ## Changelog
+### July 1st, 2022 (v1.4)
+- Added user authentication (login/signup)
+- Added user database to store applications (no more cookies)
+
 ### May 8th, 2022 (v1.3)
 - Overhauled application search (can filter by any field now)
 - Added warning to follow up with employers two weeks after applying

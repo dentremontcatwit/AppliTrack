@@ -357,6 +357,7 @@ function DisplayApplications(applications) {
     deleteLink.classList.add("card-footer-item");
     deleteLink.classList.add("application-card");
     deleteLink.addEventListener("click", async () => {
+      console.log('clicked');
       var id = "" + currentID;
       var obj = {};
       obj[id] = deleteField();

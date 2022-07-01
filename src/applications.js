@@ -69,6 +69,7 @@ const modal = document.querySelector("#formModal");
 const applicationForm = document.querySelector("#applicationform");
 const formSubmitButton = document.querySelector("#formsubmit");
 const invalidInput = document.querySelector("#invalidinput");
+const invalidCompanyName = document.querySelector("#invalidcompanyname");
 
 //Application View Modal
 const viewModal = document.querySelector("#viewModal");
@@ -514,41 +515,44 @@ applicationForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   var elements = document.getElementById("applicationform").elements;
 
-    if (elements[0].value.length < 1 || elements[1].value.length < 1) {
-      invalidInput.style.display = "block";
-    } else {
-      invalidInput.style.display = "none";
+  if (elements[0].value.length < 1 || elements[1].value.length < 1) {
+    invalidInput.style.display = "block";
+  } else if (!/^[A-Za-z0-9]*$/.test(elements[0].value.replace(/\s/g, ""))) {
+    invalidCompanyName.style.display = "block";
+  } else {
+    invalidInput.style.display = "none";
+    invalidCompanyName.style.display = "none";
 
-      //Build element array and create application
-      const formElements = [];
-      for (var i = 0, element; (element = elements[i++]); ) {
-        formElements.push(element.value);
-      }
-      //Create a unique ID to assign to application
-      var date = new Date();
-      var idNum =
-        "" +
-        (date.getMonth() + 1) +
-        date.getDate() +
-        date.getFullYear() +
-        date.getHours() +
-        date.getMinutes() +
-        date.getSeconds();
-      var id = "" + elements[0].value.replace(/\s/g, "") + idNum;
+    //Build element array and create application
+    const formElements = [];
+    for (var i = 0, element; (element = elements[i++]); ) {
+      formElements.push(element.value);
+    }
+    //Create a unique ID to assign to application
+    var date = new Date();
+    var idNum =
+      "" +
+      (date.getMonth() + 1) +
+      date.getDate() +
+      date.getFullYear() +
+      date.getHours() +
+      date.getMinutes() +
+      date.getSeconds();
+    var id = "" + elements[0].value.replace(/\s/g, "") + idNum;
 
-      var obj = {};
-      obj[id] = formElements;
-      if(isDuplicate){
-        obj[applicationID] = deleteField();
-        isDuplicate = false;
-      }
-      await updateDoc(doc(db, "users", auth.currentUser.uid), obj);
-      
-      //Reset form once successfully submitted
-      modal.classList.remove("is-active");
-      applicationForm.reset();
-      invalidInput.style.display = "none";
-      location.reload();
+    var obj = {};
+    obj[id] = formElements;
+    if (isDuplicate) {
+      obj[applicationID] = deleteField();
+      isDuplicate = false;
+    }
+    await updateDoc(doc(db, "users", auth.currentUser.uid), obj);
+
+    //Reset form once successfully submitted
+    modal.classList.remove("is-active");
+    applicationForm.reset();
+    invalidInput.style.display = "none";
+    location.reload();
   }
 });
 

@@ -1,0 +1,209 @@
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AppliTrack</title>
+    <script src="https://kit.fontawesome.com/d36d0a95a4.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" />
+    <link rel="stylesheet" href="stylesheet.css">
+    <link rel="icon" href="images/logo2.png">
+  </head>
+
+  <body>
+    <div class="hero-head">
+      <nav class="navbar has-shadow is-dark">
+        <div class="container">
+          <div class="navbar-brand">
+            <a href="index.html" class="navbar-item">
+              <img src="images/logo.png" alt="AppliTrack" />
+            </a>
+          </div>
+
+
+          <div class="navbar-start" id="navbarstart">
+            <a hidden href="#" onclick="EntryPoint.openLogIn()" class="navbar-item" id="loginlink">Log In</a>
+            <a hidden href="#" onclick="EntryPoint.openSignUp()" class="navbar-item" id="signuplink">Sign Up</a>
+            <a hidden href="applications.html" class="navbar-item" id="applicationlink">Applications</a>
+          </div>
+
+          <div class="navbar-end">
+            <a hidden href="#" onclick="EntryPoint.logout()" class="navbar-item" id="logoutlink">Logout</a>
+          </div>
+        </div>
+    </div>
+    </nav>
+    </div>
+
+    <div class="hero-body" id="head-body">
+      <h1 class="title" id="titletext">Welcome to <b>AppliTrack</b></h1>
+      <p class="subtitle" id="subtitletext">A tool to easily manage your job applications</p>
+
+      <div class="card mr-6" id="excard">
+        <div class="card-content">
+          <p>Software Engineer @</p>
+          <p class="title is-size-5">Raytheon Labs</p>
+        </div>
+        <footer class="card-footer">
+          <p class="card-footer-item">
+            <a class="has-text-grey homeLink">View</a>
+          </p>
+          <p class="card-footer-item">
+            <a class="has-text-grey homeLink">Delete</a>
+          </p>
+        </footer>
+      </div>
+
+      <div class="card mr-6" id="excard">
+        <div class="card-content">
+          <p>Aerospace Engineer @</p>
+          <p class="title is-size-5">NASA</p>
+        </div>
+        <footer class="card-footer">
+          <p class="card-footer-item">
+            <a class="has-text-grey homeLink">View</a>
+          </p>
+          <p class="card-footer-item">
+            <a class="has-text-grey homeLink">Delete</a>
+          </p>
+        </footer>
+      </div>
+
+      <div class="card mr-6" id="excard">
+        <div class="card-content">
+          <p>Full Stack Developer @</p>
+          <p class="title is-size-5">Google</p>
+        </div>
+        <footer class="card-footer">
+          <p class="card-footer-item">
+            <a class="has-text-grey homeLink">View</a>
+          </p>
+          <p class="card-footer-item">
+            <a class="has-text-grey homeLink">Delete</a>
+          </p>
+        </footer>
+      </div>
+
+      <div class="card mr-6" id="excard">
+        <div class="card-content">
+          <p>Product Manager @</p>
+          <p class="title is-size-5">Netflix</p>
+        </div>
+        <footer class="card-footer">
+          <p class="card-footer-item">
+            <a class="has-text-grey">View</a>
+          </p>
+          <p class="card-footer-item">
+            <a class="has-text-grey">Delete</a>
+          </p>
+        </footer>
+      </div>
+    </div>
+
+    <br>
+    <div class="hero-body has-text-centered mb-6 mr-6 ml-6" id="bottom-body">
+      <h3 class="title">Never lose track of your job search.</h3>
+      <button hidden class="button is-link" onclick="EntryPoint.openSignUp()" id="signupbutton">Create Account
+      </button>
+      <button hidden class="button is-link" onclick="location.href='applications.html'" id="applicationsbutton">Go to
+        Applications
+      </button>
+    </div>
+
+    <div id="footer" class="has-text-centered">
+      <a href="https://github.com/dentremontcatwit/AppliTrack" target="_blank">
+        <span class="icon is-medium">
+          <i class="fab fa-lg fa-github"></i>
+        </span>
+      </a>AppliTrack v1.3 created by <a href="https://chrisdentremont.net/" target="_blank">Chris D'Entremont</a>
+    </div>
+
+    <div class="modal" id="logInModal">
+      <div class="modal-background" id="logInModalBg"></div>
+      <div class="modal-content has-background-white py-5 px-5">
+        <h3 class="title has-text-weight-bold">Log In</h3>
+        <div hidden class="notification is-danger" id="invalidlogin"></div>
+        <a href="#" onclick="EntryPoint.openSignUp()" class="is-size-6">Don't have an account? Sign up here.</a>
+        <br />
+        <a href="#" onclick="EntryPoint.openForgPass()" class="is-size-6">Forgot password?</a>
+        <form method="POST" action="/login" id="loginform">
+          <br />
+          <div class="field">
+            <label class="label">Email</label>
+            <div class="control">
+              <input class="input" type="email" name="email" required>
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">Password</label>
+            <div class="control">
+              <input class="input" type="password" name="password" required>
+            </div>
+          </div>
+
+          <br />
+          <button class="button is-block is-primary is-medium is-fullwidth" type="submit" id="loginsubmit">Log
+            In</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="modal" id="signUpModal">
+      <div class="modal-background" id="signUpModalBg"></div>
+      <div class="modal-content has-background-white py-5 px-5">
+        <h3 class="title mb-6 has-text-weight-bold">Create Account</h3>
+        <div hidden class="notification is-danger" id="invalidpassword"></div>
+        <div hidden class="notification is-success" id="accountcreate"></div>
+        <form method="POST" action="/signup" id="signupform">
+          <div class="field">
+            <label class="label">Email</label>
+            <div class="control">
+              <input class="input" type="email" name="email" required>
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">Password</label>
+            <div class="control">
+              <input class="input" type="password" name="password" required>
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">Re-Enter Password</label>
+            <div class="control">
+              <input class="input" type="password" name="repassword" required>
+            </div>
+          </div>
+
+          <br />
+          <button class="button is-block is-primary is-medium is-fullwidth" type="submit" id="signupsubmit">Sign
+            Up</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="modal" id="forgPassModal">
+      <div class="modal-background" id="forgPassModalBg"></div>
+      <div class="modal-content has-background-white py-5 px-5">
+        <h3 class="title mb-6 has-text-weight-bold">Forgot Password?</h3>
+        <div hidden class="notification is-success" id="forgpassmessage">If there is an account associated with the
+          email,
+          a password reset email has been sent.</div>
+        <form method="POST" action="/signup" id="forgpassform">
+          <div class="field">
+            <label class="label">Email</label>
+            <div class="control">
+              <input class="input" type="email" name="email" required>
+            </div>
+          </div>
+
+          <br />
+          <button class="button is-block is-primary is-medium is-fullwidth" type="submit" id="forgpasssubmit">Reset
+            Password</button>
+        </form>
+      </div>
+    </div>
+  </body>
+  <script type="text/javascript" src="index.bundle.js"></script>
+
+</html>

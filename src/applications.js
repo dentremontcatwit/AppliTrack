@@ -356,7 +356,7 @@ function DisplayApplications(applications) {
     var deleteLink = document.createElement("p");
     deleteLink.classList.add("card-footer-item");
     deleteLink.classList.add("application-card");
-    deleteLink.addEventListener("slick", async () => {
+    deleteLink.addEventListener("click", async () => {
       var id = "" + currentID;
       var obj = {};
       obj[id] = deleteField();

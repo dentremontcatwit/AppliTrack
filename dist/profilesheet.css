@@ -1,0 +1,15 @@
+#profile-head {
+  padding-top: 5%;
+}
+
+p {
+  font-size: 20px;
+}
+
+.box {
+  width: 50%;
+}
+
+.icon.is-medium {
+  padding-left: 10px;
+}

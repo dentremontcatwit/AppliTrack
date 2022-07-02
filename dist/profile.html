@@ -1,0 +1,122 @@
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>AppliTrack</title>
+        <script src="https://kit.fontawesome.com/d36d0a95a4.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" />
+        <link rel="stylesheet" href="stylesheet.css">
+        <link rel="stylesheet" href="profilesheet.css">
+        <link rel="icon" href="images/logo2.png">
+    </head>
+
+    <body>
+        <div class="hero-head">
+            <nav class="navbar has-shadow is-dark">
+                <div class="container">
+                    <div class="navbar-brand">
+                        <a href="index.html" class="navbar-item">
+                            <img src="images/logo.png" alt="AppliTrack" />
+                        </a>
+                    </div>
+
+
+                    <div class="navbar-start" id="navbarstart">
+                        <a href="applications.html" class="navbar-item" id="applicationlink">
+                            <span class="icon is-medium mr-1">
+                                <i class="fas fa-lg fa-book"></i>
+                            </span>
+                            Applications
+                        </a>
+                    </div>
+
+                    <div class="navbar-end">
+                        <a hidden href="profile.html" class="navbar-item" id="profilelink">
+                            <span class="icon is-medium mr-1">
+                                <i class="fas fa-lg fa-user"></i>
+                            </span>
+                            Account
+                        </a>
+                        <a hidden href="#" onclick="EntryPoint.logout()" class="navbar-item" id="logoutlink">
+                            <span class="icon is-medium mr-1">
+                                <i class="fas fa-lg fa-sign-out-alt"></i>
+                            </span>
+                            Logout
+                        </a>
+                    </div>
+                </div>
+        </div>
+        </nav>
+        </div>
+
+        <div class="container" id="profile-head">
+            <span class="icon-text">
+                <span>
+                    <h1 class="title has-text-centered is-1" id="nameText"></h1>
+                </span>
+                <a onclick="EntryPoint.changeName()">
+                    <span class="icon is-large">
+                        <i class="fas fa-lg fa-pen"></i>
+                    </span>
+                </a>
+            </span>
+
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+
+            <h2 class="title is-2">Email</h2>
+            <p class="subtitle is-4" id="emailText"></p>
+
+            <br>
+
+            <button class="button is-link" onclick="EntryPoint.changePass()" id="changepassbutton">Change
+                Password</button>
+            <button class="button is-danger" onclick="EntryPoint.deleteAccount()" id="deletebutton">Delete
+                Account</button>
+
+            <br>
+            <br>
+            <p id="changepasstext"></p>
+        </div>
+
+        <div class="modal" id="resetnamemodal">
+            <div class="modal-background" id="resetnamemodalbg"></div>
+            <div class="modal-content has-background-white py-5 px-5">
+                <h3 class="title mb-6 has-text-weight-bold">Enter New Name</h3>
+                <div hidden class="notification is-success" id="nameresetmessage">Your name has been changed.</div>
+                <form method="POST" action="/signup" id="nameresetform">
+                    <div class="field">
+                        <div class="control">
+                            <input class="input" type="text" name="name" required>
+                        </div>
+                    </div>
+
+                    <br />
+                    <button class="button is-block is-primary is-medium is-fullwidth" type="submit"
+                        id="forgpasssubmit">Change Name</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="modal" id="deleteaccountmodal">
+            <div class="modal-background" id="deleteaccountmodalbg"></div>
+            <div class="modal-content has-background-white py-5 px-5">
+                <h3 class="title mb-6 has-text-weight-bold">Delete Account</h3>
+                <div hidden class="notification is-success" id="deleteaccountmessage">Your account has been deleted.
+                </div>
+                <p class="subtitle">Deleting your account will delete all your data. If you delete your account, <b>you
+                        will not be able to get your data back.</b></p>
+                <button class="button is-block is-danger is-medium is-fullwidth" type="button"
+                    onclick="EntryPoint.deleteAUser()">Yes,
+                    I understand this will delete all of my data.</button>
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript" src="profile.bundle.js"></script>
+
+</html>

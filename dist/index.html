@@ -25,11 +25,27 @@
           <div class="navbar-start" id="navbarstart">
             <a hidden href="#" onclick="EntryPoint.openLogIn()" class="navbar-item" id="loginlink">Log In</a>
             <a hidden href="#" onclick="EntryPoint.openSignUp()" class="navbar-item" id="signuplink">Sign Up</a>
-            <a hidden href="applications.html" class="navbar-item" id="applicationlink">Applications</a>
+            <a hidden href="applications.html" class="navbar-item" id="applicationlink">
+              <span class="icon is-medium mr-1">
+                <i class="fas fa-lg fa-book"></i>
+              </span>
+              Applications
+            </a>
           </div>
 
           <div class="navbar-end">
-            <a hidden href="#" onclick="EntryPoint.logout()" class="navbar-item" id="logoutlink">Logout</a>
+            <a hidden href="profile.html" class="navbar-item" id="profilelink">
+              <span class="icon is-medium mr-1">
+                <i class="fas fa-lg fa-user"></i>
+              </span>
+              Account
+            </a>
+            <a hidden href="#" onclick="EntryPoint.logout()" class="navbar-item" id="logoutlink">
+              <span class="icon is-medium mr-1">
+                <i class="fas fa-lg fa-sign-out-alt"></i>
+              </span>
+              Logout
+            </a>
           </div>
         </div>
     </div>
@@ -160,6 +176,12 @@
             <label class="label">Email</label>
             <div class="control">
               <input class="input" type="email" name="email" required>
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">Name</label>
+            <div class="control">
+              <input class="input" type="text" name="name" required>
             </div>
           </div>
           <div class="field">

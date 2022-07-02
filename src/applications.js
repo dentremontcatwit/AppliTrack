@@ -446,7 +446,10 @@ function windowLoad(applications) {
   appsToDisplay = Object.entries(applicationObject);
 
   document.getElementById("appTitle").textContent =
-    "Your Applications (" + Object.keys(applicationObject).length + ")";
+    auth.currentUser.displayName +
+    "'s Applications (" +
+    Object.keys(applicationObject).length +
+    ")";
 
   //Get sort cookie and see if cookies need to be sorted
   let cookie = {};
@@ -487,6 +490,7 @@ modalBg.addEventListener("click", () => {
   modal.classList.remove("is-active");
   applicationForm.reset();
   invalidInput.style.display = "none";
+  invalidCompanyName.style.display = "none";
 });
 
 /**

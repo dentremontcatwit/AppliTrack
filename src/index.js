@@ -7,6 +7,7 @@ import {
   onAuthStateChanged,
   sendEmailVerification,
   sendPasswordResetEmail,
+  updateProfile,
 } from "firebase/auth";
 import { getFirestore, doc, setDoc } from "firebase/firestore";
 
@@ -48,12 +49,14 @@ const loginLink = document.querySelector("#loginlink");
 const signupLink = document.querySelector("#signuplink");
 const logoutLink = document.querySelector("#logoutlink");
 const applicationLink = document.querySelector("#applicationlink");
+const profileLink = document.querySelector("#profilelink");
 loginLink.style.display = "none";
 signupLink.style.display = "none";
 logoutLink.style.display = "none";
 applicationLink.style.display = "none";
 applicationsButton.style.display = "none";
 signUpButton.style.display = "none";
+profileLink.style.display = "none";
 
 onAuthStateChanged(auth, (user) => {
   if (user == null) {
@@ -63,6 +66,7 @@ onAuthStateChanged(auth, (user) => {
     applicationLink.style.display = "none";
     signUpButton.style.display = "inline";
     applicationsButton.style.display = "none";
+    profileLink.style.display = "none";
   } else {
     loginLink.style.display = "none";
     signupLink.style.display = "none";
@@ -70,6 +74,7 @@ onAuthStateChanged(auth, (user) => {
     applicationLink.style.display = "flex";
     signUpButton.style.display = "none";
     applicationsButton.style.display = "inline";
+    profileLink.style.display = "flex";
   }
 });
 
@@ -120,16 +125,22 @@ signupForm.addEventListener("submit", (e) => {
   const email = signupForm.email.value;
   const password = signupForm.password.value;
   const repassword = signupForm.repassword.value;
+  const username = signUpForm.name.value;
   if (password == repassword) {
     invalidPassword.style.display = "none";
     createUserWithEmailAndPassword(auth, email, password)
       .then((cred) => {
         sendEmailVerification(auth.currentUser).then(() => {
-          accountCreate.textContent =
-            "Account has been created. Please check email for verification.";
-          accountCreate.style.display = "block";
+          updateProfile(cred.user, {
+            displayName: username,
+          }).then(() => {
+            accountCreate.textContent =
+              "Account has been created. Please check email for verification.";
+            accountCreate.style.display = "block";
+          });
         });
         setDoc(doc(db, "users", cred.user.uid), {});
+
         signupForm.reset();
       })
       .catch((err) => {

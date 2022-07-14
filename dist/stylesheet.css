@@ -180,9 +180,19 @@ html {
   display: none;
 }
 
-.card-footer-item.application-card:hover {
+.card-footer-item.application-card-view:hover {
   background-color: lightgray;
   cursor: pointer;
+}
+
+.card-footer-item.application-card-delete {
+  color: red;
+}
+
+.card-footer-item.application-card-delete:hover {
+  background-color: lightpink;
+  cursor: pointer;
+  color: red;
 }
 
 #cards {

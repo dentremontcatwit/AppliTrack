@@ -160,7 +160,7 @@ function DisplayApplications(applications) {
 
     var viewLink = document.createElement("p");
     viewLink.classList.add("card-footer-item");
-    viewLink.classList.add("application-card");
+    viewLink.classList.add("application-card-view");
     viewLink.addEventListener("click", () => {
       //Title
       var modalTitle = document.createElement("header");
@@ -356,7 +356,7 @@ function DisplayApplications(applications) {
 
     var deleteLink = document.createElement("p");
     deleteLink.classList.add("card-footer-item");
-    deleteLink.classList.add("application-card");
+    deleteLink.classList.add("application-card-delete");
     deleteLink.addEventListener("click", async () => {
       var id = "" + currentID;
       var obj = {};

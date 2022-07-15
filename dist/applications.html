@@ -32,6 +32,16 @@
           </div>
 
           <div class="navbar-end">
+            <a href="#" onclick="EntryPoint.setNightMode()" class="navbar-item" id="nightbutton">
+              <span class="icon is-medium">
+                <i class="fas fa-lg fa-moon"></i>
+              </span>
+            </a>
+            <a href="#" onclick="EntryPoint.setLightMode()" class="navbar-item" id="lightbutton">
+              <span class="icon is-medium">
+                <i class="fas fa-lg fa-sun"></i>
+              </span>
+            </a>
             <a href="profile.html" class="navbar-item" id="profilelink">
               <span class="icon is-medium mr-1">
                 <i class="fas fa-lg fa-user"></i>
@@ -211,7 +221,7 @@
 
       <div class="modal" id="formModal">
         <div class="modal-background" id="formModalBg"></div>
-        <div class="modal-content has-background-white py-5 px-5">
+        <div class="modal-content has-background-white py-5 px-5" id="addModalContent">
           <h3 class="title mb-6 has-text-weight-bold" id="newAppTitle">New Application</h3>
           <h5 class="subtitle is-6">* = required</h5>
           <div hidden class="notification is-danger" id="invalidinput">

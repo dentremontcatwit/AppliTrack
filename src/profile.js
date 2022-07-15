@@ -23,6 +23,55 @@ initializeApp(firebaseConfig);
 const auth = getAuth();
 const db = getFirestore();
 
+function setNightMode(){
+  document.cookie = "theme=night";
+  location.reload();
+}
+
+function setLightMode(){
+  document.cookie = "theme=light";
+  location.reload();
+}
+
+function renderTheme(){
+  let cookie = {};
+  document.cookie.split(";").forEach(function (el) {
+    let [key, value] = el.split("=");
+    cookie[key.trim()] = value;
+  });
+  if(cookie["theme"] == "night"){
+    document.getElementById('nightbutton').style.display = "none";
+    document.getElementById('lightbutton').style.display = "flex";
+    document.getElementById('resetNameModalColor').classList.remove('has-background-white');
+    document.getElementById('deleteAccountModalColor').classList.remove('has-background-white');
+    document.getElementById('html').style.backgroundColor = "#243B53";
+    document.querySelector('nav').style.backgroundColor = "#102A43";
+    var titleTexts = document.querySelectorAll('.title');
+    for(var i = 0; i < titleTexts.length; i++){
+      titleTexts[i].style.color = "#BCCCDC";
+    }
+    var subtitleTexts = document.querySelectorAll('.subtitle');
+    for(var i = 0; i < subtitleTexts.length; i++){
+      subtitleTexts[i].style.color = "#BCCCDC";
+    }
+    var spanTexts = document.querySelectorAll('span');
+    for(var i = 0; i < spanTexts.length; i++){
+      spanTexts[i].style.color = "#BCCCDC";
+    }
+    var modalBgs = document.querySelectorAll('.modal-content');
+    for(var i = 0; i < modalBgs.length; i++){
+      modalBgs[i].style.backgroundColor = "#243B53";
+    }
+  }else{
+    document.getElementById('nightbutton').style.display = "flex";
+    document.getElementById('lightbutton').style.display = "none";
+    document.getElementById('resetNameModalColor').classList.add('has-background-white');
+    document.getElementById('deleteAccountModalColor').classList.add('has-background-white');
+  }
+}
+
+renderTheme();
+
 //Reset Name
 const resetNameForm = document.querySelector("#nameresetform");
 const resetNameModal = document.querySelector("#resetnamemodal");
@@ -96,4 +145,4 @@ function deleteAUser() {
   deleteUser(auth.currentUser).then(() => {});
 }
 
-export { logout, changeName, changePass, deleteAccount, deleteAUser };
+export { logout, changeName, changePass, deleteAccount, deleteAUser, setLightMode, setNightMode };

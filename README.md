@@ -12,6 +12,9 @@ AppliTrack is a web application that allows you to keep track of your job applic
 ![applications screenshot](dist/images/applications.jpg)
 
 ## Changelog
+### July 15th, 2022 (v1.5)
+- Added toggle between dark and light mode
+
 ### July 1st, 2022 (v1.4)
 - Added user authentication (login/signup)
 - Added user database to store applications (no more cookies)

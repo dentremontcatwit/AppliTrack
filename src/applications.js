@@ -49,6 +49,79 @@ function logout() {
   window.location.href = "index.html";
 }
 
+function setNightMode(){
+  document.cookie = "theme=night";
+  location.reload();
+}
+
+function setLightMode(){
+  document.cookie = "theme=light";
+  location.reload();
+}
+
+function renderTheme(){
+  let cookie = {};
+  document.cookie.split(";").forEach(function (el) {
+    let [key, value] = el.split("=");
+    cookie[key.trim()] = value;
+  });
+  if(cookie["theme"] == "night"){
+    document.getElementById('nightbutton').style.display = "none";
+    document.getElementById('lightbutton').style.display = "flex";
+    document.getElementById('html').style.backgroundColor = "#243B53";
+    document.getElementById('appTitle').style.color = "#BCCCDC";
+    document.getElementById('newAppTitle').style.color = "#BCCCDC";
+    document.querySelector('h5').style.color = "#BCCCDC";
+    document.querySelector('nav').style.backgroundColor = "#102A43";
+    document.getElementById('addapplication').style.backgroundColor = "#00897B";
+    document.getElementById('viewModalContent').classList.remove('has-background-white');
+    document.getElementById('addModalContent').classList.remove('has-background-white');
+    var cardContents = document.querySelectorAll('.card-content');
+    for(var i = 0; i < cardContents.length; i++){
+      cardContents[i].style.backgroundColor = "#334E68";
+    }
+    var cardFooters = document.querySelectorAll('.card-footer-item');
+    for(var i = 0; i < cardFooters.length; i++){
+      cardFooters[i].style.backgroundColor = "#102A43";
+    }
+    var pTexts = document.querySelectorAll('p');
+    for(var i = 0; i < pTexts.length; i++){
+      pTexts[i].style.color = "#BCCCDC";
+    }
+    var topButtons = document.querySelectorAll('.topbutton');
+    for(var i = 0; i < topButtons.length; i++){
+      topButtons[i].style.backgroundColor = "#334E68";
+    }
+    var spanTexts = document.querySelectorAll('span');
+    for(var i = 0; i < spanTexts.length; i++){
+      spanTexts[i].style.color = "#BCCCDC";
+    }
+    var modalBgs = document.querySelectorAll('.modal-content');
+    for(var i = 0; i < modalBgs.length; i++){
+      modalBgs[i].style.backgroundColor = "#243B53";
+    }
+    var labelTexts = document.querySelectorAll('label');
+    for(var i = 0; i < labelTexts.length; i++){
+      labelTexts[i].style.color = "#BCCCDC";
+    }
+    var h5Texts = document.querySelectorAll('h5');
+    for(var i = 0; i < h5Texts.length; i++){
+      h5Texts[i].style.color = "#BCCCDC";
+    }
+    var modalHeaders = document.querySelectorAll('#viewModalHeader');
+    for(var i = 0; i < modalHeaders.length; i++){
+      modalHeaders[i].style.backgroundColor = "#102A43";
+      modalHeaders[i].style.color = "#BCCCDC";
+    }
+
+  }else{
+    document.getElementById('nightbutton').style.display = "flex";
+    document.getElementById('lightbutton').style.display = "none";
+    document.getElementById('viewModalContent').classList.add('has-background-white');
+    document.getElementById('addModalContent').classList.add('has-background-white');
+  }
+}
+
 const cardList = document.querySelector("#cards");
 
 //Top Menu Elements
@@ -88,11 +161,7 @@ function isTwoWeeksAgo(date) {
   const twoWeeks = 15 * 24 * 60 * 60 * 1000;
   const twoWeeksTime = new Date().getTime() - twoWeeks;
 
-  if (twoWeeksTime > date) {
-    return true;
-  } else {
-    return false;
-  }
+  return twoWeeksTime > date;
 }
 
 /**
@@ -164,6 +233,7 @@ function DisplayApplications(applications) {
     viewLink.addEventListener("click", () => {
       //Title
       var modalTitle = document.createElement("header");
+      modalTitle.setAttribute("id", "viewModalHeader");
       modalTitle.classList.add("modal-card-head");
       modalTitle.classList.add("is-size-5");
       modalTitle.classList.add("has-text-weight-bold");
@@ -322,6 +392,7 @@ function DisplayApplications(applications) {
       viewModalContent.appendChild(viewFollowedUp);
       viewModalContent.appendChild(viewNotesTitle);
       viewModalContent.appendChild(viewNotes);
+      renderTheme();
       viewModal.classList.add("is-active");
     });
     viewModalBg.addEventListener("click", () => {
@@ -374,6 +445,7 @@ function DisplayApplications(applications) {
     newCard.appendChild(cardContent);
     newCard.appendChild(cardFooter);
     cardList.appendChild(newCard);
+    renderTheme();
   }
 }
 
@@ -857,4 +929,4 @@ function editCard() {
   formSubmitButton.textContent = "Submit Changes";
 }
 
-export { editCard, logout, selectSearch, search_applications, sortCards };
+export { editCard, logout, selectSearch, search_applications, sortCards, setLightMode, setNightMode };

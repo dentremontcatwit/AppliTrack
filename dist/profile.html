@@ -1,4 +1,4 @@
-<html lang="en">
+<html lang="en" id="html">
 
     <head>
         <meta charset="UTF-8" />
@@ -14,7 +14,7 @@
 
     <body>
         <div class="hero-head">
-            <nav class="navbar has-shadow is-dark">
+            <nav class="navbar is-dark">
                 <div class="container">
                     <div class="navbar-brand">
                         <a href="index.html" class="navbar-item">
@@ -33,6 +33,16 @@
                     </div>
 
                     <div class="navbar-end">
+                        <a href="#" onclick="EntryPoint.setNightMode()" class="navbar-item" id="nightbutton">
+                            <span class="icon is-medium">
+                              <i class="fas fa-lg fa-moon"></i>
+                            </span>
+                          </a>
+                          <a href="#" onclick="EntryPoint.setLightMode()" class="navbar-item" id="lightbutton">
+                            <span class="icon is-medium">
+                              <i class="fas fa-lg fa-sun"></i>
+                            </span>
+                          </a>
                         <a hidden href="profile.html" class="navbar-item" id="profilelink">
                             <span class="icon is-medium mr-1">
                                 <i class="fas fa-lg fa-user"></i>
@@ -86,7 +96,7 @@
 
         <div class="modal" id="resetnamemodal">
             <div class="modal-background" id="resetnamemodalbg"></div>
-            <div class="modal-content has-background-white py-5 px-5">
+            <div class="modal-content py-5 px-5" id="resetNameModalColor">
                 <h3 class="title mb-6 has-text-weight-bold">Enter New Name</h3>
                 <div hidden class="notification is-success" id="nameresetmessage">Your name has been changed.</div>
                 <form method="POST" action="/signup" id="nameresetform">
@@ -105,7 +115,7 @@
 
         <div class="modal" id="deleteaccountmodal">
             <div class="modal-background" id="deleteaccountmodalbg"></div>
-            <div class="modal-content has-background-white py-5 px-5">
+            <div class="modal-content py-5 px-5" id="deleteAccountModalColor">
                 <h3 class="title mb-6 has-text-weight-bold">Delete Account</h3>
                 <div hidden class="notification is-success" id="deleteaccountmessage">Your account has been deleted.
                 </div>

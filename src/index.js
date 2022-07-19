@@ -1,3 +1,4 @@
+renderTheme();
 import { initializeApp } from "firebase/app";
 import {
   getAuth,
@@ -80,7 +81,7 @@ onAuthStateChanged(auth, (user) => {
 
 function setNightMode(){
   document.cookie = "theme=night";
-  location.reload();
+  renderTheme();
 }
 
 function setLightMode(){
@@ -140,9 +141,6 @@ function renderTheme(){
     document.getElementById('forgPassModalColor').classList.add('has-background-white');
   }
 }
-
-renderTheme();
-
 
 function openLogIn() {
   invalidLogin.style.display = "none";

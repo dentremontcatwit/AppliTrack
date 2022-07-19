@@ -1,3 +1,4 @@
+renderTheme();
 import { initializeApp } from "firebase/app";
 import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
 import {
@@ -51,7 +52,7 @@ function logout() {
 
 function setNightMode(){
   document.cookie = "theme=night";
-  location.reload();
+  renderTheme();
 }
 
 function setLightMode(){
@@ -59,6 +60,7 @@ function setLightMode(){
   location.reload();
 }
 
+//Switch styles of objects to dark theme
 function renderTheme(){
   let cookie = {};
   document.cookie.split(";").forEach(function (el) {
@@ -206,8 +208,7 @@ function DisplayApplications(applications) {
     }
     cardContentTop.appendChild(text);
     var cardContentBottom = document.createElement("p");
-    cardContentBottom.classList.add("title");
-    cardContentBottom.classList.add("is-size-5");
+    cardContentBottom.classList.add("title", "is-size-5");
     if (screen.width < 1600 && currentDisplay[0].length > 19) {
       text = document.createTextNode(
         currentDisplay[0].substring(0, 19) + "..."
@@ -228,16 +229,12 @@ function DisplayApplications(applications) {
     cardFooter.classList.add("card-footer");
 
     var viewLink = document.createElement("p");
-    viewLink.classList.add("card-footer-item");
-    viewLink.classList.add("application-card-view");
+    viewLink.classList.add("card-footer-item", "application-card-view");
     viewLink.addEventListener("click", () => {
       //Title
       var modalTitle = document.createElement("header");
       modalTitle.setAttribute("id", "viewModalHeader");
-      modalTitle.classList.add("modal-card-head");
-      modalTitle.classList.add("is-size-5");
-      modalTitle.classList.add("has-text-weight-bold");
-      modalTitle.classList.add("mb-2");
+      modalTitle.classList.add("modal-card-head", "is-size-5", "has-text-weight-bold", "mb-2");
       if (currentDisplay[1].length + currentDisplay[0].length <= 50) {
         modalTitle.appendChild(
           document.createTextNode(
@@ -256,11 +253,9 @@ function DisplayApplications(applications) {
       editButton.setAttribute("href", "#");
       editButton.setAttribute("onClick", "javascript:EntryPoint.editCard()");
       var editSpan = document.createElement("span");
-      editSpan.classList.add("icon");
-      editSpan.classList.add("is-medium");
+      editSpan.classList.add("icon", "is-medium");
       var editIcon = document.createElement("i");
-      editIcon.classList.add("fas");
-      editIcon.classList.add("fa-pen");
+      editIcon.classList.add("fas", "fa-pen");
       editSpan.appendChild(editIcon);
       editButton.appendChild(editSpan);
       modalTitle.appendChild(editButton);
@@ -269,76 +264,46 @@ function DisplayApplications(applications) {
       //Company Name
       var viewCompanyNameTitle = document.createElement("h5");
       viewCompanyNameTitle.setAttribute("name", currentID.replace(/\s/g, ""));
-      viewCompanyNameTitle.classList.add("subtitle");
-      viewCompanyNameTitle.classList.add("is-4");
-      viewCompanyNameTitle.classList.add("px-4");
-      viewCompanyNameTitle.classList.add("mb-1");
-      viewCompanyNameTitle.classList.add("has-text-weight-bold");
+      viewCompanyNameTitle.classList.add("subtitle", "is-4", "px-4", "mb-1", "has-text-weight-bold");
       viewCompanyNameTitle.appendChild(document.createTextNode("Company"));
       var viewCompanyName = document.createElement("p");
-      viewCompanyName.classList.add("pText");
-      viewCompanyName.classList.add("mb-3");
-      viewCompanyName.classList.add("px-4");
+      viewCompanyName.classList.add("pText", "mb-3", "px-4");
       viewCompanyName.appendChild(document.createTextNode(currentDisplay[0]));
 
       //Position
       var viewPositionTitle = document.createElement("h5");
-      viewPositionTitle.classList.add("subtitle");
-      viewPositionTitle.classList.add("is-4");
-      viewPositionTitle.classList.add("px-4");
-      viewPositionTitle.classList.add("mb-1");
-      viewPositionTitle.classList.add("has-text-weight-bold");
+      viewPositionTitle.classList.add("subtitle", "is-4", "px-4", "mb-1", "has-text-weight-bold");
       viewPositionTitle.appendChild(document.createTextNode("Position"));
       var viewPosition = document.createElement("p");
-      viewPosition.classList.add("pText");
-      viewPosition.classList.add("mb-3");
-      viewPosition.classList.add("px-4");
+      viewPosition.classList.add("pText", "mb-3", "px-4");
       viewPosition.appendChild(document.createTextNode(currentDisplay[1]));
 
       //Position Type
       var viewPositionTypeTitle = document.createElement("h5");
-      viewPositionTypeTitle.classList.add("subtitle");
-      viewPositionTypeTitle.classList.add("is-4");
-      viewPositionTypeTitle.classList.add("px-4");
-      viewPositionTypeTitle.classList.add("mb-1");
-      viewPositionTypeTitle.classList.add("has-text-weight-bold");
+      viewPositionTypeTitle.classList.add("subtitle", "is-4", "px-4", "mb-1", "has-text-weight-bold");
       viewPositionTypeTitle.appendChild(
         document.createTextNode("Position Type")
       );
       var viewPositionType = document.createElement("p");
-      viewPositionType.classList.add("pText");
-      viewPositionType.classList.add("mb-3");
-      viewPositionType.classList.add("px-4");
+      viewPositionType.classList.add("pText", "mb-3", "px-4");
       viewPositionType.appendChild(document.createTextNode(currentDisplay[2]));
 
       //Status
       var viewStatusTitle = document.createElement("h5");
-      viewStatusTitle.classList.add("subtitle");
-      viewStatusTitle.classList.add("is-4");
-      viewStatusTitle.classList.add("px-4");
-      viewStatusTitle.classList.add("mb-1");
-      viewStatusTitle.classList.add("has-text-weight-bold");
+      viewStatusTitle.classList.add("subtitle", "is-4", "px-4", "mb-1", "has-text-weight-bold");
       viewStatusTitle.appendChild(
         document.createTextNode("Application Status")
       );
       var viewStatus = document.createElement("p");
-      viewStatus.classList.add("pText");
-      viewStatus.classList.add("mb-3");
-      viewStatus.classList.add("px-4");
+      viewStatus.classList.add("pText", "mb-3", "px-4");
       viewStatus.appendChild(document.createTextNode(currentDisplay[3]));
 
       //Date Applied
       var viewDateAppliedTitle = document.createElement("h5");
-      viewDateAppliedTitle.classList.add("subtitle");
-      viewDateAppliedTitle.classList.add("is-4");
-      viewDateAppliedTitle.classList.add("px-4");
-      viewDateAppliedTitle.classList.add("mb-1");
-      viewDateAppliedTitle.classList.add("has-text-weight-bold");
+      viewDateAppliedTitle.classList.add("subtitle", "is-4", "px-4", "mb-1", "has-text-weight-bold");
       viewDateAppliedTitle.appendChild(document.createTextNode("Date Applied"));
       var viewDateApplied = document.createElement("p");
-      viewDateApplied.classList.add("pText");
-      viewDateApplied.classList.add("mb-3");
-      viewDateApplied.classList.add("px-4");
+      viewDateApplied.classList.add("pText", "mb-3", "px-4");
       if (currentDisplay[4].length == 0) {
         viewDateApplied.appendChild(document.createTextNode("N/A"));
       } else {
@@ -347,30 +312,18 @@ function DisplayApplications(applications) {
 
       //Followed Up
       var viewFollowedUpTitle = document.createElement("h5");
-      viewFollowedUpTitle.classList.add("subtitle");
-      viewFollowedUpTitle.classList.add("is-4");
-      viewFollowedUpTitle.classList.add("px-4");
-      viewFollowedUpTitle.classList.add("mb-1");
-      viewFollowedUpTitle.classList.add("has-text-weight-bold");
+      viewFollowedUpTitle.classList.add("subtitle", "is-4", "px-4", "mb-1", "has-text-weight-bold");
       viewFollowedUpTitle.appendChild(document.createTextNode("Followed Up"));
       var viewFollowedUp = document.createElement("p");
-      viewFollowedUp.classList.add("pText");
-      viewFollowedUp.classList.add("mb-3");
-      viewFollowedUp.classList.add("px-4");
+      viewFollowedUp.classList.add("pText", "mb-3", "px-4");
       viewFollowedUp.appendChild(document.createTextNode(currentDisplay[5]));
 
       //Notes
       var viewNotesTitle = document.createElement("h5");
-      viewNotesTitle.classList.add("subtitle");
-      viewNotesTitle.classList.add("is-4");
-      viewNotesTitle.classList.add("px-4");
-      viewNotesTitle.classList.add("mb-1");
-      viewNotesTitle.classList.add("has-text-weight-bold");
+      viewNotesTitle.classList.add("subtitle", "is-4", "px-4", "mb-1", "has-text-weight-bold");
       viewNotesTitle.appendChild(document.createTextNode("Notes"));
       var viewNotes = document.createElement("p");
-      viewNotes.classList.add("pText");
-      viewNotes.classList.add("mb-3");
-      viewNotes.classList.add("px-4");
+      viewNotes.classList.add("pText", "mb-3", "px-4");
       if (currentDisplay[6].length == 0) {
         viewNotes.appendChild(document.createTextNode("-"));
       } else {
@@ -410,12 +363,9 @@ function DisplayApplications(applications) {
       currentDisplay[5] == "No"
     ) {
       var followUpWarning = document.createElement("span");
-      followUpWarning.classList.add("icon");
-      followUpWarning.classList.add("has-text-danger");
+      followUpWarning.classList.add("icon", "has-text-danger");
       var followUpIcon = document.createElement("i");
-      followUpIcon.classList.add("fas");
-      followUpIcon.classList.add("fa-clock");
-      followUpIcon.classList.add("tooltip");
+      followUpIcon.classList.add("fas", "fa-clock", "tooltip");
       followUpWarning.appendChild(followUpIcon);
       var followUpText = document.createElement("span");
       followUpText.classList.add("tooltiptext");
@@ -426,8 +376,7 @@ function DisplayApplications(applications) {
     }
 
     var deleteLink = document.createElement("p");
-    deleteLink.classList.add("card-footer-item");
-    deleteLink.classList.add("application-card-delete");
+    deleteLink.classList.add("card-footer-item", "application-card-delete");
     deleteLink.addEventListener("click", async () => {
       var id = "" + currentID;
       var obj = {};

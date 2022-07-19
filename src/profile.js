@@ -1,3 +1,4 @@
+renderTheme();
 import { initializeApp } from "firebase/app";
 import {
   getAuth,
@@ -25,7 +26,7 @@ const db = getFirestore();
 
 function setNightMode(){
   document.cookie = "theme=night";
-  location.reload();
+  renderTheme();
 }
 
 function setLightMode(){
@@ -69,8 +70,6 @@ function renderTheme(){
     document.getElementById('deleteAccountModalColor').classList.add('has-background-white');
   }
 }
-
-renderTheme();
 
 //Reset Name
 const resetNameForm = document.querySelector("#nameresetform");

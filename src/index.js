@@ -199,12 +199,14 @@ signupForm.addEventListener("submit", (e) => {
             displayName: username,
           }).then(() => {
             accountCreate.textContent =
-              "Account has been created. Please check email for verification.";
+              "Account has been created. Please check email for verification. (Email might show up under spam)";
             accountCreate.style.display = "block";
           });
         });
-        setDoc(doc(db, "users", cred.user.uid), {});
-
+        var settings = {};
+        settings["userSettings"] = ["true", "2 Weeks", "Cards"]; //Default settings
+        setDoc(doc(db, "users", cred.user.uid), settings);
+        
         signupForm.reset();
       })
       .catch((err) => {

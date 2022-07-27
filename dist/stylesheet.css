@@ -81,9 +81,8 @@ html {
 
 #addapplication,
 #sortbutton,
-#uploaddata,
-#downloaddata,
-#searchbar {
+#searchbar,
+#settingsbutton {
   font-size: 15px;
   margin: 5px;
 }
@@ -199,4 +198,17 @@ html {
   overflow: hidden;
   padding-top: 0%;
   padding-left: 10%;
+}
+
+#applicationtable{
+  width: 90%;
+}
+
+.tablebutton {
+  border: none;
+  height: 30px;
+}
+
+.table>tbody>tr>td {
+  vertical-align: middle;
 }

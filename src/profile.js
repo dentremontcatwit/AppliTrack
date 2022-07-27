@@ -8,7 +8,7 @@ import {
   sendPasswordResetEmail,
   deleteUser,
 } from "firebase/auth";
-import { deleteDoc, doc, getFirestore } from "firebase/firestore";
+import { getDoc, deleteDoc, doc, getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAvbph3Qpz8w_ZERUZQ-Oh5YEyZI-ulCWQ",
@@ -47,6 +47,7 @@ function renderTheme(){
     document.getElementById('deleteAccountModalColor').classList.remove('has-background-white');
     document.getElementById('html').style.backgroundColor = "#243B53";
     document.querySelector('nav').style.backgroundColor = "#102A43";
+    document.querySelector('.box').style.backgroundColor = "#102A43";
     var titleTexts = document.querySelectorAll('.title');
     for(var i = 0; i < titleTexts.length; i++){
       titleTexts[i].style.color = "#BCCCDC";

@@ -61,9 +61,7 @@
     </div>
 
     <div class="hero-body" id="application-body">
-      <h1 class="title" id="appTitle">
-        Your Applications
-      </h1>
+      <h1 class="title" id="appTitle"></h1>
       <div hidden class="notification is-danger" id="verifyemail">Please verify your email before adding any
         applications.
       </div>
@@ -147,7 +145,7 @@
 
           <div class="dropdown is-hoverable" id="appsearchbarptype">
             <div class="dropdown-trigger">
-              <button class="button" aria-haspopup="true" aria-controls="dropdown-menu3">
+              <button class="button topbutton" aria-haspopup="true" aria-controls="dropdown-menu3">
                 <span id="searchPTypeText">Select</span>
                 <span class="icon is-small">
                   <i class="fas fa-angle-down" aria-hidden="true"></i>
@@ -171,7 +169,7 @@
 
           <div class="dropdown is-hoverable" id="appsearchbarpstatus">
             <div class="dropdown-trigger">
-              <button class="button" aria-haspopup="true" aria-controls="dropdown-menu3">
+              <button class="button topbutton" aria-haspopup="true" aria-controls="dropdown-menu3">
                 <span id="searchPStatusText">Select</span>
                 <span class="icon is-small">
                   <i class="fas fa-angle-down" aria-hidden="true"></i>
@@ -198,7 +196,7 @@
 
           <div class="dropdown is-hoverable" id="appsearchbarfup">
             <div class="dropdown-trigger">
-              <button class="button" aria-haspopup="true" aria-controls="dropdown-menu3">
+              <button class="button topbutton" aria-haspopup="true" aria-controls="dropdown-menu3">
                 <span id="searchfUpText">Select</span>
                 <span class="icon is-small">
                   <i class="fas fa-angle-down" aria-hidden="true"></i>
@@ -217,6 +215,50 @@
             </div>
           </div>
         </div>
+
+        <button class="button topbutton" id="settingsbutton">
+          <span class="icon is-small">
+            <i class="fas fa-bars"></i>
+          </span>
+          <span>Settings</span>
+        </button>
+      </div>
+
+      <div class="modal" id="settingsModal">
+        <div class="modal-background" id="settingsModalBg"></div>
+        <div class="modal-content has-background-white py-5 px-5" id="settingsModalContent">
+          <h3 class="title has-text-weight-bold" id="settingsTitle">Settings</h3>
+          <form method="POST" action="/settings" id="settingsform">
+          <div class="control">
+            <label class="checkbox"><input type="checkbox" id="showfollowup" name="showfollowup"><b> Show Follow Up Warnings</b></label>
+          </div>
+          <br />
+          <div class="control">
+            <label class="label">Follow Up Warning Time</label>
+            <div class="select">
+              <select id="warningSelect" name="warningselect">
+                <option>3 Days</option>
+                <option>5 Days</option>
+                <option>1 Week</option>
+                <option>2 Weeks</option>
+              </select>
+            </div>
+          </div>
+          <br />
+          <div class="control">
+            <label class="label">Display Style</label>
+            <div class="select">
+              <select id="displaySelect" name="displayselect">
+                <option>Cards</option>
+                <option class="is-desktop">List</option>
+              </select>
+            </div>
+          </div>
+          <br />
+            <button class="button is-block is-primary is-medium is-fullwidth" type="submit"
+              id="settingssubmit">Save Changes</button>
+        </div>
+      </form>
       </div>
 
       <div class="modal" id="formModal">
@@ -303,7 +345,10 @@
       </div>
     </div>
     <div class="hero-body" id="cards">
-
+      <table class="table is-striped mt-5" id="applicationtable">
+        <tbody id="applicationtablebody">
+        </tbody>
+      </table>
     </div>
   </body>
   <script type="text/javascript" src="applications.bundle.js"></script>

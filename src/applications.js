@@ -23,6 +23,8 @@ initializeApp(firebaseConfig);
 const auth = getAuth();
 const db = getFirestore();
 
+var userSettings = {};
+
 const verifyEmail = document.querySelector("#verifyemail");
 var isEmailVerified;
 verifyEmail.style.display = "none";
@@ -32,6 +34,8 @@ onAuthStateChanged(auth, async (user) => {
   if (user) {
     const userRef = await getDoc(doc(db, "users", user.uid));
     var applications = userRef.data();
+    userSettings = applications['userSettings'];
+    delete applications['userSettings'];
     windowLoad(applications); //Display applications for current user
     if (!user.emailVerified) {
       verifyEmail.style.display = "block";
@@ -73,11 +77,13 @@ function renderTheme(){
     document.getElementById('html').style.backgroundColor = "#243B53";
     document.getElementById('appTitle').style.color = "#BCCCDC";
     document.getElementById('newAppTitle').style.color = "#BCCCDC";
+    document.getElementById('settingsTitle').style.color = "#BCCCDC";
     document.querySelector('h5').style.color = "#BCCCDC";
     document.querySelector('nav').style.backgroundColor = "#102A43";
     document.getElementById('addapplication').style.backgroundColor = "#00897B";
     document.getElementById('viewModalContent').classList.remove('has-background-white');
     document.getElementById('addModalContent').classList.remove('has-background-white');
+    document.getElementById('settingsModalContent').classList.remove('has-background-white');
     var cardContents = document.querySelectorAll('.card-content');
     for(var i = 0; i < cardContents.length; i++){
       cardContents[i].style.backgroundColor = "#334E68";
@@ -85,6 +91,7 @@ function renderTheme(){
     var cardFooters = document.querySelectorAll('.card-footer-item');
     for(var i = 0; i < cardFooters.length; i++){
       cardFooters[i].style.backgroundColor = "#102A43";
+      cardFooters[i]
     }
     var pTexts = document.querySelectorAll('p');
     for(var i = 0; i < pTexts.length; i++){
@@ -115,16 +122,31 @@ function renderTheme(){
       modalHeaders[i].style.backgroundColor = "#102A43";
       modalHeaders[i].style.color = "#BCCCDC";
     }
+    var tableHeaders = document.querySelectorAll('tr');
+    for(var i = 0; i < tableHeaders.length; i++){
+      tableHeaders[i].style.backgroundColor = "#102A43";
+      tableHeaders[i].style.color = "#BCCCDC";
+    }
+    var tableText = document.querySelectorAll('td');
+    for(var i = 0; i < tableText.length; i++){
+      tableText[i].style.color = "#BCCCDC";
+    }
+    var tableTextHeaders = document.querySelectorAll('th');
+    for(var i = 0; i < tableTextHeaders.length; i++){
+      tableTextHeaders[i].style.color = "#BCCCDC";
+    }
 
   }else{
     document.getElementById('nightbutton').style.display = "flex";
     document.getElementById('lightbutton').style.display = "none";
     document.getElementById('viewModalContent').classList.add('has-background-white');
     document.getElementById('addModalContent').classList.add('has-background-white');
+    document.getElementById('settingsModalContent').classList.add('has-background-white');
   }
 }
 
 const cardList = document.querySelector("#cards");
+const appTable = document.querySelector('#applicationtable');
 
 //Top Menu Elements
 const searchTextBar = document.querySelector("#appsearchbar");
@@ -132,6 +154,15 @@ const searchPType = document.querySelector("#appsearchbarptype");
 const searchPStatus = document.querySelector("#appsearchbarpstatus");
 const searchFUp = document.querySelector("#appsearchbarfup");
 const searchDate = document.querySelector("#appsearchdatebar");
+
+//Settings Menu
+const settingsModal = document.querySelector('#settingsModal');
+const settingsModalBg = document.querySelector('#settingsModalBg');
+const settingsButton = document.querySelector('#settingsbutton');
+const settingsForm = document.querySelector("#settingsform");
+const settingsShowWarning = document.querySelector("#showfollowup");
+const settingsWarningTime = document.querySelector("#warningSelect");
+const settingsCardDisplay = document.querySelector('#displaySelect');
 
 //Application Form Modal
 const newAppButton = document.querySelector("#addapplication");
@@ -159,11 +190,23 @@ var appsToDisplay = [];
  * A function to check if a given date is two weeks or more away
  * from the current date.
  */
-function isTwoWeeksAgo(date) {
-  const twoWeeks = 15 * 24 * 60 * 60 * 1000;
-  const twoWeeksTime = new Date().getTime() - twoWeeks;
+function isDateAgo(date, timeframe) {
+  console.log(timeframe);
+  var time = 0;
+  var dateTime = 0;
+  if(timeframe == "3 Days"){
+    time = 4 * 24 * 60 * 60 * 1000;
+  }else if(timeframe == "5 Days"){
+    time = 6 * 24 * 60 * 60 * 1000;
+  }else if(timeframe == "1 Week"){
+    time = 8 * 24 * 60 * 60 * 1000;
+  }else{
+    time = 15 * 24 * 60 * 60 * 1000;
+  }
 
-  return twoWeeksTime > date;
+  dateTime = new Date().getTime() - time;
+
+  return dateTime > date;
 }
 
 /**
@@ -178,224 +221,443 @@ function isTwoWeeksAgo(date) {
  *
  * @param {*} applications
  */
-function DisplayApplications(applications) {
-  while (cardList.firstChild) {
-    cardList.removeChild(cardList.firstChild);
-  }
-
-  for (var i = 0, element; (element = applications[i++]); ) {
-    const currentID = element[0];
-    const currentDisplay = element[1];
-
-    //Create HTML element
-    //Card div
-    var newCard = document.createElement("div");
-    newCard.classList.add("card");
-    var cardID = "" + currentID;
-    newCard.setAttribute("id", cardID);
-
-    //Card content
-    var cardContent = document.createElement("div");
-    cardContent.classList.add("card-content");
-    var cardContentTop = document.createElement("p");
-    cardContentTop.classList.add("pTopText");
-    if (currentDisplay[1].length <= 23) {
-      var text = document.createTextNode(currentDisplay[1] + " @");
-    } else {
-      var text = document.createTextNode(
-        currentDisplay[1].substring(0, 23) + "... @"
-      );
+function DisplayApplicationCards(applications) {
+  if(userSettings[2] == "Cards"){
+    while (cardList.firstChild) {
+      cardList.removeChild(cardList.firstChild);
     }
-    cardContentTop.appendChild(text);
-    var cardContentBottom = document.createElement("p");
-    cardContentBottom.classList.add("title", "is-size-5");
-    if (screen.width < 1600 && currentDisplay[0].length > 19) {
-      text = document.createTextNode(
-        currentDisplay[0].substring(0, 19) + "..."
-      );
-    } else if (currentDisplay[0].length > 20) {
-      text = document.createTextNode(
-        currentDisplay[0].substring(0, 20) + "..."
-      );
-    } else {
-      text = document.createTextNode(currentDisplay[0]);
-    }
-    cardContentBottom.appendChild(text);
-    cardContent.appendChild(cardContentTop);
-    cardContent.appendChild(cardContentBottom);
-
-    //Footer content
-    var cardFooter = document.createElement("footer");
-    cardFooter.classList.add("card-footer");
-
-    var viewLink = document.createElement("p");
-    viewLink.classList.add("card-footer-item", "application-card-view");
-    viewLink.addEventListener("click", () => {
-      //Title
-      var modalTitle = document.createElement("header");
-      modalTitle.setAttribute("id", "viewModalHeader");
-      modalTitle.classList.add("modal-card-head", "is-size-5", "has-text-weight-bold", "mb-2");
-      if (currentDisplay[1].length + currentDisplay[0].length <= 50) {
-        modalTitle.appendChild(
-          document.createTextNode(
-            "" + currentDisplay[1] + " @ " + currentDisplay[0]
-          )
-        );
+  
+    for (var i = 0, element; (element = applications[i++]); ) {
+      const currentID = element[0];
+      const currentDisplay = element[1];
+  
+      //Create HTML element
+      //Card div
+      var newCard = document.createElement("div");
+      newCard.classList.add("card");
+      var cardID = "" + currentID;
+      newCard.setAttribute("id", cardID);
+  
+      //Card content
+      var cardContent = document.createElement("div");
+      cardContent.classList.add("card-content");
+      var cardContentTop = document.createElement("p");
+      cardContentTop.classList.add("pTopText");
+      if (currentDisplay[1].length <= 23) {
+        var text = document.createTextNode(currentDisplay[1] + " @");
       } else {
-        var titleString = "" + currentDisplay[1] + " @ " + currentDisplay[0];
-        modalTitle.appendChild(
-          document.createTextNode(titleString.substring(0, 50) + "...")
+        var text = document.createTextNode(
+          currentDisplay[1].substring(0, 23) + "... @"
         );
       }
-      //Edit button
-      var editButton = document.createElement("a");
-      editButton.setAttribute("id", "editIcon");
-      editButton.setAttribute("href", "#");
-      editButton.setAttribute("onClick", "javascript:EntryPoint.editCard()");
-      var editSpan = document.createElement("span");
-      editSpan.classList.add("icon", "is-medium");
-      var editIcon = document.createElement("i");
-      editIcon.classList.add("fas", "fa-pen");
-      editSpan.appendChild(editIcon);
-      editButton.appendChild(editSpan);
-      modalTitle.appendChild(editButton);
-      editModalButton = editButton;
-
-      //Company Name
-      var viewCompanyNameTitle = document.createElement("h5");
-      viewCompanyNameTitle.setAttribute("name", currentID.replace(/\s/g, ""));
-      viewCompanyNameTitle.classList.add("subtitle", "is-4", "px-4", "mb-1", "has-text-weight-bold");
-      viewCompanyNameTitle.appendChild(document.createTextNode("Company"));
-      var viewCompanyName = document.createElement("p");
-      viewCompanyName.classList.add("pText", "mb-3", "px-4");
-      viewCompanyName.appendChild(document.createTextNode(currentDisplay[0]));
-
-      //Position
-      var viewPositionTitle = document.createElement("h5");
-      viewPositionTitle.classList.add("subtitle", "is-4", "px-4", "mb-1", "has-text-weight-bold");
-      viewPositionTitle.appendChild(document.createTextNode("Position"));
-      var viewPosition = document.createElement("p");
-      viewPosition.classList.add("pText", "mb-3", "px-4");
-      viewPosition.appendChild(document.createTextNode(currentDisplay[1]));
-
-      //Position Type
-      var viewPositionTypeTitle = document.createElement("h5");
-      viewPositionTypeTitle.classList.add("subtitle", "is-4", "px-4", "mb-1", "has-text-weight-bold");
-      viewPositionTypeTitle.appendChild(
-        document.createTextNode("Position Type")
-      );
-      var viewPositionType = document.createElement("p");
-      viewPositionType.classList.add("pText", "mb-3", "px-4");
-      viewPositionType.appendChild(document.createTextNode(currentDisplay[2]));
-
-      //Status
-      var viewStatusTitle = document.createElement("h5");
-      viewStatusTitle.classList.add("subtitle", "is-4", "px-4", "mb-1", "has-text-weight-bold");
-      viewStatusTitle.appendChild(
-        document.createTextNode("Application Status")
-      );
-      var viewStatus = document.createElement("p");
-      viewStatus.classList.add("pText", "mb-3", "px-4");
-      viewStatus.appendChild(document.createTextNode(currentDisplay[3]));
-
-      //Date Applied
-      var viewDateAppliedTitle = document.createElement("h5");
-      viewDateAppliedTitle.classList.add("subtitle", "is-4", "px-4", "mb-1", "has-text-weight-bold");
-      viewDateAppliedTitle.appendChild(document.createTextNode("Date Applied"));
-      var viewDateApplied = document.createElement("p");
-      viewDateApplied.classList.add("pText", "mb-3", "px-4");
-      if (currentDisplay[4].length == 0) {
-        viewDateApplied.appendChild(document.createTextNode("N/A"));
+      cardContentTop.appendChild(text);
+      var cardContentBottom = document.createElement("p");
+      cardContentBottom.classList.add("title", "is-size-5");
+      if (screen.width < 1600 && currentDisplay[0].length > 19) {
+        text = document.createTextNode(
+          currentDisplay[0].substring(0, 19) + "..."
+        );
+      } else if (currentDisplay[0].length > 20) {
+        text = document.createTextNode(
+          currentDisplay[0].substring(0, 20) + "..."
+        );
       } else {
-        viewDateApplied.appendChild(document.createTextNode(currentDisplay[4]));
+        text = document.createTextNode(currentDisplay[0]);
       }
-
-      //Followed Up
-      var viewFollowedUpTitle = document.createElement("h5");
-      viewFollowedUpTitle.classList.add("subtitle", "is-4", "px-4", "mb-1", "has-text-weight-bold");
-      viewFollowedUpTitle.appendChild(document.createTextNode("Followed Up"));
-      var viewFollowedUp = document.createElement("p");
-      viewFollowedUp.classList.add("pText", "mb-3", "px-4");
-      viewFollowedUp.appendChild(document.createTextNode(currentDisplay[5]));
-
-      //Notes
-      var viewNotesTitle = document.createElement("h5");
-      viewNotesTitle.classList.add("subtitle", "is-4", "px-4", "mb-1", "has-text-weight-bold");
-      viewNotesTitle.appendChild(document.createTextNode("Notes"));
-      var viewNotes = document.createElement("p");
-      viewNotes.classList.add("pText", "mb-3", "px-4");
-      if (currentDisplay[6].length == 0) {
-        viewNotes.appendChild(document.createTextNode("-"));
-      } else {
-        viewNotes.appendChild(document.createTextNode(currentDisplay[6]));
+      cardContentBottom.appendChild(text);
+      cardContent.appendChild(cardContentTop);
+      cardContent.appendChild(cardContentBottom);
+  
+      //Footer content
+      var cardFooter = document.createElement("footer");
+      cardFooter.classList.add("card-footer");
+  
+      var viewLink = document.createElement("p");
+      viewLink.classList.add("card-footer-item", "application-card-view");
+      viewLink.addEventListener("click", () => {
+        //Title
+        var modalTitle = document.createElement("header");
+        modalTitle.setAttribute("id", "viewModalHeader");
+        modalTitle.classList.add("modal-card-head", "is-size-5", "has-text-weight-bold", "mb-2");
+        if (currentDisplay[1].length + currentDisplay[0].length <= 50) {
+          modalTitle.appendChild(
+            document.createTextNode(
+              "" + currentDisplay[1] + " @ " + currentDisplay[0]
+            )
+          );
+        } else {
+          var titleString = "" + currentDisplay[1] + " @ " + currentDisplay[0];
+          modalTitle.appendChild(
+            document.createTextNode(titleString.substring(0, 50) + "...")
+          );
+        }
+        //Edit button
+        var editButton = document.createElement("a");
+        editButton.setAttribute("id", "editIcon");
+        editButton.setAttribute("href", "#");
+        editButton.setAttribute("onClick", "javascript:EntryPoint.editCard()");
+        var editSpan = document.createElement("span");
+        editSpan.classList.add("icon", "is-medium");
+        var editIcon = document.createElement("i");
+        editIcon.classList.add("fas", "fa-pen");
+        editSpan.appendChild(editIcon);
+        editButton.appendChild(editSpan);
+        modalTitle.appendChild(editButton);
+        editModalButton = editButton;
+  
+        //Company Name
+        var viewCompanyNameTitle = document.createElement("h5");
+        viewCompanyNameTitle.setAttribute("name", currentID.replace(/\s/g, ""));
+        viewCompanyNameTitle.classList.add("subtitle", "is-4", "px-4", "mb-1", "has-text-weight-bold");
+        viewCompanyNameTitle.appendChild(document.createTextNode("Company"));
+        var viewCompanyName = document.createElement("p");
+        viewCompanyName.classList.add("pText", "mb-3", "px-4");
+        viewCompanyName.appendChild(document.createTextNode(currentDisplay[0]));
+  
+        //Position
+        var viewPositionTitle = document.createElement("h5");
+        viewPositionTitle.classList.add("subtitle", "is-4", "px-4", "mb-1", "has-text-weight-bold");
+        viewPositionTitle.appendChild(document.createTextNode("Position"));
+        var viewPosition = document.createElement("p");
+        viewPosition.classList.add("pText", "mb-3", "px-4");
+        viewPosition.appendChild(document.createTextNode(currentDisplay[1]));
+  
+        //Position Type
+        var viewPositionTypeTitle = document.createElement("h5");
+        viewPositionTypeTitle.classList.add("subtitle", "is-4", "px-4", "mb-1", "has-text-weight-bold");
+        viewPositionTypeTitle.appendChild(
+          document.createTextNode("Position Type")
+        );
+        var viewPositionType = document.createElement("p");
+        viewPositionType.classList.add("pText", "mb-3", "px-4");
+        viewPositionType.appendChild(document.createTextNode(currentDisplay[2]));
+  
+        //Status
+        var viewStatusTitle = document.createElement("h5");
+        viewStatusTitle.classList.add("subtitle", "is-4", "px-4", "mb-1", "has-text-weight-bold");
+        viewStatusTitle.appendChild(
+          document.createTextNode("Application Status")
+        );
+        var viewStatus = document.createElement("p");
+        viewStatus.classList.add("pText", "mb-3", "px-4");
+        viewStatus.appendChild(document.createTextNode(currentDisplay[3]));
+  
+        //Date Applied
+        var viewDateAppliedTitle = document.createElement("h5");
+        viewDateAppliedTitle.classList.add("subtitle", "is-4", "px-4", "mb-1", "has-text-weight-bold");
+        viewDateAppliedTitle.appendChild(document.createTextNode("Date Applied"));
+        var viewDateApplied = document.createElement("p");
+        viewDateApplied.classList.add("pText", "mb-3", "px-4");
+        if (currentDisplay[4].length == 0) {
+          viewDateApplied.appendChild(document.createTextNode("N/A"));
+        } else {
+          viewDateApplied.appendChild(document.createTextNode(currentDisplay[4]));
+        }
+  
+        //Followed Up
+        var viewFollowedUpTitle = document.createElement("h5");
+        viewFollowedUpTitle.classList.add("subtitle", "is-4", "px-4", "mb-1", "has-text-weight-bold");
+        viewFollowedUpTitle.appendChild(document.createTextNode("Followed Up"));
+        var viewFollowedUp = document.createElement("p");
+        viewFollowedUp.classList.add("pText", "mb-3", "px-4");
+        viewFollowedUp.appendChild(document.createTextNode(currentDisplay[5]));
+  
+        //Notes
+        var viewNotesTitle = document.createElement("h5");
+        viewNotesTitle.classList.add("subtitle", "is-4", "px-4", "mb-1", "has-text-weight-bold");
+        viewNotesTitle.appendChild(document.createTextNode("Notes"));
+        var viewNotes = document.createElement("p");
+        viewNotes.classList.add("pText", "mb-3", "px-4");
+        if (currentDisplay[6].length == 0) {
+          viewNotes.appendChild(document.createTextNode("-"));
+        } else {
+          viewNotes.appendChild(document.createTextNode(currentDisplay[6]));
+        }
+  
+        viewModalContent.appendChild(modalTitle);
+        viewModalContent.appendChild(viewCompanyNameTitle);
+        viewModalContent.appendChild(viewCompanyName);
+        viewModalContent.appendChild(viewPositionTitle);
+        viewModalContent.appendChild(viewPosition);
+        viewModalContent.appendChild(viewPositionTypeTitle);
+        viewModalContent.appendChild(viewPositionType);
+        viewModalContent.appendChild(viewStatusTitle);
+        viewModalContent.appendChild(viewStatus);
+        viewModalContent.appendChild(viewDateAppliedTitle);
+        viewModalContent.appendChild(viewDateApplied);
+        viewModalContent.appendChild(viewFollowedUpTitle);
+        viewModalContent.appendChild(viewFollowedUp);
+        viewModalContent.appendChild(viewNotesTitle);
+        viewModalContent.appendChild(viewNotes);
+        renderTheme();
+        viewModal.classList.add("is-active");
+      });
+      viewModalBg.addEventListener("click", () => {
+        while (viewModalContent.firstChild) {
+          viewModalContent.removeChild(viewModalContent.firstChild);
+        }
+        viewModal.classList.remove("is-active");
+        isDuplicate = false;
+      });
+      var viewLinkText = document.createTextNode("View");
+      viewLink.appendChild(viewLinkText);
+      //Check if it's been more than two weeks since Applied Date & add warning if so
+      if (
+        isDateAgo(new Date(currentDisplay[4]), userSettings[1]) &&
+        currentDisplay[5] == "No" && userSettings[0] == "true"
+      ) {
+        var followUpWarning = document.createElement("span");
+        followUpWarning.classList.add("icon", "has-text-danger");
+        var followUpIcon = document.createElement("i");
+        followUpIcon.classList.add("fas", "fa-clock", "tooltip");
+        followUpWarning.appendChild(followUpIcon);
+        var followUpText = document.createElement("span");
+        followUpText.classList.add("tooltiptext");
+        followUpText.textContent =
+          "It's been more than " + userSettings[1].toLowerCase() + " since you've applied, consider following up!";
+        followUpIcon.appendChild(followUpText);
+        viewLink.appendChild(followUpWarning);
       }
-
-      viewModalContent.appendChild(modalTitle);
-      viewModalContent.appendChild(viewCompanyNameTitle);
-      viewModalContent.appendChild(viewCompanyName);
-      viewModalContent.appendChild(viewPositionTitle);
-      viewModalContent.appendChild(viewPosition);
-      viewModalContent.appendChild(viewPositionTypeTitle);
-      viewModalContent.appendChild(viewPositionType);
-      viewModalContent.appendChild(viewStatusTitle);
-      viewModalContent.appendChild(viewStatus);
-      viewModalContent.appendChild(viewDateAppliedTitle);
-      viewModalContent.appendChild(viewDateApplied);
-      viewModalContent.appendChild(viewFollowedUpTitle);
-      viewModalContent.appendChild(viewFollowedUp);
-      viewModalContent.appendChild(viewNotesTitle);
-      viewModalContent.appendChild(viewNotes);
+  
+      var deleteLink = document.createElement("p");
+      deleteLink.classList.add("card-footer-item", "application-card-delete");
+      deleteLink.addEventListener("click", async () => {
+        var id = "" + currentID;
+        var obj = {};
+        obj[id] = deleteField();
+        await updateDoc(doc(db, "users", auth.currentUser.uid), obj);
+        location.reload();
+      });
+      deleteLink.href = "";
+      var deleteLinkText = document.createTextNode("Delete");
+      deleteLink.appendChild(deleteLinkText);
+  
+      cardFooter.appendChild(viewLink);
+      cardFooter.appendChild(deleteLink);
+  
+      newCard.appendChild(cardContent);
+      newCard.appendChild(cardFooter);
+      cardList.appendChild(newCard);
       renderTheme();
-      viewModal.classList.add("is-active");
-    });
-    viewModalBg.addEventListener("click", () => {
-      while (viewModalContent.firstChild) {
-        viewModalContent.removeChild(viewModalContent.firstChild);
-      }
-      viewModal.classList.remove("is-active");
-      isDuplicate = false;
-    });
-    var viewLinkText = document.createTextNode("View");
-    viewLink.appendChild(viewLinkText);
-    //Check if it's been more than two weeks since Applied Date & add warning if so
-    if (
-      isTwoWeeksAgo(new Date(currentDisplay[4])) &&
-      currentDisplay[5] == "No"
-    ) {
-      var followUpWarning = document.createElement("span");
-      followUpWarning.classList.add("icon", "has-text-danger");
-      var followUpIcon = document.createElement("i");
-      followUpIcon.classList.add("fas", "fa-clock", "tooltip");
-      followUpWarning.appendChild(followUpIcon);
-      var followUpText = document.createElement("span");
-      followUpText.classList.add("tooltiptext");
-      followUpText.textContent =
-        "It's been more than 2 weeks since you've applied, consider following up!";
-      followUpIcon.appendChild(followUpText);
-      viewLink.appendChild(followUpWarning);
+    }
+  }else if(userSettings[2] == "List"){
+    while (appTable.firstChild) {
+      appTable.removeChild(appTable.firstChild);
     }
 
-    var deleteLink = document.createElement("p");
-    deleteLink.classList.add("card-footer-item", "application-card-delete");
-    deleteLink.addEventListener("click", async () => {
-      var id = "" + currentID;
-      var obj = {};
-      obj[id] = deleteField();
-      await updateDoc(doc(db, "users", auth.currentUser.uid), obj);
-      location.reload();
-    });
-    deleteLink.href = "";
-    var deleteLinkText = document.createTextNode("Delete");
-    deleteLink.appendChild(deleteLinkText);
+    var tableBody = document.createElement('tbody');
 
-    cardFooter.appendChild(viewLink);
-    cardFooter.appendChild(deleteLink);
+    var tableHead = document.createElement('thead');
+    var tRow = document.createElement('tr');
+    var cNameHeader = document.createElement('th');
+    cNameHeader.textContent = "Company Name";
+    var pHeader = document.createElement('th');
+    pHeader.textContent = "Position";
+    var pTypeHeader = document.createElement('th');
+    pTypeHeader.textContent = "Position Type";
+    var pStatusHeader = document.createElement('th');
+    pStatusHeader.textContent = "Position Status";
+    var actionHeader = document.createElement('th');
+    actionHeader.textContent = "Actions";
+    tRow.appendChild(cNameHeader);
+    tRow.appendChild(pHeader);
+    tRow.appendChild(pTypeHeader);
+    tRow.appendChild(pStatusHeader);
+    tRow.appendChild(actionHeader);
+    tableHead.appendChild(tRow);
+    appTable.appendChild(tableHead);
+    appTable.appendChild(tableBody);
 
-    newCard.appendChild(cardContent);
-    newCard.appendChild(cardFooter);
-    cardList.appendChild(newCard);
-    renderTheme();
+    for(var i = 0, element; (element = applications[i++]);){
+      const currentID = element[0];
+      const currentDisplay = element[1];
+
+      var newRow = document.createElement("tr");
+      var companyName = document.createElement("td");
+      if(currentDisplay[0].length >= 30){
+        companyName.textContent = currentDisplay[0].substring(0, 29) + "...";
+      }else{
+        companyName.textContent = currentDisplay[0];
+      }
+      //Check if it's been more than two weeks since Applied Date & add warning if so
+      if (
+        isDateAgo(new Date(currentDisplay[4]), userSettings[1]) &&
+        currentDisplay[5] == "No" && userSettings[0] == "true"
+      ) {
+        var followUpWarning = document.createElement("span");
+        followUpWarning.classList.add("icon", "has-text-danger");
+        var followUpIcon = document.createElement("i");
+        followUpIcon.classList.add("fas", "fa-clock", "tooltip");
+        followUpWarning.appendChild(followUpIcon);
+        var followUpText = document.createElement("span");
+        followUpText.classList.add("tooltiptext");
+        followUpText.textContent =
+          "It's been more than " + userSettings[1].toLowerCase() + " since you've applied, consider following up!";
+        followUpIcon.appendChild(followUpText);
+        companyName.appendChild(followUpWarning);
+      }
+      var position = document.createElement("td");
+      if(currentDisplay[1].length >= 40){
+        position.textContent = currentDisplay[1].substring(0, 39) + "...";
+      }else{
+        position.textContent = currentDisplay[1];
+      }
+      var positionType = document.createElement("td");
+      positionType.textContent = currentDisplay[2];
+      var positionStatus = document.createElement("td");
+      positionStatus.textContent = currentDisplay[3];
+      var buttonTD = document.createElement('td');
+      var viewButton = document.createElement("button");
+      viewButton.classList.add("button", "tablebutton", "is-primary", "mr-2");
+      viewButton.textContent = "View";
+      var deleteButton = document.createElement("button");
+      deleteButton.classList.add("button", "tablebutton", "is-danger");
+      deleteButton.textContent = "Delete";
+      viewButton.addEventListener("click", () => {
+        //Title
+        var modalTitle = document.createElement("header");
+        modalTitle.setAttribute("id", "viewModalHeader");
+        modalTitle.classList.add("modal-card-head", "is-size-5", "has-text-weight-bold", "mb-2");
+        if (currentDisplay[1].length + currentDisplay[0].length <= 50) {
+          modalTitle.appendChild(
+            document.createTextNode(
+              "" + currentDisplay[1] + " @ " + currentDisplay[0]
+            )
+          );
+        } else {
+          var titleString = "" + currentDisplay[1] + " @ " + currentDisplay[0];
+          modalTitle.appendChild(
+            document.createTextNode(titleString.substring(0, 50) + "...")
+          );
+        }
+        //Edit button
+        var editButton = document.createElement("a");
+        editButton.setAttribute("id", "editIcon");
+        editButton.setAttribute("href", "#");
+        editButton.setAttribute("onClick", "javascript:EntryPoint.editCard()");
+        var editSpan = document.createElement("span");
+        editSpan.classList.add("icon", "is-medium");
+        var editIcon = document.createElement("i");
+        editIcon.classList.add("fas", "fa-pen");
+        editSpan.appendChild(editIcon);
+        editButton.appendChild(editSpan);
+        modalTitle.appendChild(editButton);
+        editModalButton = editButton;
+  
+        //Company Name
+        var viewCompanyNameTitle = document.createElement("h5");
+        viewCompanyNameTitle.setAttribute("name", currentID.replace(/\s/g, ""));
+        viewCompanyNameTitle.classList.add("subtitle", "is-4", "px-4", "mb-1", "has-text-weight-bold");
+        viewCompanyNameTitle.appendChild(document.createTextNode("Company"));
+        var viewCompanyName = document.createElement("p");
+        viewCompanyName.classList.add("pText", "mb-3", "px-4");
+        viewCompanyName.appendChild(document.createTextNode(currentDisplay[0]));
+  
+        //Position
+        var viewPositionTitle = document.createElement("h5");
+        viewPositionTitle.classList.add("subtitle", "is-4", "px-4", "mb-1", "has-text-weight-bold");
+        viewPositionTitle.appendChild(document.createTextNode("Position"));
+        var viewPosition = document.createElement("p");
+        viewPosition.classList.add("pText", "mb-3", "px-4");
+        viewPosition.appendChild(document.createTextNode(currentDisplay[1]));
+  
+        //Position Type
+        var viewPositionTypeTitle = document.createElement("h5");
+        viewPositionTypeTitle.classList.add("subtitle", "is-4", "px-4", "mb-1", "has-text-weight-bold");
+        viewPositionTypeTitle.appendChild(
+          document.createTextNode("Position Type")
+        );
+        var viewPositionType = document.createElement("p");
+        viewPositionType.classList.add("pText", "mb-3", "px-4");
+        viewPositionType.appendChild(document.createTextNode(currentDisplay[2]));
+  
+        //Status
+        var viewStatusTitle = document.createElement("h5");
+        viewStatusTitle.classList.add("subtitle", "is-4", "px-4", "mb-1", "has-text-weight-bold");
+        viewStatusTitle.appendChild(
+          document.createTextNode("Application Status")
+        );
+        var viewStatus = document.createElement("p");
+        viewStatus.classList.add("pText", "mb-3", "px-4");
+        viewStatus.appendChild(document.createTextNode(currentDisplay[3]));
+  
+        //Date Applied
+        var viewDateAppliedTitle = document.createElement("h5");
+        viewDateAppliedTitle.classList.add("subtitle", "is-4", "px-4", "mb-1", "has-text-weight-bold");
+        viewDateAppliedTitle.appendChild(document.createTextNode("Date Applied"));
+        var viewDateApplied = document.createElement("p");
+        viewDateApplied.classList.add("pText", "mb-3", "px-4");
+        if (currentDisplay[4].length == 0) {
+          viewDateApplied.appendChild(document.createTextNode("N/A"));
+        } else {
+          viewDateApplied.appendChild(document.createTextNode(currentDisplay[4]));
+        }
+  
+        //Followed Up
+        var viewFollowedUpTitle = document.createElement("h5");
+        viewFollowedUpTitle.classList.add("subtitle", "is-4", "px-4", "mb-1", "has-text-weight-bold");
+        viewFollowedUpTitle.appendChild(document.createTextNode("Followed Up"));
+        var viewFollowedUp = document.createElement("p");
+        viewFollowedUp.classList.add("pText", "mb-3", "px-4");
+        viewFollowedUp.appendChild(document.createTextNode(currentDisplay[5]));
+  
+        //Notes
+        var viewNotesTitle = document.createElement("h5");
+        viewNotesTitle.classList.add("subtitle", "is-4", "px-4", "mb-1", "has-text-weight-bold");
+        viewNotesTitle.appendChild(document.createTextNode("Notes"));
+        var viewNotes = document.createElement("p");
+        viewNotes.classList.add("pText", "mb-3", "px-4");
+        if (currentDisplay[6].length == 0) {
+          viewNotes.appendChild(document.createTextNode("-"));
+        } else {
+          viewNotes.appendChild(document.createTextNode(currentDisplay[6]));
+        }
+  
+        viewModalContent.appendChild(modalTitle);
+        viewModalContent.appendChild(viewCompanyNameTitle);
+        viewModalContent.appendChild(viewCompanyName);
+        viewModalContent.appendChild(viewPositionTitle);
+        viewModalContent.appendChild(viewPosition);
+        viewModalContent.appendChild(viewPositionTypeTitle);
+        viewModalContent.appendChild(viewPositionType);
+        viewModalContent.appendChild(viewStatusTitle);
+        viewModalContent.appendChild(viewStatus);
+        viewModalContent.appendChild(viewDateAppliedTitle);
+        viewModalContent.appendChild(viewDateApplied);
+        viewModalContent.appendChild(viewFollowedUpTitle);
+        viewModalContent.appendChild(viewFollowedUp);
+        viewModalContent.appendChild(viewNotesTitle);
+        viewModalContent.appendChild(viewNotes);
+        renderTheme();
+        viewModal.classList.add("is-active");
+      });
+      viewModalBg.addEventListener("click", () => {
+        while (viewModalContent.firstChild) {
+          viewModalContent.removeChild(viewModalContent.firstChild);
+        }
+        viewModal.classList.remove("is-active");
+        isDuplicate = false;
+      });
+
+      deleteButton.addEventListener("click", async () => {
+        var id = "" + currentID;
+        var obj = {};
+        obj[id] = deleteField();
+        await updateDoc(doc(db, "users", auth.currentUser.uid), obj);
+        location.reload();
+      });
+
+      buttonTD.appendChild(viewButton);
+      buttonTD.appendChild(deleteButton);
+      newRow.appendChild(companyName);
+      newRow.appendChild(position);
+      newRow.appendChild(positionType);
+      newRow.appendChild(positionStatus);
+      newRow.appendChild(buttonTD);
+      tableBody.appendChild(newRow);
+    }
   }
+  renderTheme();
 }
 
 /**
@@ -486,8 +748,24 @@ function windowLoad(applications) {
     appsToDisplay = appsToDisplay.sort(sortByDate);
   }
 
-  DisplayApplications(appsToDisplay);
+  DisplayApplicationCards(appsToDisplay);
 }
+
+settingsButton.addEventListener("click", () => {
+  settingsModal.classList.add('is-active');
+  if(userSettings[0] == "true"){
+    settingsShowWarning.checked = true;
+  }else{
+    settingsShowWarning.checked = false;
+  }
+
+  settingsWarningTime.value = userSettings[1];
+  settingsCardDisplay.value = userSettings[2];
+});
+
+settingsModalBg.addEventListener("click", () => {
+  settingsModal.classList.remove("is-active");
+});
 
 /**
  * Shows application form for user to submit data.
@@ -530,6 +808,26 @@ function sortCards(method) {
   }
   location.reload();
 }
+
+settingsForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  var settings = settingsForm.elements;
+  const settingsElements = [];
+  for(var i = 0; i < settings.length-1; i++){
+    settingsElements.push(settings[i].value);
+  }
+
+  if(settingsShowWarning.checked){
+    settingsElements[0] = "true";
+  }else{
+    settingsElements[0] = "false";
+  }
+
+  var settings = {};
+  settings["userSettings"] = settingsElements;
+  await updateDoc(doc(db, "users", auth.currentUser.uid), settings);
+  location.reload();
+});
 
 /**
  * A function that parses through the application form results
@@ -598,7 +896,7 @@ function selectSearch(value) {
 
   if (value == "Company Name") {
     document.getElementById("appsearchbar").value = "";
-    DisplayApplications(appsToDisplay);
+    DisplayApplicationCards(appsToDisplay);
     searchBar.type = "text";
     searchPType.style.display = "none";
     searchPStatus.style.display = "none";
@@ -607,7 +905,7 @@ function selectSearch(value) {
     searchTextBar.style.display = "block";
   } else if (value == "Position Name") {
     document.getElementById("appsearchbar").value = "";
-    DisplayApplications(appsToDisplay);
+    DisplayApplicationCards(appsToDisplay);
     searchBar.type = "text";
     searchPType.style.display = "none";
     searchPStatus.style.display = "none";
@@ -632,7 +930,7 @@ function selectSearch(value) {
     searchPStatus.style.display = "block";
   } else if (value == "Date Applied <=" || value == "Date Applied >") {
     searchDate.value = "";
-    DisplayApplications(appsToDisplay);
+    DisplayApplicationCards(appsToDisplay);
     searchBar.type = "date";
     searchPType.style.display = "none";
     searchPStatus.style.display = "none";
@@ -648,7 +946,7 @@ function selectSearch(value) {
     searchFUp.style.display = "block";
   } else if (value == "Notes") {
     document.getElementById("appsearchbar").value = "";
-    DisplayApplications(appsToDisplay);
+    DisplayApplicationCards(appsToDisplay);
     searchBar.type = "text";
     searchPType.style.display = "none";
     searchPStatus.style.display = "none";
@@ -656,6 +954,7 @@ function selectSearch(value) {
     searchDate.style.display = "none";
     searchTextBar.style.display = "block";
   }
+  renderTheme();
 }
 
 /**
@@ -674,7 +973,7 @@ function search_applications(selectValue) {
   if (spanText.textContent == "Company Name") {
     let input = document.getElementById("appsearchbar").value.toLowerCase();
     if (input == "") {
-      DisplayApplications(appsToDisplay);
+      DisplayApplicationCards(appsToDisplay);
     } else {
       let newApplications = [];
       for (var i = 0, element; (element = appsToDisplay[i++]); ) {
@@ -683,12 +982,12 @@ function search_applications(selectValue) {
           newApplications.push(element);
         }
       }
-      DisplayApplications(newApplications);
+      DisplayApplicationCards(newApplications);
     }
   } else if (spanText.textContent == "Position Name") {
     let input = document.getElementById("appsearchbar").value.toLowerCase();
     if (input == "") {
-      DisplayApplications(appsToDisplay);
+      DisplayApplicationCards(appsToDisplay);
     } else {
       let newApplications = [];
       for (var i = 0, element; (element = appsToDisplay[i++]); ) {
@@ -697,7 +996,7 @@ function search_applications(selectValue) {
           newApplications.push(element);
         }
       }
-      DisplayApplications(newApplications);
+      DisplayApplicationCards(newApplications);
     }
   } else if (spanText.textContent == "Position Type") {
     if (selectValue == "Internship/Co-Op") {
@@ -710,7 +1009,7 @@ function search_applications(selectValue) {
           newApplications.push(element);
         }
       }
-      DisplayApplications(newApplications);
+      DisplayApplicationCards(newApplications);
     } else if (selectValue == "Part-Time") {
       document.getElementById("searchPTypeText").textContent = "Part-Time";
       let newApplications = [];
@@ -720,7 +1019,7 @@ function search_applications(selectValue) {
           newApplications.push(element);
         }
       }
-      DisplayApplications(newApplications);
+      DisplayApplicationCards(newApplications);
     } else if (selectValue == "Full-Time") {
       document.getElementById("searchPTypeText").textContent = "Full-Time";
       let newApplications = [];
@@ -730,7 +1029,7 @@ function search_applications(selectValue) {
           newApplications.push(element);
         }
       }
-      DisplayApplications(newApplications);
+      DisplayApplicationCards(newApplications);
     }
   } else if (spanText.textContent == "Position Status") {
     if (selectValue == "Applied") {
@@ -742,7 +1041,7 @@ function search_applications(selectValue) {
           newApplications.push(element);
         }
       }
-      DisplayApplications(newApplications);
+      DisplayApplicationCards(newApplications);
     } else if (selectValue == "Interviewed") {
       document.getElementById("searchPStatusText").textContent = "Interviewed";
       let newApplications = [];
@@ -752,7 +1051,7 @@ function search_applications(selectValue) {
           newApplications.push(element);
         }
       }
-      DisplayApplications(newApplications);
+      DisplayApplicationCards(newApplications);
     } else if (selectValue == "Rejected") {
       document.getElementById("searchPStatusText").textContent = "Rejected";
       let newApplications = [];
@@ -762,7 +1061,7 @@ function search_applications(selectValue) {
           newApplications.push(element);
         }
       }
-      DisplayApplications(newApplications);
+      DisplayApplicationCards(newApplications);
     } else if ((selectValue = "Offered")) {
       document.getElementById("searchPStatusText").textContent = "Offered";
       let newApplications = [];
@@ -772,7 +1071,7 @@ function search_applications(selectValue) {
           newApplications.push(element);
         }
       }
-      DisplayApplications(newApplications);
+      DisplayApplicationCards(newApplications);
     }
   } else if (spanText.textContent == "Date Applied <=") {
     let input = document.getElementById("appsearchdatebar").value;
@@ -783,7 +1082,7 @@ function search_applications(selectValue) {
         newApplications.push(element);
       }
     }
-    DisplayApplications(newApplications);
+    DisplayApplicationCards(newApplications);
   } else if (spanText.textContent == "Date Applied >") {
     let input = document.getElementById("appsearchdatebar").value;
     let newApplications = [];
@@ -793,7 +1092,7 @@ function search_applications(selectValue) {
         newApplications.push(element);
       }
     }
-    DisplayApplications(newApplications);
+    DisplayApplicationCards(newApplications);
   } else if (spanText.textContent == "Followed Up") {
     if (selectValue == "Yes") {
       document.getElementById("searchfUpText").textContent = "Yes";
@@ -804,7 +1103,7 @@ function search_applications(selectValue) {
           newApplications.push(element);
         }
       }
-      DisplayApplications(newApplications);
+      DisplayApplicationCards(newApplications);
     } else if (selectValue == "No") {
       document.getElementById("searchfUpText").textContent = "No";
       let newApplications = [];
@@ -814,12 +1113,12 @@ function search_applications(selectValue) {
           newApplications.push(element);
         }
       }
-      DisplayApplications(newApplications);
+      DisplayApplicationCards(newApplications);
     }
   } else if (spanText.textContent == "Notes") {
     let input = document.getElementById("appsearchbar").value.toLowerCase();
     if (input == "") {
-      DisplayApplications(appsToDisplay);
+      DisplayApplicationCards(appsToDisplay);
     } else {
       let newApplications = [];
       for (var i = 0, element; (element = appsToDisplay[i++]); ) {
@@ -828,7 +1127,7 @@ function search_applications(selectValue) {
           newApplications.push(element);
         }
       }
-      DisplayApplications(newApplications);
+      DisplayApplicationCards(newApplications);
     }
   }
 }

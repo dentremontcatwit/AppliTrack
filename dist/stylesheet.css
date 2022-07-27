@@ -79,12 +79,16 @@ html {
   font-size: 200%;
 }
 
+#settingsbutton,
 #addapplication,
-#sortbutton,
 #searchbar,
-#settingsbutton {
-  font-size: 15px;
+#sortbutton {
   margin: 5px;
+}
+
+#settingsbutton:hover {
+  background-color: lightgray;
+  transition: 0.3s;
 }
 
 #head-body {

@@ -1,0 +1,67 @@
+<html lang="en" id="html">
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>AppliTrack</title>
+        <script src="https://kit.fontawesome.com/d36d0a95a4.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" />
+        <link rel="stylesheet" href="stylesheet.css">
+        <link rel="icon" href="images/logo2.png">
+    </head>
+
+    <body>
+        <div class="hero-head">
+            <nav class="navbar is-dark">
+                <div class="container">
+                    <div class="navbar-brand">
+                        <a href="index.html" class="navbar-item">
+                            <img src="images/logo.png" alt="AppliTrack" />
+                        </a>
+                    </div>
+
+
+                    <div class="navbar-start" id="navbarstart">
+                        <a href="applications.html" class="navbar-item" id="applicationlink">
+                            <span class="icon is-medium mr-1">
+                                <i class="fas fa-lg fa-book"></i>
+                            </span>
+                            Applications
+                        </a>
+                    </div>
+
+                    <div class="navbar-end">
+                        <a href="#" onclick="EntryPoint.setNightMode()" class="navbar-item" id="nightbutton">
+                            <span class="icon is-medium">
+                                <i class="fas fa-lg fa-moon"></i>
+                            </span>
+                        </a>
+                        <a href="#" onclick="EntryPoint.setLightMode()" class="navbar-item" id="lightbutton">
+                            <span class="icon is-medium">
+                                <i class="fas fa-lg fa-sun"></i>
+                            </span>
+                        </a>
+                        <a hidden href="profile.html" class="navbar-item" id="profilelink">
+                            <span class="icon is-medium mr-1">
+                                <i class="fas fa-lg fa-user"></i>
+                            </span>
+                            Account
+                        </a>
+                        <a hidden href="#" onclick="EntryPoint.logout()" class="navbar-item" id="logoutlink">
+                            <span class="icon is-medium mr-1">
+                                <i class="fas fa-lg fa-sign-out-alt"></i>
+                            </span>
+                            Logout
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        //TODO: Write code to display job recommendations
+
+    </body>
+    <script type="text/javascript" src="profile.bundle.js"></script>
+
+</html>

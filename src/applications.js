@@ -34,8 +34,8 @@ onAuthStateChanged(auth, async (user) => {
   if (user) {
     const userRef = await getDoc(doc(db, "users", user.uid));
     var applications = userRef.data();
-    userSettings = applications['userSettings'];
-    delete applications['userSettings'];
+    userSettings = applications["userSettings"];
+    delete applications["userSettings"];
     windowLoad(applications); //Display applications for current user
     if (!user.emailVerified) {
       verifyEmail.style.display = "block";
@@ -54,99 +54,110 @@ function logout() {
   window.location.href = "index.html";
 }
 
-function setNightMode(){
+function setNightMode() {
   document.cookie = "theme=night";
   renderTheme();
 }
 
-function setLightMode(){
+function setLightMode() {
   document.cookie = "theme=light";
   location.reload();
 }
 
 //Switch styles of objects to dark theme
-function renderTheme(){
+function renderTheme() {
   let cookie = {};
   document.cookie.split(";").forEach(function (el) {
     let [key, value] = el.split("=");
     cookie[key.trim()] = value;
   });
-  if(cookie["theme"] == "night"){
-    document.getElementById('nightbutton').style.display = "none";
-    document.getElementById('lightbutton').style.display = "flex";
-    document.getElementById('html').style.backgroundColor = "#243B53";
-    document.getElementById('appTitle').style.color = "#BCCCDC";
-    document.getElementById('newAppTitle').style.color = "#BCCCDC";
-    document.getElementById('settingsTitle').style.color = "#BCCCDC";
-    document.querySelector('h5').style.color = "#BCCCDC";
-    document.querySelector('nav').style.backgroundColor = "#102A43";
-    document.getElementById('addapplication').style.backgroundColor = "#00897B";
-    document.getElementById('viewModalContent').classList.remove('has-background-white');
-    document.getElementById('addModalContent').classList.remove('has-background-white');
-    document.getElementById('settingsModalContent').classList.remove('has-background-white');
-    var cardContents = document.querySelectorAll('.card-content');
-    for(var i = 0; i < cardContents.length; i++){
+  if (cookie["theme"] == "night") {
+    document.getElementById("nightbutton").style.display = "none";
+    document.getElementById("lightbutton").style.display = "flex";
+    document.getElementById("html").style.backgroundColor = "#243B53";
+    document.getElementById("appTitle").style.color = "#BCCCDC";
+    document.getElementById("newAppTitle").style.color = "#BCCCDC";
+    document.getElementById("settingsTitle").style.color = "#BCCCDC";
+    document.querySelector("h5").style.color = "#BCCCDC";
+    document.querySelector("nav").style.backgroundColor = "#102A43";
+    document.getElementById("addapplication").style.backgroundColor = "#00897B";
+    document
+      .getElementById("viewModalContent")
+      .classList.remove("has-background-white");
+    document
+      .getElementById("addModalContent")
+      .classList.remove("has-background-white");
+    document
+      .getElementById("settingsModalContent")
+      .classList.remove("has-background-white");
+    var cardContents = document.querySelectorAll(".card-content");
+    for (var i = 0; i < cardContents.length; i++) {
       cardContents[i].style.backgroundColor = "#334E68";
     }
-    var cardFooters = document.querySelectorAll('.card-footer-item');
-    for(var i = 0; i < cardFooters.length; i++){
+    var cardFooters = document.querySelectorAll(".card-footer-item");
+    for (var i = 0; i < cardFooters.length; i++) {
       cardFooters[i].style.backgroundColor = "#102A43";
-      cardFooters[i]
+      cardFooters[i];
     }
-    var pTexts = document.querySelectorAll('p');
-    for(var i = 0; i < pTexts.length; i++){
+    var pTexts = document.querySelectorAll("p");
+    for (var i = 0; i < pTexts.length; i++) {
       pTexts[i].style.color = "#BCCCDC";
     }
-    var topButtons = document.querySelectorAll('.topbutton');
-    for(var i = 0; i < topButtons.length; i++){
+    var topButtons = document.querySelectorAll(".topbutton");
+    for (var i = 0; i < topButtons.length; i++) {
       topButtons[i].style.backgroundColor = "#334E68";
     }
-    var spanTexts = document.querySelectorAll('span');
-    for(var i = 0; i < spanTexts.length; i++){
+    var spanTexts = document.querySelectorAll("span");
+    for (var i = 0; i < spanTexts.length; i++) {
       spanTexts[i].style.color = "#BCCCDC";
     }
-    var modalBgs = document.querySelectorAll('.modal-content');
-    for(var i = 0; i < modalBgs.length; i++){
+    var modalBgs = document.querySelectorAll(".modal-content");
+    for (var i = 0; i < modalBgs.length; i++) {
       modalBgs[i].style.backgroundColor = "#243B53";
     }
-    var labelTexts = document.querySelectorAll('label');
-    for(var i = 0; i < labelTexts.length; i++){
+    var labelTexts = document.querySelectorAll("label");
+    for (var i = 0; i < labelTexts.length; i++) {
       labelTexts[i].style.color = "#BCCCDC";
     }
-    var h5Texts = document.querySelectorAll('h5');
-    for(var i = 0; i < h5Texts.length; i++){
+    var h5Texts = document.querySelectorAll("h5");
+    for (var i = 0; i < h5Texts.length; i++) {
       h5Texts[i].style.color = "#BCCCDC";
     }
-    var modalHeaders = document.querySelectorAll('#viewModalHeader');
-    for(var i = 0; i < modalHeaders.length; i++){
+    var modalHeaders = document.querySelectorAll("#viewModalHeader");
+    for (var i = 0; i < modalHeaders.length; i++) {
       modalHeaders[i].style.backgroundColor = "#102A43";
       modalHeaders[i].style.color = "#BCCCDC";
     }
-    var tableHeaders = document.querySelectorAll('tr');
-    for(var i = 0; i < tableHeaders.length; i++){
+    var tableHeaders = document.querySelectorAll("tr");
+    for (var i = 0; i < tableHeaders.length; i++) {
       tableHeaders[i].style.backgroundColor = "#102A43";
       tableHeaders[i].style.color = "#BCCCDC";
     }
-    var tableText = document.querySelectorAll('td');
-    for(var i = 0; i < tableText.length; i++){
+    var tableText = document.querySelectorAll("td");
+    for (var i = 0; i < tableText.length; i++) {
       tableText[i].style.color = "#BCCCDC";
     }
-    var tableTextHeaders = document.querySelectorAll('th');
-    for(var i = 0; i < tableTextHeaders.length; i++){
+    var tableTextHeaders = document.querySelectorAll("th");
+    for (var i = 0; i < tableTextHeaders.length; i++) {
       tableTextHeaders[i].style.color = "#BCCCDC";
     }
-
-  }else{
-    document.getElementById('nightbutton').style.display = "flex";
-    document.getElementById('lightbutton').style.display = "none";
-    document.getElementById('viewModalContent').classList.add('has-background-white');
-    document.getElementById('addModalContent').classList.add('has-background-white');
-    document.getElementById('settingsModalContent').classList.add('has-background-white');
+  } else {
+    document.getElementById("nightbutton").style.display = "flex";
+    document.getElementById("lightbutton").style.display = "none";
+    document
+      .getElementById("viewModalContent")
+      .classList.add("has-background-white");
+    document
+      .getElementById("addModalContent")
+      .classList.add("has-background-white");
+    document
+      .getElementById("settingsModalContent")
+      .classList.add("has-background-white");
   }
 }
 
 const cardList = document.querySelector("#cards");
-const appTable = document.querySelector('#applicationtable');
+const appTable = document.querySelector("#applicationtable");
 
 //Top Menu Elements
 const searchTextBar = document.querySelector("#appsearchbar");
@@ -156,13 +167,13 @@ const searchFUp = document.querySelector("#appsearchbarfup");
 const searchDate = document.querySelector("#appsearchdatebar");
 
 //Settings Menu
-const settingsModal = document.querySelector('#settingsModal');
-const settingsModalBg = document.querySelector('#settingsModalBg');
-const settingsButton = document.querySelector('#settingsbutton');
+const settingsModal = document.querySelector("#settingsModal");
+const settingsModalBg = document.querySelector("#settingsModalBg");
+const settingsButton = document.querySelector("#settingsbutton");
 const settingsForm = document.querySelector("#settingsform");
 const settingsShowWarning = document.querySelector("#showfollowup");
 const settingsWarningTime = document.querySelector("#warningSelect");
-const settingsCardDisplay = document.querySelector('#displaySelect');
+const settingsCardDisplay = document.querySelector("#displaySelect");
 
 //Application Form Modal
 const newAppButton = document.querySelector("#addapplication");
@@ -193,13 +204,13 @@ var appsToDisplay = [];
 function isDateAgo(date, timeframe) {
   var time = 0;
   var dateTime = 0;
-  if(timeframe == "3 Days"){
+  if (timeframe == "3 Days") {
     time = 4 * 24 * 60 * 60 * 1000;
-  }else if(timeframe == "5 Days"){
+  } else if (timeframe == "5 Days") {
     time = 6 * 24 * 60 * 60 * 1000;
-  }else if(timeframe == "1 Week"){
+  } else if (timeframe == "1 Week") {
     time = 8 * 24 * 60 * 60 * 1000;
-  }else{
+  } else {
     time = 15 * 24 * 60 * 60 * 1000;
   }
 
@@ -222,24 +233,34 @@ function isDateAgo(date, timeframe) {
  */
 function DisplayApplicationCards(applications) {
   let check = false;
-  (function(a){if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i.test(a)||/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0,4))) check = true;})(navigator.userAgent||navigator.vendor||window.opera);
+  (function (a) {
+    if (
+      /(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i.test(
+        a
+      ) ||
+      /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(
+        a.substr(0, 4)
+      )
+    )
+      check = true;
+  })(navigator.userAgent || navigator.vendor || window.opera);
 
-  if(userSettings[2] == "Cards" || check){
+  if (userSettings[2] == "Cards" || check) {
     while (cardList.firstChild) {
       cardList.removeChild(cardList.firstChild);
     }
-  
+
     for (var i = 0, element; (element = applications[i++]); ) {
       const currentID = element[0];
       const currentDisplay = element[1];
-  
+
       //Create HTML element
       //Card div
       var newCard = document.createElement("div");
       newCard.classList.add("card");
       var cardID = "" + currentID;
       newCard.setAttribute("id", cardID);
-  
+
       //Card content
       var cardContent = document.createElement("div");
       cardContent.classList.add("card-content");
@@ -269,18 +290,23 @@ function DisplayApplicationCards(applications) {
       cardContentBottom.appendChild(text);
       cardContent.appendChild(cardContentTop);
       cardContent.appendChild(cardContentBottom);
-  
+
       //Footer content
       var cardFooter = document.createElement("footer");
       cardFooter.classList.add("card-footer");
-  
+
       var viewLink = document.createElement("p");
       viewLink.classList.add("card-footer-item", "application-card-view");
       viewLink.addEventListener("click", () => {
         //Title
         var modalTitle = document.createElement("header");
         modalTitle.setAttribute("id", "viewModalHeader");
-        modalTitle.classList.add("modal-card-head", "is-size-5", "has-text-weight-bold", "mb-2");
+        modalTitle.classList.add(
+          "modal-card-head",
+          "is-size-5",
+          "has-text-weight-bold",
+          "mb-2"
+        );
         if (currentDisplay[1].length + currentDisplay[0].length <= 50) {
           modalTitle.appendChild(
             document.createTextNode(
@@ -306,67 +332,126 @@ function DisplayApplicationCards(applications) {
         editButton.appendChild(editSpan);
         modalTitle.appendChild(editButton);
         editModalButton = editButton;
-  
+
+        //Close Button
+        var viewCloseButton = document.createElement("button");
+        viewCloseButton.classList.add("delete", "mt-2");
+        viewCloseButton.setAttribute("id", "viewCloseButton");
+        viewCloseButton.addEventListener("click", () => {
+          var modalBackground =
+            viewCloseButton.parentElement.parentElement.previousElementSibling;
+          modalBackground.click();
+        });
+
         //Company Name
         var viewCompanyNameTitle = document.createElement("h5");
         viewCompanyNameTitle.setAttribute("name", currentID.replace(/\s/g, ""));
-        viewCompanyNameTitle.classList.add("subtitle", "is-4", "px-4", "mb-1", "has-text-weight-bold");
+        viewCompanyNameTitle.classList.add(
+          "subtitle",
+          "is-4",
+          "px-4",
+          "mb-1",
+          "has-text-weight-bold"
+        );
         viewCompanyNameTitle.appendChild(document.createTextNode("Company"));
+        viewCompanyNameTitle.appendChild(viewCloseButton);
         var viewCompanyName = document.createElement("p");
         viewCompanyName.classList.add("pText", "mb-3", "px-4");
         viewCompanyName.appendChild(document.createTextNode(currentDisplay[0]));
-  
+
         //Position
         var viewPositionTitle = document.createElement("h5");
-        viewPositionTitle.classList.add("subtitle", "is-4", "px-4", "mb-1", "has-text-weight-bold");
+        viewPositionTitle.classList.add(
+          "subtitle",
+          "is-4",
+          "px-4",
+          "mb-1",
+          "has-text-weight-bold"
+        );
         viewPositionTitle.appendChild(document.createTextNode("Position"));
         var viewPosition = document.createElement("p");
         viewPosition.classList.add("pText", "mb-3", "px-4");
         viewPosition.appendChild(document.createTextNode(currentDisplay[1]));
-  
+
         //Position Type
         var viewPositionTypeTitle = document.createElement("h5");
-        viewPositionTypeTitle.classList.add("subtitle", "is-4", "px-4", "mb-1", "has-text-weight-bold");
+        viewPositionTypeTitle.classList.add(
+          "subtitle",
+          "is-4",
+          "px-4",
+          "mb-1",
+          "has-text-weight-bold"
+        );
         viewPositionTypeTitle.appendChild(
           document.createTextNode("Position Type")
         );
         var viewPositionType = document.createElement("p");
         viewPositionType.classList.add("pText", "mb-3", "px-4");
-        viewPositionType.appendChild(document.createTextNode(currentDisplay[2]));
-  
+        viewPositionType.appendChild(
+          document.createTextNode(currentDisplay[2])
+        );
+
         //Status
         var viewStatusTitle = document.createElement("h5");
-        viewStatusTitle.classList.add("subtitle", "is-4", "px-4", "mb-1", "has-text-weight-bold");
+        viewStatusTitle.classList.add(
+          "subtitle",
+          "is-4",
+          "px-4",
+          "mb-1",
+          "has-text-weight-bold"
+        );
         viewStatusTitle.appendChild(
           document.createTextNode("Application Status")
         );
         var viewStatus = document.createElement("p");
         viewStatus.classList.add("pText", "mb-3", "px-4");
         viewStatus.appendChild(document.createTextNode(currentDisplay[3]));
-  
+
         //Date Applied
         var viewDateAppliedTitle = document.createElement("h5");
-        viewDateAppliedTitle.classList.add("subtitle", "is-4", "px-4", "mb-1", "has-text-weight-bold");
-        viewDateAppliedTitle.appendChild(document.createTextNode("Date Applied"));
+        viewDateAppliedTitle.classList.add(
+          "subtitle",
+          "is-4",
+          "px-4",
+          "mb-1",
+          "has-text-weight-bold"
+        );
+        viewDateAppliedTitle.appendChild(
+          document.createTextNode("Date Applied")
+        );
         var viewDateApplied = document.createElement("p");
         viewDateApplied.classList.add("pText", "mb-3", "px-4");
         if (currentDisplay[4].length == 0) {
           viewDateApplied.appendChild(document.createTextNode("N/A"));
         } else {
-          viewDateApplied.appendChild(document.createTextNode(currentDisplay[4]));
+          viewDateApplied.appendChild(
+            document.createTextNode(currentDisplay[4])
+          );
         }
-  
+
         //Followed Up
         var viewFollowedUpTitle = document.createElement("h5");
-        viewFollowedUpTitle.classList.add("subtitle", "is-4", "px-4", "mb-1", "has-text-weight-bold");
+        viewFollowedUpTitle.classList.add(
+          "subtitle",
+          "is-4",
+          "px-4",
+          "mb-1",
+          "has-text-weight-bold"
+        );
         viewFollowedUpTitle.appendChild(document.createTextNode("Followed Up"));
         var viewFollowedUp = document.createElement("p");
         viewFollowedUp.classList.add("pText", "mb-3", "px-4");
         viewFollowedUp.appendChild(document.createTextNode(currentDisplay[5]));
-  
+
         //Notes
         var viewNotesTitle = document.createElement("h5");
-        viewNotesTitle.classList.add("subtitle", "is-4", "px-4", "mb-1", "has-text-weight-bold");
+        viewNotesTitle.classList.add(
+          "subtitle",
+          "is-4",
+          "px-4",
+          "mb-1",
+          "has-text-weight-bold"
+        );
         viewNotesTitle.appendChild(document.createTextNode("Notes"));
         var viewNotes = document.createElement("textarea");
         viewNotes.classList.add("textarea", "mb-3");
@@ -376,7 +461,7 @@ function DisplayApplicationCards(applications) {
         } else {
           viewNotes.appendChild(document.createTextNode(currentDisplay[6]));
         }
-  
+
         viewModalContent.appendChild(modalTitle);
         viewModalContent.appendChild(viewCompanyNameTitle);
         viewModalContent.appendChild(viewCompanyName);
@@ -407,7 +492,8 @@ function DisplayApplicationCards(applications) {
       //Check if it's been more than two weeks since Applied Date & add warning if so
       if (
         isDateAgo(new Date(currentDisplay[4]), userSettings[1]) &&
-        currentDisplay[5] == "No" && userSettings[0] == "true"
+        currentDisplay[5] == "No" &&
+        userSettings[0] == "true"
       ) {
         var followUpWarning = document.createElement("span");
         followUpWarning.classList.add("icon", "has-text-danger");
@@ -417,11 +503,13 @@ function DisplayApplicationCards(applications) {
         var followUpText = document.createElement("span");
         followUpText.classList.add("tooltiptext");
         followUpText.textContent =
-          "It's been more than " + userSettings[1].toLowerCase() + " since you've applied, consider following up!";
+          "It's been more than " +
+          userSettings[1].toLowerCase() +
+          " since you've applied, consider following up!";
         followUpIcon.appendChild(followUpText);
         viewLink.appendChild(followUpWarning);
       }
-  
+
       var deleteLink = document.createElement("p");
       deleteLink.classList.add("card-footer-item", "application-card-delete");
       deleteLink.addEventListener("click", async () => {
@@ -434,33 +522,33 @@ function DisplayApplicationCards(applications) {
       deleteLink.href = "";
       var deleteLinkText = document.createTextNode("Delete");
       deleteLink.appendChild(deleteLinkText);
-  
+
       cardFooter.appendChild(viewLink);
       cardFooter.appendChild(deleteLink);
-  
+
       newCard.appendChild(cardContent);
       newCard.appendChild(cardFooter);
       cardList.appendChild(newCard);
       renderTheme();
     }
-  }else if(userSettings[2] == "List" && !check){
+  } else if (userSettings[2] == "List" && !check) {
     while (appTable.firstChild) {
       appTable.removeChild(appTable.firstChild);
     }
 
-    var tableBody = document.createElement('tbody');
+    var tableBody = document.createElement("tbody");
 
-    var tableHead = document.createElement('thead');
-    var tRow = document.createElement('tr');
-    var cNameHeader = document.createElement('th');
+    var tableHead = document.createElement("thead");
+    var tRow = document.createElement("tr");
+    var cNameHeader = document.createElement("th");
     cNameHeader.textContent = "Company Name";
-    var pHeader = document.createElement('th');
+    var pHeader = document.createElement("th");
     pHeader.textContent = "Position";
-    var pTypeHeader = document.createElement('th');
+    var pTypeHeader = document.createElement("th");
     pTypeHeader.textContent = "Position Type";
-    var pStatusHeader = document.createElement('th');
+    var pStatusHeader = document.createElement("th");
     pStatusHeader.textContent = "Position Status";
-    var actionHeader = document.createElement('th');
+    var actionHeader = document.createElement("th");
     actionHeader.textContent = "Actions";
     tRow.appendChild(cNameHeader);
     tRow.appendChild(pHeader);
@@ -471,21 +559,22 @@ function DisplayApplicationCards(applications) {
     appTable.appendChild(tableHead);
     appTable.appendChild(tableBody);
 
-    for(var i = 0, element; (element = applications[i++]);){
+    for (var i = 0, element; (element = applications[i++]); ) {
       const currentID = element[0];
       const currentDisplay = element[1];
 
       var newRow = document.createElement("tr");
       var companyName = document.createElement("td");
-      if(currentDisplay[0].length >= 30){
+      if (currentDisplay[0].length >= 30) {
         companyName.textContent = currentDisplay[0].substring(0, 29) + "...";
-      }else{
+      } else {
         companyName.textContent = currentDisplay[0];
       }
       //Check if it's been more than two weeks since Applied Date & add warning if so
       if (
         isDateAgo(new Date(currentDisplay[4]), userSettings[1]) &&
-        currentDisplay[5] == "No" && userSettings[0] == "true"
+        currentDisplay[5] == "No" &&
+        userSettings[0] == "true"
       ) {
         var followUpWarning = document.createElement("span");
         followUpWarning.classList.add("icon", "has-text-danger");
@@ -495,21 +584,23 @@ function DisplayApplicationCards(applications) {
         var followUpText = document.createElement("span");
         followUpText.classList.add("tooltiptext");
         followUpText.textContent =
-          "It's been more than " + userSettings[1].toLowerCase() + " since you've applied, consider following up!";
+          "It's been more than " +
+          userSettings[1].toLowerCase() +
+          " since you've applied, consider following up!";
         followUpIcon.appendChild(followUpText);
         companyName.appendChild(followUpWarning);
       }
       var position = document.createElement("td");
-      if(currentDisplay[1].length >= 40){
+      if (currentDisplay[1].length >= 40) {
         position.textContent = currentDisplay[1].substring(0, 39) + "...";
-      }else{
+      } else {
         position.textContent = currentDisplay[1];
       }
       var positionType = document.createElement("td");
       positionType.textContent = currentDisplay[2];
       var positionStatus = document.createElement("td");
       positionStatus.textContent = currentDisplay[3];
-      var buttonTD = document.createElement('td');
+      var buttonTD = document.createElement("td");
       var viewButton = document.createElement("button");
       viewButton.classList.add("button", "tablebutton", "is-link", "mr-2");
       viewButton.textContent = "View";
@@ -520,7 +611,12 @@ function DisplayApplicationCards(applications) {
         //Title
         var modalTitle = document.createElement("header");
         modalTitle.setAttribute("id", "viewModalHeader");
-        modalTitle.classList.add("modal-card-head", "is-size-5", "has-text-weight-bold", "mb-2");
+        modalTitle.classList.add(
+          "modal-card-head",
+          "is-size-5",
+          "has-text-weight-bold",
+          "mb-2"
+        );
         if (currentDisplay[1].length + currentDisplay[0].length <= 50) {
           modalTitle.appendChild(
             document.createTextNode(
@@ -539,74 +635,133 @@ function DisplayApplicationCards(applications) {
         editButton.setAttribute("href", "#");
         editButton.setAttribute("onClick", "javascript:EntryPoint.editCard()");
         var editSpan = document.createElement("span");
-        editSpan.classList.add("icon", "is-medium");
+        editSpan.classList.add("icon", "is-medium", "ml-1");
         var editIcon = document.createElement("i");
         editIcon.classList.add("fas", "fa-pen");
         editSpan.appendChild(editIcon);
         editButton.appendChild(editSpan);
         modalTitle.appendChild(editButton);
         editModalButton = editButton;
-  
+
+        //Close Button
+        var viewCloseButton = document.createElement("button");
+        viewCloseButton.classList.add("delete", "mt-2");
+        viewCloseButton.setAttribute("id", "viewCloseButton");
+        viewCloseButton.addEventListener("click", () => {
+          var modalBackground =
+            viewCloseButton.parentElement.parentElement.previousElementSibling;
+          modalBackground.click();
+        });
+
         //Company Name
         var viewCompanyNameTitle = document.createElement("h5");
         viewCompanyNameTitle.setAttribute("name", currentID.replace(/\s/g, ""));
-        viewCompanyNameTitle.classList.add("subtitle", "is-4", "px-4", "mb-1", "has-text-weight-bold");
+        viewCompanyNameTitle.classList.add(
+          "subtitle",
+          "is-4",
+          "px-4",
+          "mb-1",
+          "has-text-weight-bold"
+        );
         viewCompanyNameTitle.appendChild(document.createTextNode("Company"));
+        viewCompanyNameTitle.appendChild(viewCloseButton);
         var viewCompanyName = document.createElement("p");
         viewCompanyName.classList.add("pText", "mb-3", "px-4");
         viewCompanyName.appendChild(document.createTextNode(currentDisplay[0]));
-  
+
         //Position
         var viewPositionTitle = document.createElement("h5");
-        viewPositionTitle.classList.add("subtitle", "is-4", "px-4", "mb-1", "has-text-weight-bold");
+        viewPositionTitle.classList.add(
+          "subtitle",
+          "is-4",
+          "px-4",
+          "mb-1",
+          "has-text-weight-bold"
+        );
         viewPositionTitle.appendChild(document.createTextNode("Position"));
         var viewPosition = document.createElement("p");
         viewPosition.classList.add("pText", "mb-3", "px-4");
         viewPosition.appendChild(document.createTextNode(currentDisplay[1]));
-  
+
         //Position Type
         var viewPositionTypeTitle = document.createElement("h5");
-        viewPositionTypeTitle.classList.add("subtitle", "is-4", "px-4", "mb-1", "has-text-weight-bold");
+        viewPositionTypeTitle.classList.add(
+          "subtitle",
+          "is-4",
+          "px-4",
+          "mb-1",
+          "has-text-weight-bold"
+        );
         viewPositionTypeTitle.appendChild(
           document.createTextNode("Position Type")
         );
         var viewPositionType = document.createElement("p");
         viewPositionType.classList.add("pText", "mb-3", "px-4");
-        viewPositionType.appendChild(document.createTextNode(currentDisplay[2]));
-  
+        viewPositionType.appendChild(
+          document.createTextNode(currentDisplay[2])
+        );
+
         //Status
         var viewStatusTitle = document.createElement("h5");
-        viewStatusTitle.classList.add("subtitle", "is-4", "px-4", "mb-1", "has-text-weight-bold");
+        viewStatusTitle.classList.add(
+          "subtitle",
+          "is-4",
+          "px-4",
+          "mb-1",
+          "has-text-weight-bold"
+        );
         viewStatusTitle.appendChild(
           document.createTextNode("Application Status")
         );
         var viewStatus = document.createElement("p");
         viewStatus.classList.add("pText", "mb-3", "px-4");
         viewStatus.appendChild(document.createTextNode(currentDisplay[3]));
-  
+
         //Date Applied
         var viewDateAppliedTitle = document.createElement("h5");
-        viewDateAppliedTitle.classList.add("subtitle", "is-4", "px-4", "mb-1", "has-text-weight-bold");
-        viewDateAppliedTitle.appendChild(document.createTextNode("Date Applied"));
+        viewDateAppliedTitle.classList.add(
+          "subtitle",
+          "is-4",
+          "px-4",
+          "mb-1",
+          "has-text-weight-bold"
+        );
+        viewDateAppliedTitle.appendChild(
+          document.createTextNode("Date Applied")
+        );
         var viewDateApplied = document.createElement("p");
         viewDateApplied.classList.add("pText", "mb-3", "px-4");
         if (currentDisplay[4].length == 0) {
           viewDateApplied.appendChild(document.createTextNode("N/A"));
         } else {
-          viewDateApplied.appendChild(document.createTextNode(currentDisplay[4]));
+          viewDateApplied.appendChild(
+            document.createTextNode(currentDisplay[4])
+          );
         }
-  
+
         //Followed Up
         var viewFollowedUpTitle = document.createElement("h5");
-        viewFollowedUpTitle.classList.add("subtitle", "is-4", "px-4", "mb-1", "has-text-weight-bold");
+        viewFollowedUpTitle.classList.add(
+          "subtitle",
+          "is-4",
+          "px-4",
+          "mb-1",
+          "has-text-weight-bold"
+        );
         viewFollowedUpTitle.appendChild(document.createTextNode("Followed Up"));
         var viewFollowedUp = document.createElement("p");
         viewFollowedUp.classList.add("pText", "mb-3", "px-4");
         viewFollowedUp.appendChild(document.createTextNode(currentDisplay[5]));
-  
+
         //Notes
         var viewNotesTitle = document.createElement("h5");
-        viewNotesTitle.classList.add("subtitle", "is-4", "px-4", "mb-1", "has-text-weight-bold");
+        viewNotesTitle.classList.add(
+          "subtitle",
+          "is-4",
+          "px-4",
+          "mb-1",
+          "has-text-weight-bold"
+        );
         viewNotesTitle.appendChild(document.createTextNode("Notes"));
         var viewNotes = document.createElement("textarea");
         viewNotes.classList.add("textarea", "mb-3");
@@ -616,7 +771,7 @@ function DisplayApplicationCards(applications) {
         } else {
           viewNotes.appendChild(document.createTextNode(currentDisplay[6]));
         }
-  
+
         viewModalContent.appendChild(modalTitle);
         viewModalContent.appendChild(viewCompanyNameTitle);
         viewModalContent.appendChild(viewCompanyName);
@@ -756,20 +911,31 @@ function windowLoad(applications) {
 }
 
 settingsButton.addEventListener("click", () => {
-  settingsModal.classList.add('is-active');
+  settingsModal.classList.add("is-active");
   let check = false;
-  (function(a){if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i.test(a)||/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0,4))) check = true;})(navigator.userAgent||navigator.vendor||window.opera);
+  (function (a) {
+    if (
+      /(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i.test(
+        a
+      ) ||
+      /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(
+        a.substr(0, 4)
+      )
+    )
+      check = true;
+  })(navigator.userAgent || navigator.vendor || window.opera);
 
-  if(check){
+  if (check) {
     settingsCardDisplay.setAttribute("disabled", "true");
     var mobileText = document.createElement("p");
-    mobileText.innerHTML = "<i>Note: Display change not available on mobile</i>";
+    mobileText.innerHTML =
+      "<i>Note: Display change not available on mobile</i>";
     settingsForm.appendChild(mobileText);
   }
 
-  if(userSettings[0] == "true"){
+  if (userSettings[0] == "true") {
     settingsShowWarning.checked = true;
-  }else{
+  } else {
     settingsShowWarning.checked = false;
   }
 
@@ -827,13 +993,13 @@ settingsForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   var settings = settingsForm.elements;
   const settingsElements = [];
-  for(var i = 0; i < settings.length-1; i++){
+  for (var i = 0; i < settings.length - 1; i++) {
     settingsElements.push(settings[i].value);
   }
 
-  if(settingsShowWarning.checked){
+  if (settingsShowWarning.checked) {
     settingsElements[0] = "true";
-  }else{
+  } else {
     settingsElements[0] = "false";
   }
 
@@ -1163,7 +1329,7 @@ function editCard() {
     if (editParent.firstChild.nodeName == "P") {
       values.push(editParent.firstChild.textContent);
     }
-    if(editParent.firstChild.lastChild.nodeName == "TEXTAREA"){
+    if (editParent.firstChild.lastChild.nodeName == "TEXTAREA") {
       values.push(editParent.firstChild.lastChild.value);
     }
     if (editParent.firstChild.hasAttribute("name")) {
@@ -1194,4 +1360,25 @@ function editCard() {
   formSubmitButton.textContent = "Submit Changes";
 }
 
-export { editCard, logout, selectSearch, search_applications, sortCards, setLightMode, setNightMode };
+const appModalDelete = document.querySelector("#appCloseButton");
+appModalDelete.addEventListener("click", () => {
+  var modalBackground = appModalDelete.parentElement.previousElementSibling;
+  modalBackground.click();
+});
+
+const settingsModalDelete = document.querySelector("#settingsCloseButton");
+settingsModalDelete.addEventListener("click", () => {
+  var modalBackground =
+    settingsModalDelete.parentElement.previousElementSibling;
+  modalBackground.click();
+});
+
+export {
+  editCard,
+  logout,
+  selectSearch,
+  search_applications,
+  sortCards,
+  setLightMode,
+  setNightMode,
+};

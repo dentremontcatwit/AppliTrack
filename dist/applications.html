@@ -71,7 +71,7 @@
           <span class="icon is-small">
             <i class="fas fa-plus"></i>
           </span>
-          <span>Add Application</span>
+          <span>New Application</span>
         </button>
 
         <button class="button topbutton" id="settingsbutton">
@@ -227,43 +227,46 @@
       <div class="modal" id="settingsModal">
         <div class="modal-background" id="settingsModalBg"></div>
         <div class="modal-content has-background-white py-5 px-5" id="settingsModalContent">
+          <button class="delete" id="settingsCloseButton"></button>
           <h3 class="title has-text-weight-bold" id="settingsTitle">Settings</h3>
           <form method="POST" action="/settings" id="settingsform">
-          <div class="control">
-            <label class="checkbox"><input type="checkbox" id="showfollowup" name="showfollowup"><b> Show Follow Up Warnings</b></label>
-          </div>
-          <br />
-          <div class="control">
-            <label class="label">Follow Up Warning Time</label>
-            <div class="select">
-              <select id="warningSelect" name="warningselect">
-                <option>3 Days</option>
-                <option>5 Days</option>
-                <option>1 Week</option>
-                <option>2 Weeks</option>
-              </select>
+            <div class="control">
+              <label class="checkbox"><input type="checkbox" id="showfollowup" name="showfollowup"><b> Show Follow Up
+                  Warnings</b></label>
             </div>
-          </div>
-          <br />
-          <div class="control">
-            <label class="label">Display Style</label>
-            <div class="select">
-              <select id="displaySelect" name="displayselect">
-                <option>Cards</option>
-                <option class="is-desktop">List</option>
-              </select>
+            <br />
+            <div class="control">
+              <label class="label">Follow Up Warning Time</label>
+              <div class="select">
+                <select id="warningSelect" name="warningselect">
+                  <option>3 Days</option>
+                  <option>5 Days</option>
+                  <option>1 Week</option>
+                  <option>2 Weeks</option>
+                </select>
+              </div>
             </div>
-          </div>
-          <br />
-            <button class="button is-block is-primary is-medium is-fullwidth" type="submit"
-              id="settingssubmit">Save Changes</button>
+            <br />
+            <div class="control">
+              <label class="label">Display Style</label>
+              <div class="select">
+                <select id="displaySelect" name="displayselect">
+                  <option>Cards</option>
+                  <option class="is-desktop">List</option>
+                </select>
+              </div>
+            </div>
+            <br />
+            <button class="button is-block is-primary is-medium is-fullwidth" type="submit" id="settingssubmit">Save
+              Changes</button>
         </div>
-      </form>
+        </form>
       </div>
 
       <div class="modal" id="formModal">
         <div class="modal-background" id="formModalBg"></div>
         <div class="modal-content has-background-white py-5 px-5" id="addModalContent">
+          <button class="delete" id="appCloseButton"></button>
           <h3 class="title mb-6 has-text-weight-bold" id="newAppTitle">New Application</h3>
           <h5 class="subtitle is-6">* = required</h5>
           <div hidden class="notification is-danger" id="invalidinput">

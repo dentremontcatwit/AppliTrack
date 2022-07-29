@@ -63,7 +63,7 @@ html {
   border: 0px;
 }
 
-.navbar-item{
+.navbar-item {
   color: white;
 }
 
@@ -204,7 +204,7 @@ html {
   padding-left: 10%;
 }
 
-#applicationtable{
+#applicationtable {
   width: 90%;
 }
 
@@ -213,6 +213,14 @@ html {
   height: 30px;
 }
 
-.table>tbody>tr>td {
+.table > tbody > tr > td {
   vertical-align: middle;
+}
+
+.delete {
+  float: right;
+}
+
+.modal-card-head {
+  margin-right: 0px;
 }

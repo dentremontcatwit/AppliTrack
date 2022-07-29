@@ -79,66 +79,78 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 
-function setNightMode(){
+function setNightMode() {
   document.cookie = "theme=night";
   renderTheme();
 }
 
-function setLightMode(){
+function setLightMode() {
   document.cookie = "theme=light";
   location.reload();
 }
 
-function renderTheme(){
+function renderTheme() {
   let cookie = {};
   document.cookie.split(";").forEach(function (el) {
     let [key, value] = el.split("=");
     cookie[key.trim()] = value;
   });
-  if(cookie["theme"] == "night"){
-    document.getElementById('nightbutton').style.display = "none";
-    document.getElementById('lightbutton').style.display = "flex";
-    document.getElementById('logInModalColor').classList.remove('has-background-white');
-    document.getElementById('signUpModalColor').classList.remove('has-background-white');
-    document.getElementById('forgPassModalColor').classList.remove('has-background-white');
-    document.getElementById('html').style.backgroundColor = "#243B53";
-    document.getElementById('footer').style.backgroundColor = "#102A43";
-    document.getElementById('footer').style.color = "#BCCCDC";
-    document.querySelector('nav').style.backgroundColor = "#102A43";
-    var cardContents = document.querySelectorAll('.card-content');
-    for(var i = 0; i < cardContents.length; i++){
+  if (cookie["theme"] == "night") {
+    document.getElementById("nightbutton").style.display = "none";
+    document.getElementById("lightbutton").style.display = "flex";
+    document
+      .getElementById("logInModalColor")
+      .classList.remove("has-background-white");
+    document
+      .getElementById("signUpModalColor")
+      .classList.remove("has-background-white");
+    document
+      .getElementById("forgPassModalColor")
+      .classList.remove("has-background-white");
+    document.getElementById("html").style.backgroundColor = "#243B53";
+    document.getElementById("footer").style.backgroundColor = "#102A43";
+    document.getElementById("footer").style.color = "#BCCCDC";
+    document.querySelector("nav").style.backgroundColor = "#102A43";
+    var cardContents = document.querySelectorAll(".card-content");
+    for (var i = 0; i < cardContents.length; i++) {
       cardContents[i].style.backgroundColor = "#334E68";
     }
-    var cardFooters = document.querySelectorAll('.card-footer-item');
-    for(var i = 0; i < cardFooters.length; i++){
+    var cardFooters = document.querySelectorAll(".card-footer-item");
+    for (var i = 0; i < cardFooters.length; i++) {
       cardFooters[i].style.backgroundColor = "#334E68";
     }
-    var pTexts = document.querySelectorAll('p');
-    for(var i = 0; i < pTexts.length; i++){
+    var pTexts = document.querySelectorAll("p");
+    for (var i = 0; i < pTexts.length; i++) {
       pTexts[i].style.color = "#BCCCDC";
     }
-    var titleTexts = document.querySelectorAll('.title');
-    for(var i = 0; i < titleTexts.length; i++){
+    var titleTexts = document.querySelectorAll(".title");
+    for (var i = 0; i < titleTexts.length; i++) {
       titleTexts[i].style.color = "#BCCCDC";
     }
-    var subtitleTexts = document.querySelectorAll('.subtitle');
-    for(var i = 0; i < subtitleTexts.length; i++){
+    var subtitleTexts = document.querySelectorAll(".subtitle");
+    for (var i = 0; i < subtitleTexts.length; i++) {
       subtitleTexts[i].style.color = "#BCCCDC";
     }
-    var modalBgs = document.querySelectorAll('.modal-content');
-    for(var i = 0; i < modalBgs.length; i++){
+    var modalBgs = document.querySelectorAll(".modal-content");
+    for (var i = 0; i < modalBgs.length; i++) {
       modalBgs[i].style.backgroundColor = "#243B53";
     }
-    var labelTexts = document.querySelectorAll('label');
-    for(var i = 0; i < labelTexts.length; i++){
+    var labelTexts = document.querySelectorAll("label");
+    for (var i = 0; i < labelTexts.length; i++) {
       labelTexts[i].style.color = "#BCCCDC";
     }
-  }else{
-    document.getElementById('nightbutton').style.display = "flex";
-    document.getElementById('lightbutton').style.display = "none";
-    document.getElementById('logInModalColor').classList.add('has-background-white');
-    document.getElementById('signUpModalColor').classList.add('has-background-white');
-    document.getElementById('forgPassModalColor').classList.add('has-background-white');
+  } else {
+    document.getElementById("nightbutton").style.display = "flex";
+    document.getElementById("lightbutton").style.display = "none";
+    document
+      .getElementById("logInModalColor")
+      .classList.add("has-background-white");
+    document
+      .getElementById("signUpModalColor")
+      .classList.add("has-background-white");
+    document
+      .getElementById("forgPassModalColor")
+      .classList.add("has-background-white");
   }
 }
 
@@ -206,7 +218,7 @@ signupForm.addEventListener("submit", (e) => {
         var settings = {};
         settings["userSettings"] = ["true", "2 Weeks", "Cards"]; //Default settings
         setDoc(doc(db, "users", cred.user.uid), settings);
-        
+
         signupForm.reset();
       })
       .catch((err) => {
@@ -247,9 +259,45 @@ forgPassForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
   const email = forgPassForm.email.value;
-  sendPasswordResetEmail(auth, email).then(() => {
-    forgPassMessage.style.display = "block";
-  });
+  sendPasswordResetEmail(auth, email)
+    .then(() => {
+      forgPassMessage.classList.remove("is-danger");
+      forgPassMessage.classList.add("is-success");
+      forgPassMessage.textContent = "A password reset email has been sent.";
+      forgPassMessage.style.display = "block";
+    })
+    .catch((err) => {
+      forgPassMessage.classList.remove("is-success");
+      forgPassMessage.classList.add("is-danger");
+      forgPassMessage.textContent = "An account with that email was not found.";
+      forgPassMessage.style.display = "block";
+    });
 });
 
-export { openLogIn, openSignUp, openForgPass, logout, setLightMode, setNightMode };
+const logInModalDelete = document.querySelector("#logInCloseButton");
+logInModalDelete.addEventListener("click", () => {
+  var modalBackground = logInModalDelete.parentElement.previousElementSibling;
+  modalBackground.click();
+});
+
+const signUpModalDelete = document.querySelector("#signUpCloseButton");
+signUpModalDelete.addEventListener("click", () => {
+  var modalBackground = signUpModalDelete.parentElement.previousElementSibling;
+  modalBackground.click();
+});
+
+const forgPassModalDelete = document.querySelector("#forgPassCloseButton");
+forgPassModalDelete.addEventListener("click", () => {
+  var modalBackground =
+    forgPassModalDelete.parentElement.previousElementSibling;
+  modalBackground.click();
+});
+
+export {
+  openLogIn,
+  openSignUp,
+  openForgPass,
+  logout,
+  setLightMode,
+  setNightMode,
+};

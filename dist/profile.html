@@ -60,7 +60,7 @@
             </nav>
         </div>
 
-        <div class="container" id="profile-head">
+        <div class="box has-text-centered">
             <span class="icon-text">
                 <span>
                     <h1 class="title has-text-centered is-1" id="nameText"></h1>
@@ -78,24 +78,30 @@
             <br>
             <br>
 
-            <h2 class="title is-2">Email</h2>
-            <p class="subtitle is-4" id="emailText"></p>
+            <h2 class="title is-3">Email</h2>
+            <p class="subtitle is-5" id="emailText"></p>
 
             <br>
 
             <button class="button is-link" onclick="EntryPoint.changePass()" id="changepassbutton">Change
                 Password</button>
+            <br>
+            <br>
             <button class="button is-danger" onclick="EntryPoint.deleteAccount()" id="deletebutton">Delete
                 Account</button>
-
             <br>
             <br>
             <p id="changepasstext"></p>
         </div>
 
+        <div class="container" id="profile-head">
+
+        </div>
+
         <div class="modal" id="resetnamemodal">
             <div class="modal-background" id="resetnamemodalbg"></div>
             <div class="modal-content py-5 px-5" id="resetNameModalColor">
+                <button class="delete" id="changeNameCloseButton"></button>
                 <h3 class="title mb-6 has-text-weight-bold">Enter New Name</h3>
                 <div hidden class="notification is-success" id="nameresetmessage">Your name has been changed.</div>
                 <form method="POST" action="/signup" id="nameresetform">
@@ -115,6 +121,7 @@
         <div class="modal" id="deleteaccountmodal">
             <div class="modal-background" id="deleteaccountmodalbg"></div>
             <div class="modal-content py-5 px-5" id="deleteAccountModalColor">
+                <button class="delete" id="delAccountCloseButton"></button>
                 <h3 class="title mb-6 has-text-weight-bold">Delete Account</h3>
                 <div hidden class="notification is-success" id="deleteaccountmessage">Your account has been deleted.
                 </div>

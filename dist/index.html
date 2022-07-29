@@ -142,12 +142,13 @@
         <span class="icon is-medium">
           <i class="fab fa-lg fa-github"></i>
         </span>
-      </a>AppliTrack v1.5 created by <a href="https://chrisdentremont.net/" target="_blank">Chris D'Entremont</a>
+      </a>AppliTrack v1.6 created by <a href="https://chrisdentremont.net/" target="_blank">Chris D'Entremont</a>
     </div>
 
     <div class="modal" id="logInModal">
       <div class="modal-background" id="logInModalBg"></div>
       <div class="modal-content py-5 px-5" id="logInModalColor">
+        <button class="delete" id="logInCloseButton"></button>
         <h3 class="title has-text-weight-bold">Log In</h3>
         <div hidden class="notification is-danger" id="invalidlogin"></div>
         <a href="#" onclick="EntryPoint.openSignUp()" class="is-size-6">Don't have an account? Sign up here.</a>
@@ -178,6 +179,7 @@
     <div class="modal" id="signUpModal">
       <div class="modal-background" id="signUpModalBg"></div>
       <div class="modal-content py-5 px-5" id="signUpModalColor">
+        <button class="delete" id="signUpCloseButton"></button>
         <h3 class="title mb-6 has-text-weight-bold">Create Account</h3>
         <div hidden class="notification is-danger" id="invalidpassword"></div>
         <div hidden class="notification is-success" id="accountcreate"></div>
@@ -217,6 +219,7 @@
     <div class="modal" id="forgPassModal">
       <div class="modal-background" id="forgPassModalBg"></div>
       <div class="modal-content py-5 px-5" id="forgPassModalColor">
+        <button class="delete" id="forgPassCloseButton"></button>
         <h3 class="title mb-6 has-text-weight-bold">Forgot Password?</h3>
         <div hidden class="notification is-success" id="forgpassmessage">If there is an account associated with the
           email,

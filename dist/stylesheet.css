@@ -63,7 +63,7 @@ html {
   border: 0px;
 }
 
-.navbar-item{
+.navbar-item {
   color: white;
 }
 
@@ -79,13 +79,16 @@ html {
   font-size: 200%;
 }
 
+#settingsbutton,
 #addapplication,
-#sortbutton,
-#uploaddata,
-#downloaddata,
-#searchbar {
-  font-size: 15px;
+#searchbar,
+#sortbutton {
   margin: 5px;
+}
+
+#settingsbutton:hover {
+  background-color: lightgray;
+  transition: 0.3s;
 }
 
 #head-body {
@@ -199,4 +202,25 @@ html {
   overflow: hidden;
   padding-top: 0%;
   padding-left: 10%;
+}
+
+#applicationtable {
+  width: 90%;
+}
+
+.tablebutton {
+  border: none;
+  height: 30px;
+}
+
+.table > tbody > tr > td {
+  vertical-align: middle;
+}
+
+.delete {
+  float: right;
+}
+
+.modal-card-head {
+  margin-right: 0px;
 }

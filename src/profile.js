@@ -8,7 +8,7 @@ import {
   sendPasswordResetEmail,
   deleteUser,
 } from "firebase/auth";
-import { deleteDoc, doc, getFirestore } from "firebase/firestore";
+import { getDoc, deleteDoc, doc, getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAvbph3Qpz8w_ZERUZQ-Oh5YEyZI-ulCWQ",
@@ -24,50 +24,59 @@ initializeApp(firebaseConfig);
 const auth = getAuth();
 const db = getFirestore();
 
-function setNightMode(){
+function setNightMode() {
   document.cookie = "theme=night";
   renderTheme();
 }
 
-function setLightMode(){
+function setLightMode() {
   document.cookie = "theme=light";
   location.reload();
 }
 
-function renderTheme(){
+function renderTheme() {
   let cookie = {};
   document.cookie.split(";").forEach(function (el) {
     let [key, value] = el.split("=");
     cookie[key.trim()] = value;
   });
-  if(cookie["theme"] == "night"){
-    document.getElementById('nightbutton').style.display = "none";
-    document.getElementById('lightbutton').style.display = "flex";
-    document.getElementById('resetNameModalColor').classList.remove('has-background-white');
-    document.getElementById('deleteAccountModalColor').classList.remove('has-background-white');
-    document.getElementById('html').style.backgroundColor = "#243B53";
-    document.querySelector('nav').style.backgroundColor = "#102A43";
-    var titleTexts = document.querySelectorAll('.title');
-    for(var i = 0; i < titleTexts.length; i++){
+  if (cookie["theme"] == "night") {
+    document.getElementById("nightbutton").style.display = "none";
+    document.getElementById("lightbutton").style.display = "flex";
+    document
+      .getElementById("resetNameModalColor")
+      .classList.remove("has-background-white");
+    document
+      .getElementById("deleteAccountModalColor")
+      .classList.remove("has-background-white");
+    document.getElementById("html").style.backgroundColor = "#243B53";
+    document.querySelector("nav").style.backgroundColor = "#102A43";
+    document.querySelector(".box").style.backgroundColor = "#102A43";
+    var titleTexts = document.querySelectorAll(".title");
+    for (var i = 0; i < titleTexts.length; i++) {
       titleTexts[i].style.color = "#BCCCDC";
     }
-    var subtitleTexts = document.querySelectorAll('.subtitle');
-    for(var i = 0; i < subtitleTexts.length; i++){
+    var subtitleTexts = document.querySelectorAll(".subtitle");
+    for (var i = 0; i < subtitleTexts.length; i++) {
       subtitleTexts[i].style.color = "#BCCCDC";
     }
-    var spanTexts = document.querySelectorAll('span');
-    for(var i = 0; i < spanTexts.length; i++){
+    var spanTexts = document.querySelectorAll("span");
+    for (var i = 0; i < spanTexts.length; i++) {
       spanTexts[i].style.color = "#BCCCDC";
     }
-    var modalBgs = document.querySelectorAll('.modal-content');
-    for(var i = 0; i < modalBgs.length; i++){
+    var modalBgs = document.querySelectorAll(".modal-content");
+    for (var i = 0; i < modalBgs.length; i++) {
       modalBgs[i].style.backgroundColor = "#243B53";
     }
-  }else{
-    document.getElementById('nightbutton').style.display = "flex";
-    document.getElementById('lightbutton').style.display = "none";
-    document.getElementById('resetNameModalColor').classList.add('has-background-white');
-    document.getElementById('deleteAccountModalColor').classList.add('has-background-white');
+  } else {
+    document.getElementById("nightbutton").style.display = "flex";
+    document.getElementById("lightbutton").style.display = "none";
+    document
+      .getElementById("resetNameModalColor")
+      .classList.add("has-background-white");
+    document
+      .getElementById("deleteAccountModalColor")
+      .classList.add("has-background-white");
   }
 }
 
@@ -144,4 +153,26 @@ function deleteAUser() {
   deleteUser(auth.currentUser).then(() => {});
 }
 
-export { logout, changeName, changePass, deleteAccount, deleteAUser, setLightMode, setNightMode };
+const delAccountModalDelete = document.querySelector("#delAccountCloseButton");
+delAccountModalDelete.addEventListener("click", () => {
+  var modalBackground =
+    delAccountModalDelete.parentElement.previousElementSibling;
+  modalBackground.click();
+});
+
+const changeNameModalDelete = document.querySelector("#changeNameCloseButton");
+changeNameModalDelete.addEventListener("click", () => {
+  var modalBackground =
+    changeNameModalDelete.parentElement.previousElementSibling;
+  modalBackground.click();
+});
+
+export {
+  logout,
+  changeName,
+  changePass,
+  deleteAccount,
+  deleteAUser,
+  setLightMode,
+  setNightMode,
+};

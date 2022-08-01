@@ -95,8 +95,23 @@
               <a href="#" class="dropdown-item" value="Alphabetical" onClick="javascript:EntryPoint.sortCards('az')">
                 A-Z
               </a>
-              <a href="#" class="dropdown-item" value="Date" onClick="javascript:EntryPoint.sortCards('date')">
-                Date Applied
+              <a href="#" class="dropdown-item" value="Alphabetical" onClick="javascript:EntryPoint.sortCards('za')">
+                Z-A
+              </a>
+              <a href="#" class="dropdown-item" value="Date" onClick="javascript:EntryPoint.sortCards('datemost')">
+                Date Applied (Most Recent)
+              </a>
+              <a href="#" class="dropdown-item" value="Date" onClick="javascript:EntryPoint.sortCards('dateleast')">
+                Date Applied (Least Recent)
+              </a>
+              <a href="#" class="dropdown-item" value="Salary" onClick="javascript:EntryPoint.sortCards('salaryhtol')">
+                Salary (High to Low)
+              </a>
+              <a href="#" class="dropdown-item" value="Salary" onClick="javascript:EntryPoint.sortCards('salaryltoh')">
+                Salary (Low to High)
+              </a>
+              <a href="#" class="dropdown-item" value="Color" onClick="javascript:EntryPoint.sortCards('color')">
+                Color
               </a>
             </div>
           </div>
@@ -131,14 +146,20 @@
                 </a>
                 <a onclick="EntryPoint.selectSearch('Date Applied <=')" class="dropdown-item">
                   Date Applied (<=) </a>
-                    <a onclick="EntryPoint.selectSearch('Date Applied >')" class="dropdown-item">
-                      Date Applied (>) </a>
-                    <a onclick="EntryPoint.selectSearch('Followed Up')" class="dropdown-item">
-                      Followed Up
-                    </a>
-                    <a onclick="EntryPoint.selectSearch('Notes')" class="dropdown-item">
-                      Notes
-                    </a>
+                <a onclick="EntryPoint.selectSearch('Date Applied >')" class="dropdown-item">
+                  Date Applied (>) </a>
+                <a onclick="EntryPoint.selectSearch('Salary <=')" class="dropdown-item">
+                  Salary (<=) </a>
+                <a onclick="EntryPoint.selectSearch('Salary >')" class="dropdown-item">
+                  Salary (>) </a>
+                <a onclick="EntryPoint.selectSearch('Color')" class="dropdown-item">
+                  Color </a>
+                <a onclick="EntryPoint.selectSearch('Followed Up')" class="dropdown-item">
+                  Followed Up
+                </a>
+                <a onclick="EntryPoint.selectSearch('Notes')" class="dropdown-item">
+                  Notes
+                </a>
               </div>
             </div>
           </div>
@@ -196,6 +217,45 @@
                 </a>
                 <a onclick="EntryPoint.search_applications('Offered')" class="dropdown-item">
                   Offered
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="dropdown is-hoverable" id="appsearchbarcolor">
+            <div class="dropdown-trigger">
+              <button class="button topbutton" aria-haspopup="true" aria-controls="dropdown-menu3">
+                <span id="searchColorText">Select</span>
+                <span class="icon is-small">
+                  <i class="fas fa-angle-down" aria-hidden="true"></i>
+                </span>
+              </button>
+            </div>
+            <div class="dropdown-menu" role="menu">
+              <div class="dropdown-content">
+                <a onclick="EntryPoint.search_applications('None')" class="dropdown-item">
+                  None
+                </a>
+                <a onclick="EntryPoint.search_applications('Blue')" class="dropdown-item" style="background-color: #85E3FF">
+                  Blue
+                </a>
+                <a onclick="EntryPoint.search_applications('Red')" class="dropdown-item" style="background-color: #FFABAB">
+                  Red
+                </a>
+                <a onclick="EntryPoint.search_applications('Green')" class="dropdown-item" style="background-color: #BFFCC6">
+                  Green
+                </a>
+                <a onclick="EntryPoint.search_applications('Orange')" class="dropdown-item" style="background-color: #FFC8A2">
+                  Orange
+                </a>
+                <a onclick="EntryPoint.search_applications('Pink')" class="dropdown-item" style="background-color: #FEE1E8">
+                  Pink
+                </a>
+                <a onclick="EntryPoint.search_applications('Purple')" class="dropdown-item" style="background-color: #CBAACB">
+                  Purple
+                </a>
+                <a onclick="EntryPoint.search_applications('Yellow')" class="dropdown-item" style="background-color: #FFFFB5">
+                  Yellow
                 </a>
               </div>
             </div>
@@ -322,7 +382,7 @@
                   <input class="input is-small" type="date" name="adddate">
                 </div>
               </div>
-              <div class="field mr-6 ml-2" style="float:left">
+              <div class="field mr-4 ml-2" style="float:left">
                 <div class="control">
                   <label class="label">Followed Up?</label>
                   <div class="select is-rounded is-small">
@@ -421,7 +481,11 @@
                 </div>
               </div>
               <div class="field mr-3">
-                <label class="label">Job Listing URL</label>
+                <label class="label" style="float:left">Job Listing URL <a title="Go to link" href="" target="_blank" id="viewjoburllink">
+                  <span class="icon is-small">
+                    <i class="fas fa-link"></i>
+                  </span>
+                </a></label>
                 <div class="control">
                   <input class="input is-small" type="text" name="viewjoburl">
                 </div>
@@ -450,7 +514,7 @@
                   <input class="input is-small" type="date" name="viewdate">
                 </div>
               </div>
-              <div class="field mr-6 ml-2" style="float:left">
+              <div class="field mr-4 ml-2" style="float:left">
                 <div class="control">
                   <label class="label">Followed Up?</label>
                   <div class="select is-rounded is-small">
@@ -511,11 +575,11 @@
     <div class="modal" id="deleteModal">
       <div class="modal-background" id="deleteModalBg"></div>
       <div class="modal-content has-background-white" style="text-align:center" id="deleteModalContent">
-        <h1 class="title has-text-centered mt-3 is-3" id="deleteAppText"></h1>
-        <h3 class="subtitle has-text-centered is-5">This action cannot be undone.</h3>
+        <h1 class="title has-text-centered mt-6 is-3" id="deleteAppText"></h1>
+        <h3 class="subtitle has-text-centered is-5 mb-6">This action cannot be undone.</h3>
         <button class="button is-rounded is-info mb-3 mr-4" id="appDeleteCloseButton">Go
           Back</button>
-        <button class="button is-rounded is-danger mb-3" id="appDeleteButton">Delete
+        <button class="button is-rounded is-danger mb-6" id="appDeleteButton">Delete
           Application</button>
       </div>
     </div>

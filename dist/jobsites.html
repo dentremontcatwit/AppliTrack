@@ -7,7 +7,7 @@
         <title>AppliTrack</title>
         <script src="https://kit.fontawesome.com/d36d0a95a4.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" />
-        <link rel="stylesheet" href="stylesheet.css">
+        <link rel="stylesheet" href="jobsites.css">
         <link rel="icon" href="images/logo2.png">
     </head>
 
@@ -59,9 +59,27 @@
             </nav>
         </div>
 
-        //TODO: Write code to display job recommendations
+        <div class="hero-body" id="title-body">
+            <h1 class="title">Good Job Sites for the Job Search</h1>
+            <div hidden class="notification is-danger" id="verifyemail">Please verify your email before adding any
+                applications.
+              </div>
+        </div>
+
+        <div class="hero-body" id="jobsites">
+            <table class="table is-striped mt-5" id="sitestable">
+                <tbody id="sitestablebody">
+                </tbody>
+            </table>
+            <!-- Create a header 
+                 Present a List of job Sites
+                 Each Row contains
+                    Site logo
+                    Site description
+                    if u click the row it takes u to the job site -->
+        </div>
 
     </body>
-    <script type="text/javascript" src="profile.bundle.js"></script>
+    <script type="text/javascript" src="jobsites.bundle.js"></script>
 
 </html>

@@ -6,6 +6,7 @@ module.exports = {
     index: "./src/index.js",
     applications: "./src/applications.js",
     profile: "./src/profile.js",
+    jobsites: "./src/jobsites.js",
   },
   output: {
     path: path.resolve(__dirname, "dist"),

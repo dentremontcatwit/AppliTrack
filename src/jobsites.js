@@ -27,190 +27,246 @@ var userSettings = {};
 
 //Job Site Info
 const AIA = {
-  logo: "images/linkedin.png",
+  logo: "images/aia.png",
   title: "American Institute of Architects",
   desc: "",
   link: "https://www.aia.org/career-center",
+  industries: ["Architecture"],
 };
 
 const Angel = {
-  logo: "images/linkedin.png",
+  logo: "images/angellist.png",
   title: "Angel List",
   desc: "",
   link: "https://angel.co/jobs",
+  industries: ["Engineering","Computer Science","Digital Design","Product","Operations","Sales","Marketing",
+               "Management"],
 };
 
 const Architects = {
-  logo: "images/linkedin.png",
+  logo: "images/BSA.png",
   title: "Boston Society of Architects",
   desc: "",
   link: "https://www.architects.org/jobs",
+  industries: ["Architecture"],
 };
 
 const ASID = {
-  logo: "images/linkedin.png",
+  logo: "images/ASID.png",
   title: "American Society of Interior Designers",
   desc: "",
   link: "https://www.asid.org/",
+  industries: ["Architecture","Interior Design",],
 };
 
 const Behance = {
-  logo: "images/linkedin.png",
+  logo: "images/behance.png",
   title: "Behance",
-  desc: "",
+  desc: "Jobs for designers. The JobList from creative platform Behance showcases opportunities within " +  
+        "some of the top global brands, including Google, Facebook, EA, Sony, Adobe, Apple, Microsoft " + 
+        "and others. You can search via company or category to help refine and narrow your results.",
   link: "https://www.behance.net/joblist?tracking_source=nav20",
+  industries: ["Everything"],
 };
 
 const Biopharmguy = {
-  logo: "images/linkedin.png",
+  logo: "images/BPG.png",
   title: "BioPharmGuy",
   desc: "",
   link: "https://biopharmguy.com/career-by-location.php",
+  industries: ["BioTech","Biology","Chemisty"],
 };
 
 const BostonStartups = {
-  logo: "images/linkedin.png",
+  logo: "images/BSG.png",
   title: "Boston Startups Guide",
   desc: "",
   link: "https://bostonstartupsguide.com/boston-startup-jobs/",
+  industries: ["Engineering","Computer Science"],
 };
 
 const BIB = {
-  logo: "images/linkedin.png",
+  logo: "images/BIB.png",
   title: "Built in Boston",
   desc: "",
   link: "https://www.builtinboston.com/",
+  industries: ["Data Science","Digital Design", "Engineering", "Computer Science","Finance","Human Resources",
+               "Legal","Marketing","Operations","Product","Management","Sales"],
 };
 
 const CollegeRecruiter = {
-  logo: "images/linkedin.png",
+  logo: "images/CollegeRecruiter.png",
   title: "College Recruiter",
   desc: "",
   link: "https://collegerecruiter.com/",
+  industries: [],
 };
 
 const Coroflot = {
-  logo: "images/linkedin.png",
+  logo: "images/Coroflot.png",
   title: "Coroflot",
   desc: "",
   link: "https://www.coroflot.com/design-jobs",
+  industries: ["Digital Design","Engineering","Design"],
 };
 
 const DesignJobs = {
-  logo: "images/linkedin.png",
+  logo: "images/AIGA.png",
   title: "AIGA Design Jobs",
   desc: "",
   link: "https://designjobs.aiga.org/",
+  industries: ["Digital Design","Design"],
 };
 
 const Dice = {
-  logo: "images/linkedin.png",
+  logo: "images/Dice.png",
   title: "Dice",
   desc: "",
   link: "https://www.dice.com/",
+  industries: ["Computer Science","Data Science", "Management",],
 };
 
 const EngineerJobs = {
-  logo: "images/linkedin.png",
+  logo: "images/Engineerjobs.png",
   title: "Engineer Jobs",
   desc: "",
   link: "https://www.engineerjobs.com/",
+  industries: ["Computer Science","Engineering"],
 };
 
 const GlassDoor = {
-  logo: "images/linkedin.png",
+  logo: "images/Glassdoor.png",
   title: "Glassdoor",
   desc: "",
   link: "https://www.glassdoor.com/",
+  industries: ["Everything"],
 };
 
 const Greentown = {
-  logo: "images/linkedin.png",
+  logo: "images/Greentown.png",
   title: "Greentown Labs",
   desc: "",
   link: "https://greentownlabs.com/",
+  industries: ["Engineering","Business","Data Science","Digital Design","Marketing","Operations",
+               "Sales","Computer Science"],
 };
 
 const HackerRank = {
-  logo: "images/linkedin.png",
+  logo: "images/HackerRank.png",
   title: "Hacker Rank",
   desc: "",
   link: "https://www.hackerrank.com/",
+  industries: ["Data Science","Computer Science"],
 };
 
 const InteriorDesign = {
-  logo: "images/linkedin.png",
+  logo: "images/IIDA.png",
   title: "International Interior Design Association",
   desc: "",
   link: "https://iida-jobs.careerwebsite.com/",
+  industries: ["Interior Design"],
 };
 
 const Indeed = {
   logo: "images/Indeed.png",
   title: "Indeed",
-  desc: "This is also a job search website.",
+  desc: "",
   link: "https://www.indeed.com/",
+  industries: ["Everything"],
 };
 
 const Interships = {
-  logo: "images/linkedin.png",
+  logo: "images/Chegg.png",
   title: "Chegg Internships",
   desc: "",
   link: "https://www.internships.com/",
+  industries: ["Everything"],
 };
 
 const Krop = {
-  logo: "images/linkedin.png",
+  logo: "images/Krop.png",
   title: "Krop",
   desc: "",
   link: "https://www.krop.com/creative-jobs/",
+  industries: ["Management","Digital Design","Computer Science"],
 };
 
 const LinkedIn = {
   logo: "images/linkedin.png",
   title: "LinkedIn",
-  desc: "This is a job search website.",
+  desc: "",
   link: "https://www.linkedin.com/",
+  industries: ["Everything"],
 };
 
 const NSF = {
-  logo: "images/linkedin.png",
+  logo: "images/NSF.png",
   title: "National Science Foundation",
   desc: "",
   link: "https://nsf.gov/",
+  industries: ["Biology","Computer Science","Engineering","Human Resources"],
 };
 
 const SimplyHired = {
-  logo: "images/linkedin.png",
+  logo: "images/SimplyHired.png",
   title: "Simply Hired.",
   desc: "",
   link: "https://www.simplyhired.com/",
+  industries: ["Everything"],
 };
 
 const TechReview = {
-  logo: "images/linkedin.png",
+  logo: "images/MIT.png",
   title: "MIT Technology Review",
   desc: "",
   link: "https://www.technologyreview.com/open-positions/",
+  industries: ["Computer Science","Data Science","Digital Design","Engineering"],
 };
 
 const USAJobs = {
-  logo: "images/linkedin.png",
+  logo: "images/USA.png",
   title: "USA Jobs",
   desc: "",
   link: "https://www.usajobs.gov/",
+  industries: ["Everything"],
 };
 
+const VentureLoop = {
+    logo: "images/Venture.png",
+    title: "Venture Loop",
+    desc: "",
+    link: "https://www.ventureloop.com/ventureloop/home.php",
+    industries: ["Finance","Data Science","Computer Science","Engineering","Business","Human Resources",
+                 "Operations"],
+  };
+  
+  const VentureFizz = {
+    logo: "images/VentureFizz.png",
+    title: "Venture Fizz",
+    desc: "",
+    link: "https://venturefizz.com/jobs",
+    industries: ["Engineering","Computer Science","Digital Design","Marketing","Sales","Human Resources",
+                 "Management","Data Science"],
+  };
+  
+  
 const WayUp = {
-  logo: "images/linkedin.png",
+  logo: "images/Wayup.png",
   title: "Way Up",
   desc: "",
   link: "https://www.wayup.com/",
+  industries: ["Everything"],
 };
 
-const sites = [AIA, Angel, Architects, ASID, Behance, Biopharmguy, BostonStartups, BIB, CollegeRecruiter, Coroflot, DesignJobs, Dice, 
-  EngineerJobs, GlassDoor, Greentown, HackerRank, InteriorDesign, Indeed, Interships, Krop, LinkedIn, NSF, SimplyHired, 
-  TechReview, USAJobs, WayUp];
+const sites = [AIA, Angel, Architects, ASID, Behance, Biopharmguy, BostonStartups, BIB, CollegeRecruiter, 
+               Coroflot, DesignJobs, Dice, EngineerJobs, GlassDoor, Greentown, HackerRank, InteriorDesign, 
+               Indeed, Interships, Krop, LinkedIn, NSF, SimplyHired, TechReview, USAJobs, VentureFizz, 
+               VentureLoop, WayUp];
+
+const industryTags = ["Architecture","Engineering","Computer Science", "Digital Design", "Product","Operations",
+                      "Sales","Marketing","Management","Interior Design","Everything","BioTech","Biology","Chemisty",
+                      "Data Science", "Finance","Human Resources", "Legal", "Economics","Psychology","Business",
+                      "HealthCare", "Education", "Language", "Design"];
 
 const verifyEmail = document.querySelector("#verifyemail");
 var isEmailVerified;

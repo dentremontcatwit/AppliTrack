@@ -1,0 +1,37 @@
+html {
+    background-size: cover;
+    background-color: rgb(241, 241, 241);
+  }
+
+
+#title-body {
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-bottom: 0%;
+  }
+
+.navbar-item {
+    color: white;
+}
+  
+#navbarstart {
+    padding-left: 3%;
+}  
+
+#sitestable {
+    width: 90%;
+}
+
+#jobsites {
+    overflow: hidden;
+    padding-top: 0%;
+    padding-left: 10%;
+  }
+
+.table > tbody > tr > td {
+    vertical-align: middle;
+}  
+
+#sitelogo {
+    
+}

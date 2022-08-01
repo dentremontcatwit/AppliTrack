@@ -1,11 +1,6 @@
 renderTheme();
 import { initializeApp } from "firebase/app";
-import {
-  getAuth,
-  signOut,
-  onAuthStateChanged,
-  GoogleAuthProvider,
-} from "firebase/auth";
+import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
 import {
   getFirestore,
   doc,
@@ -228,29 +223,6 @@ const deleteAppButton = document.querySelector("#appDeleteButton");
 const deleteAppCloseButton = document.querySelector("#appDeleteCloseButton");
 
 var appsToDisplay = [];
-
-const options = {
-  fields: ["formatted_address", "geometry", "name"],
-  strictBounds: false,
-  types: ["establishments"],
-};
-const addAutocomplete = new google.maps.places.Autocomplete(
-  appFormLocationField,
-  options
-);
-
-addAutocomplete.addListener("place_changed", () => {
-  const place = addAutocomplete.getPlace();
-});
-
-const viewAutocomplete = new google.maps.places.Autocomplete(
-  viewFormLocationField,
-  options
-);
-
-viewAutocomplete.addListener("place_changed", () => {
-  const place = viewAutocomplete.getPlace();
-});
 
 /**
  * A function to check if a given date is two weeks or more away

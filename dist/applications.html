@@ -301,7 +301,7 @@
               <div class="field mr-3" style="float:left; width:65%">
                 <label class="label">Location</label>
                 <div class="control">
-                  <input class="input is-small" type="text" name="addlocation">
+                  <input class="input is-small" type="text" name="addlocation" id="addLocationField">
                 </div>
               </div>
               <div class="field mr-3" style="float:right;">
@@ -429,7 +429,7 @@
               <div class="field mr-3" style="float:left; width:65%">
                 <label class="label">Location</label>
                 <div class="control">
-                  <input class="input is-small" type="text" name="viewlocation">
+                  <input class="input is-small" type="text" name="viewlocation" id="viewLocationField">
                 </div>
               </div>
               <div class="field mr-3" style="float:right;">
@@ -527,8 +527,28 @@
       </table>
     </div>
   </body>
+  <script>
+    let addAutocomplete;
+    let viewAutocomplete;
+    function initAutocomplete() {
+      const options = {
+        types: ["establishments"],
+        fields: ["place_id", "geometry", "name"],
+      };
+      addAutocomplete = new google.maps.places.Autocomplete(
+        document.getElementById('addLocationField'),
+        options
+      );
+
+      viewAutocomplete = new google.maps.places.Autocomplete(
+        document.getElementById('viewLocationField'),
+        options
+      );
+    }
+  </script>
   <script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwauHpY1Iw3f5TxYjzWUk3qTB32y_LYlw&libraries=places&v=weekly"></script>
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwauHpY1Iw3f5TxYjzWUk3qTB32y_LYlw&libraries=places&callback=initAutocomplete"
+    async defer></script>
   <script type="text/javascript" src="applications.bundle.js"></script>
 
 </html>

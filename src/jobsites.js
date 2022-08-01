@@ -27,7 +27,7 @@ var userSettings = {};
 
 //Job Site Info
 const AIA = {
-  logo: "images/aia.png",
+  logo: "images/AIA.png",
   title: "American Institute of Architects",
   desc: "",
   link: "https://www.aia.org/career-center",

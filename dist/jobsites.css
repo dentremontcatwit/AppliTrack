@@ -32,6 +32,18 @@ html {
     vertical-align: middle;
 }  
 
-#sitelogo {
-    
+#siteNameTD {
+  width: 300px;
+  text-align: left;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+#siteLogoTD {
+  width:  96px;
+}
+
+#sitetablerow {
+  height: 96px;
+  cursor: pointer;
 }

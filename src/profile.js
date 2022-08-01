@@ -26,6 +26,8 @@ const db = getFirestore();
 
 function setNightMode() {
   document.cookie = "theme=night";
+  document.getElementById("html").style.transition = "0.3s";
+  document.querySelector("nav").style.transition = "0.3s";
   renderTheme();
 }
 

@@ -185,6 +185,7 @@ html {
 
 .card-footer-item.application-card-view:hover {
   background-color: lightgray;
+  transition: 0.3s;
   cursor: pointer;
 }
 
@@ -194,6 +195,7 @@ html {
 
 .card-footer-item.application-card-delete:hover {
   background-color: lightpink;
+  transition: 0.3s;
   cursor: pointer;
   color: red;
 }

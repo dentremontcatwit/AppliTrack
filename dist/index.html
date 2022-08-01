@@ -149,26 +149,31 @@
       <div class="modal-background" id="logInModalBg"></div>
       <div class="modal-content py-5 px-5" id="logInModalColor">
         <button class="delete" id="logInCloseButton"></button>
-        <h3 class="title has-text-weight-bold">Log In</h3>
+        <h3 class="title has-text-weight-bold has-text-centered">Log In</h3>
         <div hidden class="notification is-danger" id="invalidlogin"></div>
-        <a href="#" onclick="EntryPoint.openSignUp()" class="is-size-6">Don't have an account? Sign up here.</a>
-        <br />
-        <a href="#" onclick="EntryPoint.openForgPass()" class="is-size-6">Forgot password?</a>
         <form method="POST" action="/login" id="loginform">
           <br />
           <div class="field">
-            <label class="label">Email</label>
-            <div class="control">
-              <input class="input" type="email" name="email" required>
+            <div class="control has-icons-left">
+              <input class="input" type="email" name="email" placeholder="Email" required>
+              <span class="icon is-small is-left">
+                <i class="fas fa-envelope"></i>
+              </span>
             </div>
           </div>
           <div class="field">
-            <label class="label">Password</label>
-            <div class="control">
-              <input class="input" type="password" name="password" required>
+            <div class="control has-icons-left">
+              <input class="input" type="password" name="password" placeholder="Password" required>
+              <span class="icon is-small is-left">
+                <i class="fas fa-key"></i>
+              </span>
             </div>
           </div>
 
+          <a href="#" onclick="EntryPoint.openSignUp()" class="is-size-6">Don't have an account? Sign up here.</a>
+          <br />
+          <a href="#" onclick="EntryPoint.openForgPass()" class="is-size-6">Forgot password?</a>
+          <br />
           <br />
           <button class="button is-block is-primary is-medium is-fullwidth" type="submit" id="loginsubmit">Log
             In</button>
@@ -180,32 +185,41 @@
       <div class="modal-background" id="signUpModalBg"></div>
       <div class="modal-content py-5 px-5" id="signUpModalColor">
         <button class="delete" id="signUpCloseButton"></button>
-        <h3 class="title mb-6 has-text-weight-bold">Create Account</h3>
+        <h3 class="title has-text-weight-bold has-text-centered">Create Account</h3>
+        <p class="subtitle is-5 mb-6 has-text-centered">Join AppliTrack Today!</p>
         <div hidden class="notification is-danger" id="invalidpassword"></div>
         <div hidden class="notification is-success" id="accountcreate"></div>
         <form method="POST" action="/signup" id="signupform">
           <div class="field">
-            <label class="label">Email</label>
-            <div class="control">
-              <input class="input" type="email" name="email" required>
+            <div class="control has-icons-left">
+              <input class="input" type="email" name="email" placeholder="Email" required>
+              <span class="icon is-small is-left">
+                <i class="fas fa-envelope"></i>
+              </span>
             </div>
           </div>
           <div class="field">
-            <label class="label">Name</label>
-            <div class="control">
-              <input class="input" type="text" name="name" required>
+            <div class="control has-icons-left">
+              <input class="input" type="text" name="name" placeholder="Name" required>
+              <span class="icon is-small is-left">
+                <i class="fas fa-user"></i>
+              </span>
             </div>
           </div>
           <div class="field">
-            <label class="label">Password</label>
-            <div class="control">
-              <input class="input" type="password" name="password" required>
+            <div class="control has-icons-left">
+              <input class="input" type="password" name="password" placeholder="Password" required>
+              <span class="icon is-small is-left">
+                <i class="fas fa-key"></i>
+              </span>
             </div>
           </div>
           <div class="field">
-            <label class="label">Re-Enter Password</label>
-            <div class="control">
-              <input class="input" type="password" name="repassword" required>
+            <div class="control has-icons-left">
+              <input class="input" type="password" name="repassword" placeholder="Re-enter Password" required>
+              <span class="icon is-small is-left">
+                <i class="fas fa-key"></i>
+              </span>
             </div>
           </div>
 

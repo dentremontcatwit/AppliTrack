@@ -56,6 +56,8 @@ function logout() {
 
 function setNightMode() {
   document.cookie = "theme=night";
+  document.getElementById("html").style.transition = "0.3s";
+  document.querySelector("nav").style.transition = "0.3s";
   renderTheme();
 }
 
@@ -78,7 +80,6 @@ function renderTheme() {
     document.getElementById("appTitle").style.color = "#BCCCDC";
     document.getElementById("newAppTitle").style.color = "#BCCCDC";
     document.getElementById("settingsTitle").style.color = "#BCCCDC";
-    document.querySelector("h5").style.color = "#BCCCDC";
     document.querySelector("nav").style.backgroundColor = "#102A43";
     document.getElementById("addapplication").style.backgroundColor = "#00897B";
     document
@@ -90,6 +91,21 @@ function renderTheme() {
     document
       .getElementById("settingsModalContent")
       .classList.remove("has-background-white");
+    document
+      .getElementById("deleteModalContent")
+      .classList.remove("has-background-white");
+    var h1texts = document.querySelectorAll("h1");
+    for (var i = 0; i < h1texts.length; i++) {
+      h1texts[i].style.color = "#BCCCDC";
+    }
+    var h3texts = document.querySelectorAll("h3");
+    for (var i = 0; i < h3texts.length; i++) {
+      h3texts[i].style.color = "#BCCCDC";
+    }
+    var h5texts = document.querySelectorAll("h5");
+    for (var i = 0; i < h5texts.length; i++) {
+      h5texts[i].style.color = "#BCCCDC";
+    }
     var cardContents = document.querySelectorAll(".card-content");
     for (var i = 0; i < cardContents.length; i++) {
       cardContents[i].style.backgroundColor = "#334E68";
@@ -97,7 +113,6 @@ function renderTheme() {
     var cardFooters = document.querySelectorAll(".card-footer-item");
     for (var i = 0; i < cardFooters.length; i++) {
       cardFooters[i].style.backgroundColor = "#102A43";
-      cardFooters[i];
     }
     var pTexts = document.querySelectorAll("p");
     for (var i = 0; i < pTexts.length; i++) {
@@ -153,6 +168,9 @@ function renderTheme() {
     document
       .getElementById("settingsModalContent")
       .classList.add("has-background-white");
+    document
+      .getElementById("deleteModalContent")
+      .classList.add("has-background-white");
   }
 }
 
@@ -184,16 +202,25 @@ const modal = document.querySelector("#formModal");
 
 //Application Form
 const applicationForm = document.querySelector("#applicationform");
+var appFormLocationField = applicationForm.addlocation;
 const formSubmitButton = document.querySelector("#formsubmit");
 const invalidInput = document.querySelector("#invalidinput");
-const invalidCompanyName = document.querySelector("#invalidcompanyname");
 
 //Application View Modal
 const viewModal = document.querySelector("#viewModal");
 const viewModalBg = document.querySelector("#viewModalBg");
 const viewModalContent = document.querySelector("#viewModalContent");
+const viewModalForm = document.querySelector("#viewappform");
+var viewFormLocationField = viewModalForm.viewlocation;
 var editModalButton;
 var applicationID = "";
+
+//Delete Modal
+const deleteModal = document.querySelector("#deleteModal");
+const deleteModalBg = document.querySelector("#deleteModalBg");
+const deleteAppText = document.querySelector("#deleteAppText");
+const deleteAppButton = document.querySelector("#appDeleteButton");
+const deleteAppCloseButton = document.querySelector("#appDeleteCloseButton");
 
 var appsToDisplay = [];
 
@@ -264,6 +291,21 @@ function DisplayApplicationCards(applications) {
       //Card content
       var cardContent = document.createElement("div");
       cardContent.classList.add("card-content");
+      if (currentDisplay[8] == "Blue") {
+        cardContent.style.backgroundColor = "#85E3FF";
+      } else if (currentDisplay[8] == "Red") {
+        cardContent.style.backgroundColor = "#FFABAB";
+      } else if (currentDisplay[8] == "Green") {
+        cardContent.style.backgroundColor = "#BFFCC6";
+      } else if (currentDisplay[8] == "Orange") {
+        cardContent.style.backgroundColor = "#FFC8A2";
+      } else if (currentDisplay[8] == "Pink") {
+        cardContent.style.backgroundColor = "#FEE1E8";
+      } else if (currentDisplay[8] == "Purple") {
+        cardContent.style.backgroundColor = "#CBAACB";
+      } else if (currentDisplay[8] == "Yellow") {
+        cardContent.style.backgroundColor = "#FFFFB5";
+      }
       var cardContentTop = document.createElement("p");
       cardContentTop.classList.add("pTopText");
       if (currentDisplay[1].length <= 23) {
@@ -298,201 +340,38 @@ function DisplayApplicationCards(applications) {
       var viewLink = document.createElement("p");
       viewLink.classList.add("card-footer-item", "application-card-view");
       viewLink.addEventListener("click", () => {
-        //Title
-        var modalTitle = document.createElement("header");
-        modalTitle.setAttribute("id", "viewModalHeader");
-        modalTitle.classList.add(
-          "modal-card-head",
-          "is-size-5",
-          "has-text-weight-bold",
-          "mb-2"
-        );
-        if (currentDisplay[1].length + currentDisplay[0].length <= 50) {
-          modalTitle.appendChild(
-            document.createTextNode(
-              "" + currentDisplay[1] + " @ " + currentDisplay[0]
-            )
-          );
-        } else {
-          var titleString = "" + currentDisplay[1] + " @ " + currentDisplay[0];
-          modalTitle.appendChild(
-            document.createTextNode(titleString.substring(0, 50) + "...")
-          );
-        }
-        //Edit button
-        var editButton = document.createElement("a");
-        editButton.setAttribute("id", "editIcon");
-        editButton.setAttribute("href", "#");
-        editButton.setAttribute("onClick", "javascript:EntryPoint.editCard()");
-        var editSpan = document.createElement("span");
-        editSpan.classList.add("icon", "is-medium");
-        var editIcon = document.createElement("i");
-        editIcon.classList.add("fas", "fa-pen");
-        editSpan.appendChild(editIcon);
-        editButton.appendChild(editSpan);
-        modalTitle.appendChild(editButton);
-        editModalButton = editButton;
+        var viewPosTitle = document.querySelector("#viewPositionTitle");
+        var viewComTitle = document.querySelector("#viewCompanyTitle");
+        viewPosTitle.textContent = currentDisplay[1];
+        viewPosTitle.setAttribute("name", currentID);
+        viewComTitle.textContent = currentDisplay[0];
 
-        //Close Button
-        var viewCloseButton = document.createElement("button");
-        viewCloseButton.classList.add("delete", "mt-2");
-        viewCloseButton.setAttribute("id", "viewCloseButton");
-        viewCloseButton.addEventListener("click", () => {
-          var modalBackground =
-            viewCloseButton.parentElement.parentElement.previousElementSibling;
-          modalBackground.click();
-        });
+        viewModalForm.viewcompany.value = currentDisplay[0];
+        viewModalForm.viewposition.value = currentDisplay[1];
+        viewModalForm.viewsalary.value = currentDisplay[2];
+        viewModalForm.viewjoburl.value = currentDisplay[3];
+        viewModalForm.viewlocation.value = currentDisplay[4];
+        viewModalForm.viewjobtype.value = currentDisplay[5];
+        viewModalForm.viewdate.value = currentDisplay[6];
+        viewModalForm.viewfollowedup.value = currentDisplay[7];
+        viewModalForm.viewcolor.value = currentDisplay[8];
+        viewModalForm.viewstatus.value = currentDisplay[9];
+        viewModalForm.viewnotes.value = currentDisplay[10];
 
-        //Company Name
-        var viewCompanyNameTitle = document.createElement("h5");
-        viewCompanyNameTitle.setAttribute("name", currentID.replace(/\s/g, ""));
-        viewCompanyNameTitle.classList.add(
-          "subtitle",
-          "is-4",
-          "px-4",
-          "mb-1",
-          "has-text-weight-bold"
-        );
-        viewCompanyNameTitle.appendChild(document.createTextNode("Company"));
-        viewCompanyNameTitle.appendChild(viewCloseButton);
-        var viewCompanyName = document.createElement("p");
-        viewCompanyName.classList.add("pText", "mb-3", "px-4");
-        viewCompanyName.appendChild(document.createTextNode(currentDisplay[0]));
-
-        //Position
-        var viewPositionTitle = document.createElement("h5");
-        viewPositionTitle.classList.add(
-          "subtitle",
-          "is-4",
-          "px-4",
-          "mb-1",
-          "has-text-weight-bold"
-        );
-        viewPositionTitle.appendChild(document.createTextNode("Position"));
-        var viewPosition = document.createElement("p");
-        viewPosition.classList.add("pText", "mb-3", "px-4");
-        viewPosition.appendChild(document.createTextNode(currentDisplay[1]));
-
-        //Position Type
-        var viewPositionTypeTitle = document.createElement("h5");
-        viewPositionTypeTitle.classList.add(
-          "subtitle",
-          "is-4",
-          "px-4",
-          "mb-1",
-          "has-text-weight-bold"
-        );
-        viewPositionTypeTitle.appendChild(
-          document.createTextNode("Position Type")
-        );
-        var viewPositionType = document.createElement("p");
-        viewPositionType.classList.add("pText", "mb-3", "px-4");
-        viewPositionType.appendChild(
-          document.createTextNode(currentDisplay[2])
-        );
-
-        //Status
-        var viewStatusTitle = document.createElement("h5");
-        viewStatusTitle.classList.add(
-          "subtitle",
-          "is-4",
-          "px-4",
-          "mb-1",
-          "has-text-weight-bold"
-        );
-        viewStatusTitle.appendChild(
-          document.createTextNode("Application Status")
-        );
-        var viewStatus = document.createElement("p");
-        viewStatus.classList.add("pText", "mb-3", "px-4");
-        viewStatus.appendChild(document.createTextNode(currentDisplay[3]));
-
-        //Date Applied
-        var viewDateAppliedTitle = document.createElement("h5");
-        viewDateAppliedTitle.classList.add(
-          "subtitle",
-          "is-4",
-          "px-4",
-          "mb-1",
-          "has-text-weight-bold"
-        );
-        viewDateAppliedTitle.appendChild(
-          document.createTextNode("Date Applied")
-        );
-        var viewDateApplied = document.createElement("p");
-        viewDateApplied.classList.add("pText", "mb-3", "px-4");
-        if (currentDisplay[4].length == 0) {
-          viewDateApplied.appendChild(document.createTextNode("N/A"));
-        } else {
-          viewDateApplied.appendChild(
-            document.createTextNode(currentDisplay[4])
-          );
-        }
-
-        //Followed Up
-        var viewFollowedUpTitle = document.createElement("h5");
-        viewFollowedUpTitle.classList.add(
-          "subtitle",
-          "is-4",
-          "px-4",
-          "mb-1",
-          "has-text-weight-bold"
-        );
-        viewFollowedUpTitle.appendChild(document.createTextNode("Followed Up"));
-        var viewFollowedUp = document.createElement("p");
-        viewFollowedUp.classList.add("pText", "mb-3", "px-4");
-        viewFollowedUp.appendChild(document.createTextNode(currentDisplay[5]));
-
-        //Notes
-        var viewNotesTitle = document.createElement("h5");
-        viewNotesTitle.classList.add(
-          "subtitle",
-          "is-4",
-          "px-4",
-          "mb-1",
-          "has-text-weight-bold"
-        );
-        viewNotesTitle.appendChild(document.createTextNode("Notes"));
-        var viewNotes = document.createElement("textarea");
-        viewNotes.classList.add("textarea", "mb-3");
-        viewNotes.setAttribute("readonly", "true");
-        if (currentDisplay[6].length == 0) {
-          viewNotes.appendChild(document.createTextNode("-"));
-        } else {
-          viewNotes.appendChild(document.createTextNode(currentDisplay[6]));
-        }
-
-        viewModalContent.appendChild(modalTitle);
-        viewModalContent.appendChild(viewCompanyNameTitle);
-        viewModalContent.appendChild(viewCompanyName);
-        viewModalContent.appendChild(viewPositionTitle);
-        viewModalContent.appendChild(viewPosition);
-        viewModalContent.appendChild(viewPositionTypeTitle);
-        viewModalContent.appendChild(viewPositionType);
-        viewModalContent.appendChild(viewStatusTitle);
-        viewModalContent.appendChild(viewStatus);
-        viewModalContent.appendChild(viewDateAppliedTitle);
-        viewModalContent.appendChild(viewDateApplied);
-        viewModalContent.appendChild(viewFollowedUpTitle);
-        viewModalContent.appendChild(viewFollowedUp);
-        viewModalContent.appendChild(viewNotesTitle);
-        viewNotesTitle.appendChild(viewNotes);
         renderTheme();
         viewModal.classList.add("is-active");
       });
       viewModalBg.addEventListener("click", () => {
-        while (viewModalContent.firstChild) {
-          viewModalContent.removeChild(viewModalContent.firstChild);
-        }
         viewModal.classList.remove("is-active");
-        isDuplicate = false;
+        const viewInvalidInput = document.getElementById("viewInvalidInput");
+        viewInvalidInput.style.display = "none";
       });
       var viewLinkText = document.createTextNode("View");
       viewLink.appendChild(viewLinkText);
       //Check if it's been more than two weeks since Applied Date & add warning if so
       if (
-        isDateAgo(new Date(currentDisplay[4]), userSettings[1]) &&
-        currentDisplay[5] == "No" &&
+        isDateAgo(new Date(currentDisplay[6]), userSettings[1]) &&
+        currentDisplay[7] == "No" &&
         userSettings[0] == "true"
       ) {
         var followUpWarning = document.createElement("span");
@@ -512,12 +391,25 @@ function DisplayApplicationCards(applications) {
 
       var deleteLink = document.createElement("p");
       deleteLink.classList.add("card-footer-item", "application-card-delete");
-      deleteLink.addEventListener("click", async () => {
-        var id = "" + currentID;
-        var obj = {};
-        obj[id] = deleteField();
-        await updateDoc(doc(db, "users", auth.currentUser.uid), obj);
-        location.reload();
+      deleteLink.addEventListener("click", () => {
+        deleteModal.classList.add("is-active");
+        deleteModalBg.addEventListener("click", () => {
+          deleteModal.classList.remove("is-active");
+        });
+        deleteAppText.textContent =
+          "Are you sure you want to delete your application for " +
+          currentDisplay[0] +
+          "?";
+        deleteAppCloseButton.addEventListener("click", () => {
+          deleteModal.classList.remove("is-active");
+        });
+        deleteAppButton.addEventListener("click", async () => {
+          var id = "" + currentID;
+          var obj = {};
+          obj[id] = deleteField();
+          await updateDoc(doc(db, "users", auth.currentUser.uid), obj);
+          location.reload();
+        });
       });
       deleteLink.href = "";
       var deleteLinkText = document.createTextNode("Delete");
@@ -564,6 +456,21 @@ function DisplayApplicationCards(applications) {
       const currentDisplay = element[1];
 
       var newRow = document.createElement("tr");
+      if (currentDisplay[8] == "Blue") {
+        newRow.style.backgroundColor = "#85E3FF";
+      } else if (currentDisplay[8] == "Red") {
+        newRow.style.backgroundColor = "#FFABAB";
+      } else if (currentDisplay[8] == "Green") {
+        newRow.style.backgroundColor = "#BFFCC6";
+      } else if (currentDisplay[8] == "Orange") {
+        newRow.style.backgroundColor = "#FFC8A2";
+      } else if (currentDisplay[8] == "Pink") {
+        newRow.style.backgroundColor = "#FEE1E8";
+      } else if (currentDisplay[8] == "Purple") {
+        newRow.style.backgroundColor = "#CBAACB";
+      } else if (currentDisplay[8] == "Yellow") {
+        newRow.style.backgroundColor = "#FFFFB5";
+      }
       var companyName = document.createElement("td");
       if (currentDisplay[0].length >= 30) {
         companyName.textContent = currentDisplay[0].substring(0, 29) + "...";
@@ -572,8 +479,8 @@ function DisplayApplicationCards(applications) {
       }
       //Check if it's been more than two weeks since Applied Date & add warning if so
       if (
-        isDateAgo(new Date(currentDisplay[4]), userSettings[1]) &&
-        currentDisplay[5] == "No" &&
+        isDateAgo(new Date(currentDisplay[6]), userSettings[1]) &&
+        currentDisplay[7] == "No" &&
         userSettings[0] == "true"
       ) {
         var followUpWarning = document.createElement("span");
@@ -597,9 +504,9 @@ function DisplayApplicationCards(applications) {
         position.textContent = currentDisplay[1];
       }
       var positionType = document.createElement("td");
-      positionType.textContent = currentDisplay[2];
+      positionType.textContent = currentDisplay[5];
       var positionStatus = document.createElement("td");
-      positionStatus.textContent = currentDisplay[3];
+      positionStatus.textContent = currentDisplay[9];
       var buttonTD = document.createElement("td");
       var viewButton = document.createElement("button");
       viewButton.classList.add("button", "tablebutton", "is-link", "mr-2");
@@ -608,202 +515,53 @@ function DisplayApplicationCards(applications) {
       deleteButton.classList.add("button", "tablebutton", "is-danger");
       deleteButton.textContent = "Delete";
       viewButton.addEventListener("click", () => {
-        //Title
-        var modalTitle = document.createElement("header");
-        modalTitle.setAttribute("id", "viewModalHeader");
-        modalTitle.classList.add(
-          "modal-card-head",
-          "is-size-5",
-          "has-text-weight-bold",
-          "mb-2"
-        );
-        if (currentDisplay[1].length + currentDisplay[0].length <= 50) {
-          modalTitle.appendChild(
-            document.createTextNode(
-              "" + currentDisplay[1] + " @ " + currentDisplay[0]
-            )
-          );
-        } else {
-          var titleString = "" + currentDisplay[1] + " @ " + currentDisplay[0];
-          modalTitle.appendChild(
-            document.createTextNode(titleString.substring(0, 50) + "...")
-          );
-        }
-        //Edit button
-        var editButton = document.createElement("a");
-        editButton.setAttribute("id", "editIcon");
-        editButton.setAttribute("href", "#");
-        editButton.setAttribute("onClick", "javascript:EntryPoint.editCard()");
-        var editSpan = document.createElement("span");
-        editSpan.classList.add("icon", "is-medium", "ml-1");
-        var editIcon = document.createElement("i");
-        editIcon.classList.add("fas", "fa-pen");
-        editSpan.appendChild(editIcon);
-        editButton.appendChild(editSpan);
-        modalTitle.appendChild(editButton);
-        editModalButton = editButton;
+        var viewPosTitle = document.querySelector("#viewPositionTitle");
+        var viewComTitle = document.querySelector("#viewCompanyTitle");
+        viewPosTitle.textContent = currentDisplay[1];
+        viewPosTitle.setAttribute("name", currentID);
+        viewComTitle.textContent = currentDisplay[0];
 
-        //Close Button
-        var viewCloseButton = document.createElement("button");
-        viewCloseButton.classList.add("delete", "mt-2");
-        viewCloseButton.setAttribute("id", "viewCloseButton");
-        viewCloseButton.addEventListener("click", () => {
-          var modalBackground =
-            viewCloseButton.parentElement.parentElement.previousElementSibling;
-          modalBackground.click();
-        });
+        var viewModalForm = document.querySelector("#viewappform");
+        viewModalForm.viewcompany.value = currentDisplay[0];
+        viewModalForm.viewposition.value = currentDisplay[1];
+        viewModalForm.viewsalary.value = currentDisplay[2];
+        viewModalForm.viewjoburl.value = currentDisplay[3];
+        viewModalForm.viewlocation.value = currentDisplay[4];
+        viewModalForm.viewjobtype.value = currentDisplay[5];
+        viewModalForm.viewdate.value = currentDisplay[6];
+        viewModalForm.viewfollowedup.value = currentDisplay[7];
+        viewModalForm.viewcolor.value = currentDisplay[8];
+        viewModalForm.viewstatus.value = currentDisplay[9];
+        viewModalForm.viewnotes.value = currentDisplay[10];
 
-        //Company Name
-        var viewCompanyNameTitle = document.createElement("h5");
-        viewCompanyNameTitle.setAttribute("name", currentID.replace(/\s/g, ""));
-        viewCompanyNameTitle.classList.add(
-          "subtitle",
-          "is-4",
-          "px-4",
-          "mb-1",
-          "has-text-weight-bold"
-        );
-        viewCompanyNameTitle.appendChild(document.createTextNode("Company"));
-        viewCompanyNameTitle.appendChild(viewCloseButton);
-        var viewCompanyName = document.createElement("p");
-        viewCompanyName.classList.add("pText", "mb-3", "px-4");
-        viewCompanyName.appendChild(document.createTextNode(currentDisplay[0]));
-
-        //Position
-        var viewPositionTitle = document.createElement("h5");
-        viewPositionTitle.classList.add(
-          "subtitle",
-          "is-4",
-          "px-4",
-          "mb-1",
-          "has-text-weight-bold"
-        );
-        viewPositionTitle.appendChild(document.createTextNode("Position"));
-        var viewPosition = document.createElement("p");
-        viewPosition.classList.add("pText", "mb-3", "px-4");
-        viewPosition.appendChild(document.createTextNode(currentDisplay[1]));
-
-        //Position Type
-        var viewPositionTypeTitle = document.createElement("h5");
-        viewPositionTypeTitle.classList.add(
-          "subtitle",
-          "is-4",
-          "px-4",
-          "mb-1",
-          "has-text-weight-bold"
-        );
-        viewPositionTypeTitle.appendChild(
-          document.createTextNode("Position Type")
-        );
-        var viewPositionType = document.createElement("p");
-        viewPositionType.classList.add("pText", "mb-3", "px-4");
-        viewPositionType.appendChild(
-          document.createTextNode(currentDisplay[2])
-        );
-
-        //Status
-        var viewStatusTitle = document.createElement("h5");
-        viewStatusTitle.classList.add(
-          "subtitle",
-          "is-4",
-          "px-4",
-          "mb-1",
-          "has-text-weight-bold"
-        );
-        viewStatusTitle.appendChild(
-          document.createTextNode("Application Status")
-        );
-        var viewStatus = document.createElement("p");
-        viewStatus.classList.add("pText", "mb-3", "px-4");
-        viewStatus.appendChild(document.createTextNode(currentDisplay[3]));
-
-        //Date Applied
-        var viewDateAppliedTitle = document.createElement("h5");
-        viewDateAppliedTitle.classList.add(
-          "subtitle",
-          "is-4",
-          "px-4",
-          "mb-1",
-          "has-text-weight-bold"
-        );
-        viewDateAppliedTitle.appendChild(
-          document.createTextNode("Date Applied")
-        );
-        var viewDateApplied = document.createElement("p");
-        viewDateApplied.classList.add("pText", "mb-3", "px-4");
-        if (currentDisplay[4].length == 0) {
-          viewDateApplied.appendChild(document.createTextNode("N/A"));
-        } else {
-          viewDateApplied.appendChild(
-            document.createTextNode(currentDisplay[4])
-          );
-        }
-
-        //Followed Up
-        var viewFollowedUpTitle = document.createElement("h5");
-        viewFollowedUpTitle.classList.add(
-          "subtitle",
-          "is-4",
-          "px-4",
-          "mb-1",
-          "has-text-weight-bold"
-        );
-        viewFollowedUpTitle.appendChild(document.createTextNode("Followed Up"));
-        var viewFollowedUp = document.createElement("p");
-        viewFollowedUp.classList.add("pText", "mb-3", "px-4");
-        viewFollowedUp.appendChild(document.createTextNode(currentDisplay[5]));
-
-        //Notes
-        var viewNotesTitle = document.createElement("h5");
-        viewNotesTitle.classList.add(
-          "subtitle",
-          "is-4",
-          "px-4",
-          "mb-1",
-          "has-text-weight-bold"
-        );
-        viewNotesTitle.appendChild(document.createTextNode("Notes"));
-        var viewNotes = document.createElement("textarea");
-        viewNotes.classList.add("textarea", "mb-3");
-        viewNotes.setAttribute("readonly", "true");
-        if (currentDisplay[6].length == 0) {
-          viewNotes.appendChild(document.createTextNode("-"));
-        } else {
-          viewNotes.appendChild(document.createTextNode(currentDisplay[6]));
-        }
-
-        viewModalContent.appendChild(modalTitle);
-        viewModalContent.appendChild(viewCompanyNameTitle);
-        viewModalContent.appendChild(viewCompanyName);
-        viewModalContent.appendChild(viewPositionTitle);
-        viewModalContent.appendChild(viewPosition);
-        viewModalContent.appendChild(viewPositionTypeTitle);
-        viewModalContent.appendChild(viewPositionType);
-        viewModalContent.appendChild(viewStatusTitle);
-        viewModalContent.appendChild(viewStatus);
-        viewModalContent.appendChild(viewDateAppliedTitle);
-        viewModalContent.appendChild(viewDateApplied);
-        viewModalContent.appendChild(viewFollowedUpTitle);
-        viewModalContent.appendChild(viewFollowedUp);
-        viewModalContent.appendChild(viewNotesTitle);
-        viewNotesTitle.appendChild(viewNotes);
         renderTheme();
         viewModal.classList.add("is-active");
       });
       viewModalBg.addEventListener("click", () => {
-        while (viewModalContent.firstChild) {
-          viewModalContent.removeChild(viewModalContent.firstChild);
-        }
         viewModal.classList.remove("is-active");
-        isDuplicate = false;
+        const viewInvalidInput = document.getElementById("viewInvalidInput");
+        viewInvalidInput.style.display = "none";
       });
 
-      deleteButton.addEventListener("click", async () => {
-        var id = "" + currentID;
-        var obj = {};
-        obj[id] = deleteField();
-        await updateDoc(doc(db, "users", auth.currentUser.uid), obj);
-        location.reload();
+      deleteButton.addEventListener("click", () => {
+        deleteModal.classList.add("is-active");
+        deleteModalBg.addEventListener("click", () => {
+          deleteModal.classList.remove("is-active");
+        });
+        deleteAppText.textContent =
+          "Are you sure you want to delete your application for " +
+          currentDisplay[0] +
+          "?";
+        deleteAppCloseButton.addEventListener("click", () => {
+          deleteModal.classList.remove("is-active");
+        });
+        deleteAppButton.addEventListener("click", async () => {
+          var id = "" + currentID;
+          var obj = {};
+          obj[id] = deleteField();
+          await updateDoc(doc(db, "users", auth.currentUser.uid), obj);
+          location.reload();
+        });
       });
 
       buttonTD.appendChild(viewButton);
@@ -872,11 +630,15 @@ function windowLoad(applications) {
   /*
   0 - Company Name
   1 - Position
-  2 - Position Type
-  3 - Status
-  4 - Date Applied
-  5 - Followed Up
-  6 - Notes
+  2 - Salary
+  3 - Job URL
+  4 - Location
+  5 - Job Type
+  6 - Date
+  7 - Followed Up
+  8 - Color
+  9 - Status
+  10 - Notes
   */
 
   //Convert applications from database into Strings for displaying
@@ -952,10 +714,10 @@ settingsModalBg.addEventListener("click", () => {
  */
 newAppButton.addEventListener("click", () => {
   if (isEmailVerified) {
+    applicationForm.addjobtype.value = "";
+    applicationForm.addstatus.value = "";
+    applicationForm.addfollowedup.value = "";
     modal.classList.add("is-active");
-    isDuplicate = false;
-    newAppTitle.textContent = "New Application";
-    formSubmitButton.textContent = "Create";
   } else {
     alert("Please verify your email before adding any applications.");
   }
@@ -969,7 +731,6 @@ modalBg.addEventListener("click", () => {
   modal.classList.remove("is-active");
   applicationForm.reset();
   invalidInput.style.display = "none";
-  invalidCompanyName.style.display = "none";
 });
 
 /**
@@ -1014,22 +775,40 @@ settingsForm.addEventListener("submit", async (e) => {
  * and creates a database entry with the given information, and adds
  * it to the database
  */
+/*
+  0 - Company Name
+  1 - Position
+  2 - Salary
+  3 - Job URL
+  4 - Location
+  5 - Job Type
+  6 - Date
+  7 - Followed Up
+  8 - Color
+  9 - Status
+  10 - Notes
+  */
 applicationForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   var elements = document.getElementById("applicationform").elements;
 
   if (elements[0].value.length < 1 || elements[1].value.length < 1) {
+    invalidInput.textContent = "Please fill all required fields.";
     invalidInput.style.display = "block";
   } else if (!/^[A-Za-z0-9]*$/.test(elements[0].value.replace(/\s/g, ""))) {
-    invalidCompanyName.style.display = "block";
+    invalidInput.textContent =
+      "Company name can only contain numbers and letters.";
+    invalidInput.style.display = "block";
+  } else if (!/^\d+$/.test(elements[2].value) && elements[2].value.length > 0) {
+    invalidInput.textContent = "Salary must only contain numbers.";
+    invalidInput.style.display = "block";
   } else {
     invalidInput.style.display = "none";
-    invalidCompanyName.style.display = "none";
 
     //Build element array and create application
     const formElements = [];
-    for (var i = 0, element; (element = elements[i++]); ) {
-      formElements.push(element.value);
+    for (var i = 0; i < elements.length - 1; i++) {
+      formElements.push(elements[i].value);
     }
     //Create a unique ID to assign to application
     var date = new Date();
@@ -1045,16 +824,63 @@ applicationForm.addEventListener("submit", async (e) => {
 
     var obj = {};
     obj[id] = formElements;
-    if (isDuplicate) {
-      obj[applicationID] = deleteField();
-      isDuplicate = false;
-    }
     await updateDoc(doc(db, "users", auth.currentUser.uid), obj);
 
     //Reset form once successfully submitted
     modal.classList.remove("is-active");
     applicationForm.reset();
     invalidInput.style.display = "none";
+    location.reload();
+  }
+});
+
+const viewAppForm = document.querySelector("#viewappform");
+viewAppForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const viewInvalidInput = document.getElementById("viewInvalidInput");
+  var elements = viewAppForm.elements;
+  var currID = document
+    .getElementById("viewPositionTitle")
+    .getAttribute("name");
+
+  if (elements[0].value.length < 1 || elements[1].value.length < 1) {
+    viewInvalidInput.textContent = "Please fill all required fields.";
+    viewInvalidInput.style.display = "block";
+  } else if (!/^[A-Za-z0-9]*$/.test(elements[0].value.replace(/\s/g, ""))) {
+    viewInvalidInput.textContent =
+      "Company name can only contain numbers and letters.";
+    viewInvalidInput.style.display = "block";
+  } else if (!/^\d+$/.test(elements[2].value) && elements[2].value.length > 0) {
+    viewInvalidInput.textContent = "Salary must only contain numbers.";
+    viewInvalidInput.style.display = "block";
+  } else {
+    viewInvalidInput.style.display = "none";
+
+    //Build element array and create application
+    const formElements = [];
+    for (var i = 0; i < elements.length - 1; i++) {
+      formElements.push(elements[i].value);
+    }
+    //Create a unique ID to assign to application
+    var date = new Date();
+    var idNum =
+      "" +
+      (date.getMonth() + 1) +
+      date.getDate() +
+      date.getFullYear() +
+      date.getHours() +
+      date.getMinutes() +
+      date.getSeconds();
+    var id = "" + elements[0].value.replace(/\s/g, "") + idNum;
+
+    var obj = {};
+    obj[id] = formElements;
+    obj[currID] = deleteField();
+    await updateDoc(doc(db, "users", auth.currentUser.uid), obj);
+
+    //Reset form once successfully submitted
+    viewModal.classList.remove("is-active");
+    viewAppForm.reset();
     location.reload();
   }
 });
@@ -1185,7 +1011,7 @@ function search_applications(selectValue) {
       let newApplications = [];
       for (var i = 0, element; (element = appsToDisplay[i++]); ) {
         let temp = element[1];
-        if (temp[2] == "Internship/Co-Op") {
+        if (temp[5] == "Internship/Co-Op") {
           newApplications.push(element);
         }
       }
@@ -1195,7 +1021,7 @@ function search_applications(selectValue) {
       let newApplications = [];
       for (var i = 0, element; (element = appsToDisplay[i++]); ) {
         let temp = element[1];
-        if (temp[2] == "Part-Time") {
+        if (temp[5] == "Part-Time") {
           newApplications.push(element);
         }
       }
@@ -1205,7 +1031,7 @@ function search_applications(selectValue) {
       let newApplications = [];
       for (var i = 0, element; (element = appsToDisplay[i++]); ) {
         let temp = element[1];
-        if (temp[2] == "Full-Time") {
+        if (temp[5] == "Full-Time") {
           newApplications.push(element);
         }
       }
@@ -1217,7 +1043,7 @@ function search_applications(selectValue) {
       let newApplications = [];
       for (var i = 0, element; (element = appsToDisplay[i++]); ) {
         let temp = element[1];
-        if (temp[3] == "Applied") {
+        if (temp[9] == "Applied") {
           newApplications.push(element);
         }
       }
@@ -1227,7 +1053,7 @@ function search_applications(selectValue) {
       let newApplications = [];
       for (var i = 0, element; (element = appsToDisplay[i++]); ) {
         let temp = element[1];
-        if (temp[3] == "Interviewed") {
+        if (temp[9] == "Interviewed") {
           newApplications.push(element);
         }
       }
@@ -1237,7 +1063,7 @@ function search_applications(selectValue) {
       let newApplications = [];
       for (var i = 0, element; (element = appsToDisplay[i++]); ) {
         let temp = element[1];
-        if (temp[3] == "Rejected") {
+        if (temp[9] == "Rejected") {
           newApplications.push(element);
         }
       }
@@ -1247,7 +1073,7 @@ function search_applications(selectValue) {
       let newApplications = [];
       for (var i = 0, element; (element = appsToDisplay[i++]); ) {
         let temp = element[1];
-        if (temp[3] == "Offered") {
+        if (temp[9] == "Offered") {
           newApplications.push(element);
         }
       }
@@ -1258,7 +1084,7 @@ function search_applications(selectValue) {
     let newApplications = [];
     for (var i = 0, element; (element = appsToDisplay[i++]); ) {
       let temp = element[1];
-      if (new Date(temp[4]) <= new Date(input)) {
+      if (new Date(temp[6]) <= new Date(input)) {
         newApplications.push(element);
       }
     }
@@ -1268,7 +1094,7 @@ function search_applications(selectValue) {
     let newApplications = [];
     for (var i = 0, element; (element = appsToDisplay[i++]); ) {
       let temp = element[1];
-      if (new Date(temp[4]) > new Date(input)) {
+      if (new Date(temp[6]) > new Date(input)) {
         newApplications.push(element);
       }
     }
@@ -1279,7 +1105,7 @@ function search_applications(selectValue) {
       let newApplications = [];
       for (var i = 0, element; (element = appsToDisplay[i++]); ) {
         let temp = element[1];
-        if (temp[5] == "Yes") {
+        if (temp[7] == "Yes") {
           newApplications.push(element);
         }
       }
@@ -1289,7 +1115,7 @@ function search_applications(selectValue) {
       let newApplications = [];
       for (var i = 0, element; (element = appsToDisplay[i++]); ) {
         let temp = element[1];
-        if (temp[5] == "No") {
+        if (temp[7] == "No") {
           newApplications.push(element);
         }
       }
@@ -1303,7 +1129,7 @@ function search_applications(selectValue) {
       let newApplications = [];
       for (var i = 0, element; (element = appsToDisplay[i++]); ) {
         let temp = element[1];
-        if (temp[6].substring(0, input.length).toLowerCase().includes(input)) {
+        if (temp[10].substring(0, input.length).toLowerCase().includes(input)) {
           newApplications.push(element);
         }
       }
@@ -1371,6 +1197,13 @@ settingsModalDelete.addEventListener("click", () => {
   var modalBackground =
     settingsModalDelete.parentElement.previousElementSibling;
   modalBackground.click();
+});
+
+const viewCloseButton = document.querySelector("#viewCloseButton");
+viewCloseButton.addEventListener("click", () => {
+  viewModal.classList.remove("is-active");
+  const viewInvalidInput = document.getElementById("viewInvalidInput");
+  viewInvalidInput.style.display = "none";
 });
 
 export {

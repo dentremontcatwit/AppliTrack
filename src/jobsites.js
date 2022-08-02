@@ -25,7 +25,6 @@ const db = getFirestore();
 
 var userSettings = {};
 
-
 //Job Site Info
 const AIA = {
   logo: "images/AIA.png",

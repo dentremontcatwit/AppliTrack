@@ -1,6 +1,6 @@
 {
   "name": "applitrack",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "description": "AppliTrack is a web application that allows you to keep track of your job applications throughout your job search.",
   "main": "index.js",
   "scripts": {

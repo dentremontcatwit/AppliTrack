@@ -1,6 +1,12 @@
+document.querySelector("html").classList.remove("is-clipped");
 renderTheme();
 import { initializeApp } from "firebase/app";
-import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
+import {
+  getAuth,
+  signOut,
+  onAuthStateChanged,
+  GoogleAuthProvider,
+} from "firebase/auth";
 import {
   getFirestore,
   doc,
@@ -183,6 +189,8 @@ const searchPType = document.querySelector("#appsearchbarptype");
 const searchPStatus = document.querySelector("#appsearchbarpstatus");
 const searchFUp = document.querySelector("#appsearchbarfup");
 const searchDate = document.querySelector("#appsearchdatebar");
+const searchColor = document.querySelector("#appsearchbarcolor");
+searchColor.style.display = "none";
 
 //Settings Menu
 const settingsModal = document.querySelector("#settingsModal");
@@ -350,6 +358,7 @@ function DisplayApplicationCards(applications) {
         viewModalForm.viewposition.value = currentDisplay[1];
         viewModalForm.viewsalary.value = currentDisplay[2];
         viewModalForm.viewjoburl.value = currentDisplay[3];
+        document.getElementById("viewjoburllink").href = currentDisplay[3];
         viewModalForm.viewlocation.value = currentDisplay[4];
         viewModalForm.viewjobtype.value = currentDisplay[5];
         viewModalForm.viewdate.value = currentDisplay[6];
@@ -357,12 +366,41 @@ function DisplayApplicationCards(applications) {
         viewModalForm.viewcolor.value = currentDisplay[8];
         viewModalForm.viewstatus.value = currentDisplay[9];
         viewModalForm.viewnotes.value = currentDisplay[10];
+        document.getElementById("viewInfoButton").classList.add("is-active");
+        if (currentDisplay[4].length == 0) {
+          document.getElementById("viewMapButton").style.display = "none";
+        } else {
+          document.getElementById("viewMapButton").style.display = "block";
+        }
+
+        document
+          .getElementById("viewInfoButton")
+          .addEventListener("click", () => {
+            document.getElementById("viewPage").style.display = "block";
+            document.getElementById("viewMap").style.display = "none";
+            document
+              .getElementById("viewInfoButton")
+              .classList.add("is-active");
+            document
+              .getElementById("viewMapButton")
+              .classList.remove("is-active");
+            document
+              .getElementById("locationMap")
+              .classList.remove("is-active");
+          });
 
         renderTheme();
+        document.querySelector("html").classList.add("is-clipped");
         viewModal.classList.add("is-active");
       });
       viewModalBg.addEventListener("click", () => {
         viewModal.classList.remove("is-active");
+        document.querySelector("html").classList.remove("is-clipped");
+        document.getElementById("viewPage").style.display = "block";
+        document.getElementById("viewMap").style.display = "none";
+        document.getElementById("viewInfoButton").classList.add("is-active");
+        document.getElementById("viewMapButton").classList.remove("is-active");
+        document.getElementById("locationMap").classList.remove("is-active");
         const viewInvalidInput = document.getElementById("viewInvalidInput");
         viewInvalidInput.style.display = "none";
       });
@@ -393,7 +431,9 @@ function DisplayApplicationCards(applications) {
       deleteLink.classList.add("card-footer-item", "application-card-delete");
       deleteLink.addEventListener("click", () => {
         deleteModal.classList.add("is-active");
+        document.querySelector("html").classList.add("is-clipped");
         deleteModalBg.addEventListener("click", () => {
+          document.querySelector("html").classList.remove("is-clipped");
           deleteModal.classList.remove("is-active");
         });
         deleteAppText.textContent =
@@ -526,6 +566,7 @@ function DisplayApplicationCards(applications) {
         viewModalForm.viewposition.value = currentDisplay[1];
         viewModalForm.viewsalary.value = currentDisplay[2];
         viewModalForm.viewjoburl.value = currentDisplay[3];
+        document.getElementById("viewjoburllink").href = currentDisplay[3];
         viewModalForm.viewlocation.value = currentDisplay[4];
         viewModalForm.viewjobtype.value = currentDisplay[5];
         viewModalForm.viewdate.value = currentDisplay[6];
@@ -533,19 +574,45 @@ function DisplayApplicationCards(applications) {
         viewModalForm.viewcolor.value = currentDisplay[8];
         viewModalForm.viewstatus.value = currentDisplay[9];
         viewModalForm.viewnotes.value = currentDisplay[10];
+        document.getElementById("viewInfoButton").classList.add("is-active");
+        if (currentDisplay[4].length == 0) {
+          document.getElementById("viewMapButton").style.display = "none";
+        } else {
+          document.getElementById("viewMapButton").style.display = "block";
+        }
+
+        document
+          .getElementById("viewInfoButton")
+          .addEventListener("click", () => {
+            document.getElementById("viewPage").style.display = "block";
+            document.getElementById("viewMap").style.display = "none";
+            document
+              .getElementById("viewInfoButton")
+              .classList.add("is-active");
+            document
+              .getElementById("viewMapButton")
+              .classList.remove("is-active");
+            document
+              .getElementById("locationMap")
+              .classList.remove("is-active");
+          });
 
         renderTheme();
+        document.querySelector("html").classList.add("is-clipped");
         viewModal.classList.add("is-active");
       });
       viewModalBg.addEventListener("click", () => {
+        document.querySelector("html").classList.remove("is-clipped");
         viewModal.classList.remove("is-active");
         const viewInvalidInput = document.getElementById("viewInvalidInput");
         viewInvalidInput.style.display = "none";
       });
 
       deleteButton.addEventListener("click", () => {
+        document.querySelector("html").classList.add("is-clipped");
         deleteModal.classList.add("is-active");
         deleteModalBg.addEventListener("click", () => {
+          document.querySelector("html").classList.remove("is-clipped");
           deleteModal.classList.remove("is-active");
         });
         deleteAppText.textContent =
@@ -598,20 +665,126 @@ function sortByAZ(a, b) {
 }
 
 /**
+ * Comparator function to sort the application cards alphabetically.
+ *
+ * @param {*} a First title to compare.
+ * @param {*} b Second title to compare.
+ * @returns Comparison result.
+ */
+function sortByZA(a, b) {
+  var aData = a[1];
+  var bData = b[1];
+
+  if (aData[0].toLowerCase() < bData[0].toLowerCase()) {
+    return 1;
+  }
+  if (bData[0].toLowerCase() < aData[0].toLowerCase()) {
+    return -1;
+  }
+  return 0;
+}
+
+/**
  * Comparator function to sort the application cards by date.
  *
  * @param {*} a First date to compare.
  * @param {*} b Second date to compare.
  * @returns Comparison result.
  */
-function sortByDate(a, b) {
+function sortByDateRecent(a, b) {
   var aData = a[1];
   var bData = b[1];
 
-  if (aData[4] < bData[4]) {
+  if (aData[6] < bData[6]) {
+    return 1;
+  }
+  if (bData[6] < aData[6]) {
     return -1;
   }
-  if (bData[4] < aData[4]) {
+  return 0;
+}
+
+/**
+ * Comparator function to sort the application cards by date.
+ *
+ * @param {*} a First date to compare.
+ * @param {*} b Second date to compare.
+ * @returns Comparison result.
+ */
+function sortByDateLeastRecent(a, b) {
+  var aData = a[1];
+  var bData = b[1];
+
+  if (aData[6] < bData[6]) {
+    return -1;
+  }
+  if (bData[6] < aData[6]) {
+    return 1;
+  }
+  return 0;
+}
+
+/**
+ * Comparator function to sort the application cards by salary value.
+ *
+ * @param {*} a First date to compare.
+ * @param {*} b Second date to compare.
+ * @returns Comparison result.
+ */
+function sortBySalaryHtoL(a, b) {
+  var aData = a[1];
+  var bData = b[1];
+
+  if (aData[2] < bData[2]) {
+    return 1;
+  }
+  if (bData[2] < aData[2]) {
+    return -1;
+  }
+  return 0;
+}
+
+/**
+ * Comparator function to sort the application cards by salary value.
+ *
+ * @param {*} a First date to compare.
+ * @param {*} b Second date to compare.
+ * @returns Comparison result.
+ */
+function sortBySalaryLtoH(a, b) {
+  var aData = a[1];
+  var bData = b[1];
+
+  if (aData[2] < bData[2]) {
+    return -1;
+  }
+  if (bData[2] < aData[2]) {
+    return 1;
+  }
+  return 0;
+}
+
+/**
+ * Comparator function to sort the application cards by colors.
+ *
+ * @param {*} a First date to compare.
+ * @param {*} b Second date to compare.
+ * @returns Comparison result.
+ */
+function sortByColor(a, b) {
+  var aData = a[1];
+  var bData = b[1];
+
+  if (aData[8] == "None") {
+    return 1;
+  }
+  if (bData[8] == "None") {
+    return -1;
+  }
+  if (aData[8] < bData[8]) {
+    return -1;
+  }
+  if (bData[8] < aData[8]) {
     return 1;
   }
   return 0;
@@ -641,6 +814,8 @@ function windowLoad(applications) {
   10 - Notes
   */
 
+  document.getElementById("viewPage").style.display = "block";
+  document.getElementById("viewMap").style.display = "none";
   //Convert applications from database into Strings for displaying
   globalApplications = Object.entries(applications);
   let applicationObject = {};
@@ -664,15 +839,27 @@ function windowLoad(applications) {
 
   if (cookie["sort"] == "az") {
     appsToDisplay = appsToDisplay.sort(sortByAZ);
-  }
-  if (cookie["sort"] == "date") {
-    appsToDisplay = appsToDisplay.sort(sortByDate);
+  } else if (cookie["sort"] == "za") {
+    appsToDisplay = appsToDisplay.sort(sortByZA);
+  } else if (cookie["sort"] == "datemost") {
+    appsToDisplay = appsToDisplay.sort(sortByDateRecent);
+  } else if (cookie["sort"] == "dateleast") {
+    appsToDisplay = appsToDisplay.sort(sortByDateLeastRecent);
+  } else if (cookie["sort"] == "salaryhtol") {
+    appsToDisplay = appsToDisplay.sort(sortBySalaryHtoL);
+  } else if (cookie["sort"] == "salaryltoh") {
+    appsToDisplay = appsToDisplay.sort(sortBySalaryLtoH);
+  } else if (cookie["sort"] == "color") {
+    appsToDisplay = appsToDisplay.sort(sortByColor);
+  } else {
+    appsToDisplay = appsToDisplay.sort(sortByAZ);
   }
 
   DisplayApplicationCards(appsToDisplay);
 }
 
 settingsButton.addEventListener("click", () => {
+  document.querySelector("html").classList.add("is-clipped");
   settingsModal.classList.add("is-active");
   let check = false;
   (function (a) {
@@ -706,6 +893,7 @@ settingsButton.addEventListener("click", () => {
 });
 
 settingsModalBg.addEventListener("click", () => {
+  document.querySelector("html").classList.remove("is-clipped");
   settingsModal.classList.remove("is-active");
 });
 
@@ -716,7 +904,7 @@ newAppButton.addEventListener("click", () => {
   if (isEmailVerified) {
     applicationForm.addjobtype.value = "";
     applicationForm.addstatus.value = "";
-    applicationForm.addfollowedup.value = "";
+    document.querySelector("html").classList.add("is-clipped");
     modal.classList.add("is-active");
   } else {
     alert("Please verify your email before adding any applications.");
@@ -728,6 +916,7 @@ newAppButton.addEventListener("click", () => {
  */
 modalBg.addEventListener("click", () => {
   isDuplicate = false;
+  document.querySelector("html").classList.remove("is-clipped");
   modal.classList.remove("is-active");
   applicationForm.reset();
   invalidInput.style.display = "none";
@@ -744,8 +933,20 @@ modalBg.addEventListener("click", () => {
 function sortCards(method) {
   if (method == "az") {
     document.cookie = "sort=az";
-  } else if (method == "date") {
-    document.cookie = "sort=date";
+  } else if (method == "datemost") {
+    document.cookie = "sort=datemost";
+  } else if (method == "salaryhtol") {
+    document.cookie = "sort=salaryhtol";
+  } else if (method == "za") {
+    document.cookie = "sort=za";
+  } else if (method == "dateleast") {
+    document.cookie = "sort=dateleast";
+  } else if (method == "salaryltoh") {
+    document.cookie = "sort=salaryltoh";
+  } else if (method == "color") {
+    document.cookie = "sort=color";
+  } else {
+    document.cookie = "sort=az";
   }
   location.reload();
 }
@@ -908,6 +1109,7 @@ function selectSearch(value) {
     searchPStatus.style.display = "none";
     searchFUp.style.display = "none";
     searchDate.style.display = "none";
+    searchColor.style.display = "none";
     searchTextBar.style.display = "block";
   } else if (value == "Position Name") {
     document.getElementById("appsearchbar").value = "";
@@ -917,6 +1119,7 @@ function selectSearch(value) {
     searchPStatus.style.display = "none";
     searchFUp.style.display = "none";
     searchDate.style.display = "none";
+    searchColor.style.display = "none";
     searchTextBar.style.display = "block";
   } else if (value == "Position Type") {
     search_applications(document.getElementById("searchPTypeText").textContent);
@@ -924,6 +1127,7 @@ function selectSearch(value) {
     searchTextBar.style.display = "none";
     searchFUp.style.display = "none";
     searchDate.style.display = "none";
+    searchColor.style.display = "none";
     searchPType.style.display = "block";
   } else if (value == "Position Status") {
     search_applications(
@@ -933,6 +1137,7 @@ function selectSearch(value) {
     searchTextBar.style.display = "none";
     searchFUp.style.display = "none";
     searchDate.style.display = "none";
+    searchColor.style.display = "none";
     searchPStatus.style.display = "block";
   } else if (value == "Date Applied <=" || value == "Date Applied >") {
     searchDate.value = "";
@@ -942,6 +1147,7 @@ function selectSearch(value) {
     searchPStatus.style.display = "none";
     searchFUp.style.display = "none";
     searchTextBar.style.display = "none";
+    searchColor.style.display = "none";
     searchDate.style.display = "block";
   } else if (value == "Followed Up") {
     search_applications(document.getElementById("searchfUpText").textContent);
@@ -949,6 +1155,7 @@ function selectSearch(value) {
     searchPStatus.style.display = "none";
     searchTextBar.style.display = "none";
     searchDate.style.display = "none";
+    searchColor.style.display = "none";
     searchFUp.style.display = "block";
   } else if (value == "Notes") {
     document.getElementById("appsearchbar").value = "";
@@ -958,7 +1165,36 @@ function selectSearch(value) {
     searchPStatus.style.display = "none";
     searchFUp.style.display = "none";
     searchDate.style.display = "none";
+    searchColor.style.display = "none";
     searchTextBar.style.display = "block";
+  } else if (value == "Salary <=") {
+    document.getElementById("appsearchbar").value = "";
+    DisplayApplicationCards(appsToDisplay);
+    searchBar.type = "text";
+    searchPType.style.display = "none";
+    searchPStatus.style.display = "none";
+    searchFUp.style.display = "none";
+    searchDate.style.display = "none";
+    searchColor.style.display = "none";
+    searchTextBar.style.display = "block";
+  } else if (value == "Salary >") {
+    document.getElementById("appsearchbar").value = "";
+    DisplayApplicationCards(appsToDisplay);
+    searchBar.type = "text";
+    searchPType.style.display = "none";
+    searchPStatus.style.display = "none";
+    searchFUp.style.display = "none";
+    searchDate.style.display = "none";
+    searchColor.style.display = "none";
+    searchTextBar.style.display = "block";
+  } else if (value == "Color") {
+    search_applications(document.getElementById("searchColorText").textContent);
+    searchPType.style.display = "none";
+    searchTextBar.style.display = "none";
+    searchFUp.style.display = "none";
+    searchDate.style.display = "none";
+    searchPStatus.style.display = "none";
+    searchColor.style.display = "block";
   }
   renderTheme();
 }
@@ -1135,6 +1371,116 @@ function search_applications(selectValue) {
       }
       DisplayApplicationCards(newApplications);
     }
+  } else if (spanText.textContent == "Salary <=") {
+    let input = parseInt(document.getElementById("appsearchbar").value, 10);
+    if (input == "") {
+      DisplayApplicationCards(appsToDisplay);
+    } else {
+      let newApplications = [];
+      for (var i = 0, element; (element = appsToDisplay[i++]); ) {
+        let temp = element[1];
+        if (parseInt(temp[2], 10) <= input && temp[2] != "") {
+          newApplications.push(element);
+        }
+      }
+      DisplayApplicationCards(newApplications);
+    }
+  } else if (spanText.textContent == "Salary >") {
+    let input = parseInt(document.getElementById("appsearchbar").value, 10);
+    if (input == "") {
+      DisplayApplicationCards(appsToDisplay);
+    } else {
+      let newApplications = [];
+      for (var i = 0, element; (element = appsToDisplay[i++]); ) {
+        let temp = element[1];
+        if (parseInt(temp[2], 10) > input && temp[2] != "") {
+          newApplications.push(element);
+        }
+      }
+      DisplayApplicationCards(newApplications);
+    }
+  } else if (spanText.textContent == "Color") {
+    if (selectValue == "None") {
+      document.getElementById("searchColorText").textContent = "None";
+      let newApplications = [];
+      for (var i = 0, element; (element = appsToDisplay[i++]); ) {
+        let temp = element[1];
+        if (temp[8] == "None" || temp[8] == "") {
+          newApplications.push(element);
+        }
+      }
+      DisplayApplicationCards(newApplications);
+    } else if (selectValue == "Blue") {
+      document.getElementById("searchColorText").textContent = "Blue";
+      let newApplications = [];
+      for (var i = 0, element; (element = appsToDisplay[i++]); ) {
+        let temp = element[1];
+        if (temp[8] == "Blue") {
+          newApplications.push(element);
+        }
+      }
+      DisplayApplicationCards(newApplications);
+    } else if (selectValue == "Red") {
+      document.getElementById("searchColorText").textContent = "Red";
+      let newApplications = [];
+      for (var i = 0, element; (element = appsToDisplay[i++]); ) {
+        let temp = element[1];
+        if (temp[8] == "Red") {
+          newApplications.push(element);
+        }
+      }
+      DisplayApplicationCards(newApplications);
+    } else if (selectValue == "Green") {
+      document.getElementById("searchColorText").textContent = "Green";
+      let newApplications = [];
+      for (var i = 0, element; (element = appsToDisplay[i++]); ) {
+        let temp = element[1];
+        if (temp[8] == "Green") {
+          newApplications.push(element);
+        }
+      }
+      DisplayApplicationCards(newApplications);
+    } else if (selectValue == "Orange") {
+      document.getElementById("searchColorText").textContent = "Orange";
+      let newApplications = [];
+      for (var i = 0, element; (element = appsToDisplay[i++]); ) {
+        let temp = element[1];
+        if (temp[8] == "Orange") {
+          newApplications.push(element);
+        }
+      }
+      DisplayApplicationCards(newApplications);
+    } else if (selectValue == "Pink") {
+      document.getElementById("searchColorText").textContent = "Pink";
+      let newApplications = [];
+      for (var i = 0, element; (element = appsToDisplay[i++]); ) {
+        let temp = element[1];
+        if (temp[8] == "Pink") {
+          newApplications.push(element);
+        }
+      }
+      DisplayApplicationCards(newApplications);
+    } else if (selectValue == "Purple") {
+      document.getElementById("searchColorText").textContent = "Purple";
+      let newApplications = [];
+      for (var i = 0, element; (element = appsToDisplay[i++]); ) {
+        let temp = element[1];
+        if (temp[8] == "Purple") {
+          newApplications.push(element);
+        }
+      }
+      DisplayApplicationCards(newApplications);
+    } else if (selectValue == "Yellow") {
+      document.getElementById("searchColorText").textContent = "Yellow";
+      let newApplications = [];
+      for (var i = 0, element; (element = appsToDisplay[i++]); ) {
+        let temp = element[1];
+        if (temp[8] == "Yellow") {
+          newApplications.push(element);
+        }
+      }
+      DisplayApplicationCards(newApplications);
+    }
   }
 }
 
@@ -1201,7 +1547,13 @@ settingsModalDelete.addEventListener("click", () => {
 
 const viewCloseButton = document.querySelector("#viewCloseButton");
 viewCloseButton.addEventListener("click", () => {
+  document.getElementById("viewPage").style.display = "block";
+  document.getElementById("viewMap").style.display = "none";
+  document.getElementById("viewInfoButton").classList.add("is-active");
+  document.getElementById("viewMapButton").classList.remove("is-active");
+  document.getElementById("locationMap").classList.remove("is-active");
   viewModal.classList.remove("is-active");
+  document.querySelector("html").classList.remove("is-clipped");
   const viewInvalidInput = document.getElementById("viewInvalidInput");
   viewInvalidInput.style.display = "none";
 });

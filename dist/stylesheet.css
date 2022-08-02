@@ -226,3 +226,7 @@ html {
 .modal-card-head {
   margin-right: 0px;
 }
+
+body.modal-open {
+  overflow-y: hidden;
+}

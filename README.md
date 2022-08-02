@@ -8,11 +8,15 @@ AppliTrack is a web application that allows you to keep track of your job applic
 - Get a visual alert to follow up with your employers if it's been a while since you applied to the job.
 - Look through our list of recommended job listing websites to help you on your job search.
 
-![applications screenshot](dist/images/readmeimgs/screenshot1.jpg)
-
 ## Changelog
 
-### July 27th, 2022 (v.1.6)
+### August 2nd, 2022 (v1.7)
+
+- Added more application fields (salary, color, location)
+- Added viewable map for applications in view window
+- Added page for job listing website recommendations
+
+### July 27th, 2022 (v1.6)
 
 - Added list option to view applications
 - Added settings panel to applications page
@@ -51,3 +55,8 @@ AppliTrack is a web application that allows you to keep track of your job applic
 - Create job applications through form
 - View existing job application information
 - Upload/Download job application data for easy transfer
+
+## Images
+
+![applications screenshot](dist/images/readmeimgs/screenshot1.jpg)
+![application view screenshot](dist/images/readmeimgs/viewwindow.jpg)

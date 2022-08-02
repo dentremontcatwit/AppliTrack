@@ -561,7 +561,6 @@ function DisplayApplicationCards(applications) {
         viewPosTitle.setAttribute("name", currentID);
         viewComTitle.textContent = currentDisplay[0];
 
-        var viewModalForm = document.querySelector("#viewappform");
         viewModalForm.viewcompany.value = currentDisplay[0];
         viewModalForm.viewposition.value = currentDisplay[1];
         viewModalForm.viewsalary.value = currentDisplay[2];
@@ -602,8 +601,13 @@ function DisplayApplicationCards(applications) {
         viewModal.classList.add("is-active");
       });
       viewModalBg.addEventListener("click", () => {
-        document.querySelector("html").classList.remove("is-clipped");
         viewModal.classList.remove("is-active");
+        document.querySelector("html").classList.remove("is-clipped");
+        document.getElementById("viewPage").style.display = "block";
+        document.getElementById("viewMap").style.display = "none";
+        document.getElementById("viewInfoButton").classList.add("is-active");
+        document.getElementById("viewMapButton").classList.remove("is-active");
+        document.getElementById("locationMap").classList.remove("is-active");
         const viewInvalidInput = document.getElementById("viewInvalidInput");
         viewInvalidInput.style.display = "none";
       });

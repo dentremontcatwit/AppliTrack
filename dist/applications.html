@@ -29,6 +29,12 @@
               </span>
               Applications
             </a>
+            <a href="jobsites.html" class="navbar-item" id="jobsiteslink">
+              <span class="icon is-medium mr-1">
+                <i class="fas fa-lg fa-search"></i>
+              </span>
+              Job Sites
+            </a>
           </div>
 
           <div class="navbar-end">
@@ -630,6 +636,9 @@
       document
         .getElementById("viewMapButton")
         .addEventListener("click", () => {
+          if (document.getElementById('viewMapButton').classList.contains('is-active')) {
+            return;
+          }
           fetch(
             "https://maps.googleapis.com/maps/api/geocode/json?address=" +
             locationField.value +

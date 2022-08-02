@@ -449,133 +449,140 @@
         <div class="modal-background" id="viewModalBg"></div>
         <div class="modal-content has-background-white" id="viewModalContent">
           <button class="delete" id="viewCloseButton" style="margin-right:5%; margin-top:5%"></button>
-          <form method="POST" action="/viewadd" id="viewappform">
-            <div class="cardtop">
-              <h1 class="title ml-6 mt-6" id="viewPositionTitle">Software Engineer Intern</h1>
-              <h3 class="subtitle mx-6 mb-4" id="viewCompanyTitle">Google</p>
-            </div>
-            <div hidden class="notification is-danger has-text-centered" id="viewInvalidInput" style="margin: 10px;">
-            </div>
-            <div class="tabs mx-6">
-              <ul>
-                <li class="is-active"><a>
-                    <span class="icon is-small"><i class="fas fa-image" aria-hidden="true"></i></span>
-                    <span>Info</span>
-                  </a></li>
-                <li><a>
-                    <span class="icon is-small"><i class="fas fa-map" aria-hidden="true"></i></span>
-                    <span>Map</span>
-                  </a></li>
-              </ul>
-            </div>
-            <section class="section mx-2 mb-3" style="padding-top: 0%; padding-bottom: 0%;">
-              <div class="field mr-3" style="float:left">
-                <label class="label">Company</label>
-                <div class="control">
-                  <input class="input is-small" type="text" name="viewcompany" required>
-                </div>
-              </div>
-              <div class="field mr-3" style="float:left">
-                <label class="label">Job Title</label>
-                <div class="control">
-                  <input class="input is-small" type="text" name="viewposition" required>
-                </div>
-              </div>
-              <div class="field mr-3" style="float:right">
-                <label class="label">Salary</label>
-                <div class="control">
-                  <input class="input is-small" type="text" name="viewsalary">
-                </div>
-              </div>
-              <div class="field mr-3">
-                <label class="label" style="float:left">Job Listing URL <a title="Go to link" href="" target="_blank"
-                    id="viewjoburllink">
-                    <span class="icon is-small">
-                      <i class="fas fa-link"></i>
-                    </span>
-                  </a></label>
-                <div class="control">
-                  <input class="input is-small" type="text" name="viewjoburl">
-                </div>
-              </div>
-              <div class="field mr-3" style="float:left; width:65%">
-                <label class="label">Location</label>
-                <div class="control">
-                  <input class="input is-small" type="text" name="viewlocation" id="viewLocationField">
-                </div>
-              </div>
-              <div class="field mr-3" style="float:right;">
-                <div class="control">
-                  <label class="label">Job Type</label>
-                  <div class="select is-rounded is-small">
-                    <select name="viewjobtype">
-                      <option>Internship/Co-Op</option>
-                      <option>Part-Time</option>
-                      <option>Full-Time</option>
-                    </select>
+          <div class="cardtop">
+            <h1 class="title ml-6 mt-6" id="viewPositionTitle">Software Engineer Intern</h1>
+            <h3 class="subtitle mx-6 mb-4" id="viewCompanyTitle">Google</p>
+          </div>
+          <div hidden class="notification is-danger has-text-centered" id="viewInvalidInput" style="margin: 10px;">
+          </div>
+          <div class="tabs mx-6">
+            <ul>
+              <li id="viewInfoButton"><a>
+                  <span class="icon is-small"><i class="fas fa-image" aria-hidden="true"></i></span>
+                  <span>Info</span>
+                </a></li>
+              <li id="viewMapButton"><a>
+                  <span class="icon is-small"><i class="fas fa-map" aria-hidden="true"></i></span>
+                  <span>Map</span>
+                </a></li>
+            </ul>
+          </div>
+          <div id="viewPage">
+            <form method="POST" action="/viewadd" id="viewappform">
+              <section class="section mx-2 mb-3" style="padding-top: 0%; padding-bottom: 0%;">
+                <div class="field mr-3" style="float:left">
+                  <label class="label">Company</label>
+                  <div class="control">
+                    <input class="input is-small" type="text" name="viewcompany" required>
                   </div>
                 </div>
-              </div>
-              <div class="field mr-5" style="float:left">
-                <label class="label">Date</label>
-                <div class="control">
-                  <input class="input is-small" type="date" name="viewdate">
-                </div>
-              </div>
-              <div class="field mr-4 ml-2" style="float:left">
-                <div class="control">
-                  <label class="label">Followed Up?</label>
-                  <div class="select is-rounded is-small">
-                    <select name="viewfollowedup">
-                      <option>No</option>
-                      <option>Yes</option>
-                    </select>
+                <div class="field mr-3" style="float:left">
+                  <label class="label">Job Title</label>
+                  <div class="control">
+                    <input class="input is-small" type="text" name="viewposition" required>
                   </div>
                 </div>
-              </div>
-              <div class="field mr-3" style="float:left">
-                <div class="control">
-                  <label class="label">Color</label>
-                  <div class="select is-rounded is-small">
-                    <select name="viewcolor">
-                      <option>None</option>
-                      <option style="background-color:#85E3FF">Blue</option>
-                      <option style="background-color: #FFABAB">Red</option>
-                      <option style="background-color: #BFFCC6">Green</option>
-                      <option style="background-color: #FFC8A2">Orange</option>
-                      <option style="background-color: #FEE1E8">Pink</option>
-                      <option style="background-color: #CBAACB">Purple</option>
-                      <option style="background-color: #FFFFB5">Yellow</option>
-                    </select>
+                <div class="field mr-3" style="float:right">
+                  <label class="label">Salary</label>
+                  <div class="control">
+                    <input class="input is-small" type="text" name="viewsalary">
                   </div>
                 </div>
-              </div>
-              <div class="field mr-3" style="float:right;">
-                <div class="control">
-                  <label class="label">Status</label>
-                  <div class="select is-rounded is-small">
-                    <select name="viewstatus">
-                      <option>Applied</option>
-                      <option>Interviewed</option>
-                      <option>Rejected</option>
-                      <option>Offered</option>
-                    </select>
+                <div class="field mr-3">
+                  <label class="label" style="float:left">Job Listing URL <a title="Go to link" href="" target="_blank"
+                      id="viewjoburllink">
+                      <span class="icon is-small">
+                        <i class="fas fa-link"></i>
+                      </span>
+                    </a></label>
+                  <div class="control">
+                    <input class="input is-small" type="text" name="viewjoburl">
                   </div>
                 </div>
-              </div>
-              <br />
-              <div class="field mt-2">
-                <div class="control">
-                  <label class="label">Notes</label>
-                  <textarea name="viewnotes" class="textarea is-small"></textarea>
+                <div class="field mr-3" style="float:left; width:65%">
+                  <label class="label">Location</label>
+                  <div class="control">
+                    <input class="input is-small" type="text" name="viewlocation" id="viewLocationField">
+                  </div>
                 </div>
-              </div>
-            </section>
-            <section class="section mx-2" style="padding-top: 5%">
-              <button class="button is-rounded is-primary is-fullwidth" type="submit" id="viewsubmit">Save
-                Changes</button>
-            </section>
-          </form>
+                <div class="field mr-3" style="float:right;">
+                  <div class="control">
+                    <label class="label">Job Type</label>
+                    <div class="select is-rounded is-small">
+                      <select name="viewjobtype">
+                        <option>Internship/Co-Op</option>
+                        <option>Part-Time</option>
+                        <option>Full-Time</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="field mr-5" style="float:left">
+                  <label class="label">Date</label>
+                  <div class="control">
+                    <input class="input is-small" type="date" name="viewdate">
+                  </div>
+                </div>
+                <div class="field mr-4 ml-2" style="float:left">
+                  <div class="control">
+                    <label class="label">Followed Up?</label>
+                    <div class="select is-rounded is-small">
+                      <select name="viewfollowedup">
+                        <option>No</option>
+                        <option>Yes</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="field mr-3" style="float:left">
+                  <div class="control">
+                    <label class="label">Color</label>
+                    <div class="select is-rounded is-small">
+                      <select name="viewcolor">
+                        <option>None</option>
+                        <option style="background-color:#85E3FF">Blue</option>
+                        <option style="background-color: #FFABAB">Red</option>
+                        <option style="background-color: #BFFCC6">Green</option>
+                        <option style="background-color: #FFC8A2">Orange</option>
+                        <option style="background-color: #FEE1E8">Pink</option>
+                        <option style="background-color: #CBAACB">Purple</option>
+                        <option style="background-color: #FFFFB5">Yellow</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="field mr-3" style="float:right;">
+                  <div class="control">
+                    <label class="label">Status</label>
+                    <div class="select is-rounded is-small">
+                      <select name="viewstatus">
+                        <option>Applied</option>
+                        <option>Interviewed</option>
+                        <option>Rejected</option>
+                        <option>Offered</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <br />
+                <div class="field mt-2">
+                  <div class="control">
+                    <label class="label">Notes</label>
+                    <textarea name="viewnotes" class="textarea is-small"></textarea>
+                  </div>
+                </div>
+              </section>
+              <section class="section mx-2" style="padding-top: 5%">
+                <button class="button is-rounded is-primary is-fullwidth" type="submit" id="viewsubmit">Save
+                  Changes</button>
+              </section>
+            </form>
+          </div>
+          <div id="viewMap">
+            <div id="locationMap" style="margin-bottom: 10px;"></div>
+            <h3 id="mapErrorText" class="title is-4 has-text-centered mb-6">Invalid address in location field. Please
+              enter a valid address.</h3>
+          </div>
         </div>
       </div>
     </div>
@@ -599,12 +606,14 @@
       </table>
     </div>
   </body>
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCIfvZmx63UjGv6PVhGhSBzYWrgXVSZNK0&libraries=places&callback=initAutocomplete"
+    async defer></script>
   <script type="text/javascript">
     let addAutocomplete;
     let viewAutocomplete;
     function initAutocomplete() {
       const options = {
-        types: ["establishments"],
         fields: ["place_id", "geometry", "name"],
       };
       addAutocomplete = new google.maps.places.Autocomplete(
@@ -616,10 +625,52 @@
         document.getElementById('viewLocationField'),
         options
       );
+
+      let locationField = document.getElementById('viewLocationField');
+      document
+        .getElementById("viewMapButton")
+        .addEventListener("click", () => {
+          fetch(
+            "https://maps.googleapis.com/maps/api/geocode/json?address=" +
+            locationField.value +
+            "&key=AIzaSyDovyHEqrLYWiEiqACyLfryUo7n9AmPYjg"
+          )
+            .then((response) => response.json())
+            .then((data) => {
+              const latitude = data.results[0].geometry.location.lat;
+              const longitude = data.results[0].geometry.location.lng;
+              console.log({ latitude, longitude });
+
+              const loc = { lat: latitude, lng: longitude };
+              const map = new google.maps.Map(
+                document.getElementById("locationMap"),
+                {
+                  zoom: 10,
+                  center: loc,
+                }
+              );
+              const marker = new google.maps.Marker({
+                position: loc,
+                map: map,
+              });
+            }).catch((e) => {
+              document.getElementById('locationMap').style.display = "none";
+              document.getElementById('mapErrorText').style.display = "block";
+            });
+          document.getElementById('locationMap').style.display = "block";
+          document.getElementById('locationMap').style.width = document.getElementById('viewappform').offsetWidth;
+          document.getElementById('locationMap').style.height = document.getElementById('viewappform').offsetHeight;
+          document.getElementById('mapErrorText').style.display = "none";
+          document.getElementById("viewPage").style.display = "none";
+          document.getElementById("viewMap").style.display = "block";
+          document.getElementById("viewMapButton").classList.add("is-active");
+          document.getElementById('locationMap').classList.add('is-active');
+          document
+            .getElementById("viewInfoButton")
+            .classList.remove("is-active");
+        });
     }
   </script>
-  <script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCIfvZmx63UjGv6PVhGhSBzYWrgXVSZNK0&libraries=places&callback=initAutocomplete"></script>
   <script type="text/javascript" src="applications.bundle.js"></script>
 
 </html>

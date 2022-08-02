@@ -47,3 +47,13 @@ html {
   height: 96px;
   cursor: pointer;
 }
+
+.dropdown-content {
+    max-height: 11em;
+    overflow: auto;
+  }
+
+.float-child {
+    width: 50%;
+    float: left;
+}  

@@ -29,7 +29,16 @@
                             </span>
                             Applications
                         </a>
+
+                        <a href="jobsites.html" class="navbar-item" id="jobsiteslink">
+                            <span class="icon is-medium mr-1">
+                                <i class="fas fa-lg fa-book"></i>
+                            </span>
+                            Job Search
+                        </a>
                     </div>
+
+                    
 
                     <div class="navbar-end">
                         <a href="#" onclick="EntryPoint.setNightMode()" class="navbar-item" id="nightbutton">
@@ -60,10 +69,107 @@
         </div>
 
         <div class="hero-body" id="title-body">
-            <h1 class="title">Good Job Sites for the Job Search</h1>
+            <div class="float-container">
+                <div class="float-child">
+                    <h1 class="title">Good Job Sites for the Job Search</h1>
+                </div>
+                <div class="float-child">
+                    <div class="dropdown is-hoverable" id="filterbutton">
+                <div class="dropdown-trigger">
+                  <button class="button topbutton" aria-haspopup="true" aria-controls="dropdown-menu" style="float:left">
+                    <span class="icon is-small">
+                      <i class="fas fa-sort"></i>
+                    </span>
+                    <span>Filter</span>
+                  </button>
+                </div>
+                <div class="dropdown-menu" id="sort-menu" role="menu">
+                  <div class="dropdown-content">
+                    <a href="#" class="dropdown-item" value="Architecture" onClick="javascript:EntryPoint.??">
+                        Architecture
+                    </a>
+                    <a href="#" class="dropdown-item" value="BioTech" onClick="javascript:EntryPoint.??">
+                        BioTech
+                    </a>
+                    <a href="#" class="dropdown-item" value="Biology" onClick="javascript:EntryPoint.??">
+                        Biology
+                    </a>
+                    <a href="#" class="dropdown-item" value="Business" onClick="javascript:EntryPoint.??">
+                        Business
+                    </a>
+                    <a href="#" class="dropdown-item" value="Chemisty" onClick="javascript:EntryPoint.??">
+                        Chemisty
+                    </a>
+                    <a href="#" class="dropdown-item" value="ComputerScience" onClick="javascript:EntryPoint.??">
+                        Computer Science
+                    </a>
+                    <a href="#" class="dropdown-item" value="DataScience" onClick="javascript:EntryPoint.??">
+                        Data Science
+                    </a>
+                    <a href="#" class="dropdown-item" value="Design" onClick="javascript:EntryPoint.??">
+                        Design
+                    </a>
+                    <a href="#" class="dropdown-item" value="DigitalDesign" onClick="javascript:EntryPoint.??">
+                        Digital Design
+                    </a>
+                    <a href="#" class="dropdown-item" value="Economics" onClick="javascript:EntryPoint.??">
+                        Economics
+                    </a>
+                    <a href="#" class="dropdown-item" value="Education" onClick="javascript:EntryPoint.??">
+                        Education
+                    </a>
+                    <a href="#" class="dropdown-item" value="Engineering" onClick="javascript:EntryPoint.??">
+                        Engineering
+                    </a>
+                    <a href="#" class="dropdown-item" value="Everything" onClick="javascript:EntryPoint.??">
+                        Everything
+                    </a>
+                    <a href="#" class="dropdown-item" value="Finance" onClick="javascript:EntryPoint.??">
+                        Finance
+                    </a>
+                    <a href="#" class="dropdown-item" value="HealthCare" onClick="javascript:EntryPoint.??">
+                        HealthCare
+                    </a>
+                    <a href="#" class="dropdown-item" value="HumanResources" onClick="javascript:EntryPoint.??">
+                        Human Resources
+                    </a>
+                    <a href="#" class="dropdown-item" value="InteriorDesign" onClick="javascript:EntryPoint.??">
+                        Interior Design
+                    </a>
+                    <a href="#" class="dropdown-item" value="Language" onClick="javascript:EntryPoint.??">
+                        Language
+                    </a>
+                    <a href="#" class="dropdown-item" value="Legal" onClick="javascript:EntryPoint.??">
+                        Legal
+                    </a>
+                    <a href="#" class="dropdown-item" value="Management" onClick="javascript:EntryPoint.??">
+                        Management
+                    </a>
+                    <a href="#" class="dropdown-item" value="Marketing" onClick="javascript:EntryPoint.??">
+                        Marketing
+                    </a>
+                    <a href="#" class="dropdown-item" value="Operations" onClick="javascript:EntryPoint.??">
+                        Operations
+                    </a>
+                    <a href="#" class="dropdown-item" value="Product" onClick="javascript:EntryPoint.??">
+                        Product
+                    </a>
+                    <a href="#" class="dropdown-item" value="Psychology" onClick="javascript:EntryPoint.??">
+                        Psychology
+                    </a>
+                    <a href="#" class="dropdown-item" value="Sales" onClick="javascript:EntryPoint.??">
+                        Sales
+                    </a>
+                  </div>
+                </div>
+                    </div>
+                </div>
+            </div>
             <div hidden class="notification is-danger" id="verifyemail">Please verify your email before adding any
                 applications.
-              </div>
+            </div>
+
+            
         </div>
 
         <div class="hero-body" id="jobsites">
@@ -71,12 +177,6 @@
                 <tbody id="sitestablebody">
                 </tbody>
             </table>
-            <!-- Create a header 
-                 Present a List of job Sites
-                 Each Row contains
-                    Site logo
-                    Site description
-                    if u click the row it takes u to the job site -->
         </div>
 
     </body>

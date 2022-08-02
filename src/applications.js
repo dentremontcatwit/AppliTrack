@@ -1,6 +1,12 @@
+document.querySelector("html").classList.remove("is-clipped");
 renderTheme();
 import { initializeApp } from "firebase/app";
-import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
+import {
+  getAuth,
+  signOut,
+  onAuthStateChanged,
+  GoogleAuthProvider,
+} from "firebase/auth";
 import {
   getFirestore,
   doc,
@@ -360,12 +366,41 @@ function DisplayApplicationCards(applications) {
         viewModalForm.viewcolor.value = currentDisplay[8];
         viewModalForm.viewstatus.value = currentDisplay[9];
         viewModalForm.viewnotes.value = currentDisplay[10];
+        document.getElementById("viewInfoButton").classList.add("is-active");
+        if (currentDisplay[4].length == 0) {
+          document.getElementById("viewMapButton").style.display = "none";
+        } else {
+          document.getElementById("viewMapButton").style.display = "block";
+        }
+
+        document
+          .getElementById("viewInfoButton")
+          .addEventListener("click", () => {
+            document.getElementById("viewPage").style.display = "block";
+            document.getElementById("viewMap").style.display = "none";
+            document
+              .getElementById("viewInfoButton")
+              .classList.add("is-active");
+            document
+              .getElementById("viewMapButton")
+              .classList.remove("is-active");
+            document
+              .getElementById("locationMap")
+              .classList.remove("is-active");
+          });
 
         renderTheme();
+        document.querySelector("html").classList.add("is-clipped");
         viewModal.classList.add("is-active");
       });
       viewModalBg.addEventListener("click", () => {
         viewModal.classList.remove("is-active");
+        document.querySelector("html").classList.remove("is-clipped");
+        document.getElementById("viewPage").style.display = "block";
+        document.getElementById("viewMap").style.display = "none";
+        document.getElementById("viewInfoButton").classList.add("is-active");
+        document.getElementById("viewMapButton").classList.remove("is-active");
+        document.getElementById("locationMap").classList.remove("is-active");
         const viewInvalidInput = document.getElementById("viewInvalidInput");
         viewInvalidInput.style.display = "none";
       });
@@ -396,7 +431,9 @@ function DisplayApplicationCards(applications) {
       deleteLink.classList.add("card-footer-item", "application-card-delete");
       deleteLink.addEventListener("click", () => {
         deleteModal.classList.add("is-active");
+        document.querySelector("html").classList.add("is-clipped");
         deleteModalBg.addEventListener("click", () => {
+          document.querySelector("html").classList.remove("is-clipped");
           deleteModal.classList.remove("is-active");
         });
         deleteAppText.textContent =
@@ -524,7 +561,6 @@ function DisplayApplicationCards(applications) {
         viewPosTitle.setAttribute("name", currentID);
         viewComTitle.textContent = currentDisplay[0];
 
-        var viewModalForm = document.querySelector("#viewappform");
         viewModalForm.viewcompany.value = currentDisplay[0];
         viewModalForm.viewposition.value = currentDisplay[1];
         viewModalForm.viewsalary.value = currentDisplay[2];
@@ -537,19 +573,50 @@ function DisplayApplicationCards(applications) {
         viewModalForm.viewcolor.value = currentDisplay[8];
         viewModalForm.viewstatus.value = currentDisplay[9];
         viewModalForm.viewnotes.value = currentDisplay[10];
+        document.getElementById("viewInfoButton").classList.add("is-active");
+        if (currentDisplay[4].length == 0) {
+          document.getElementById("viewMapButton").style.display = "none";
+        } else {
+          document.getElementById("viewMapButton").style.display = "block";
+        }
+
+        document
+          .getElementById("viewInfoButton")
+          .addEventListener("click", () => {
+            document.getElementById("viewPage").style.display = "block";
+            document.getElementById("viewMap").style.display = "none";
+            document
+              .getElementById("viewInfoButton")
+              .classList.add("is-active");
+            document
+              .getElementById("viewMapButton")
+              .classList.remove("is-active");
+            document
+              .getElementById("locationMap")
+              .classList.remove("is-active");
+          });
 
         renderTheme();
+        document.querySelector("html").classList.add("is-clipped");
         viewModal.classList.add("is-active");
       });
       viewModalBg.addEventListener("click", () => {
         viewModal.classList.remove("is-active");
+        document.querySelector("html").classList.remove("is-clipped");
+        document.getElementById("viewPage").style.display = "block";
+        document.getElementById("viewMap").style.display = "none";
+        document.getElementById("viewInfoButton").classList.add("is-active");
+        document.getElementById("viewMapButton").classList.remove("is-active");
+        document.getElementById("locationMap").classList.remove("is-active");
         const viewInvalidInput = document.getElementById("viewInvalidInput");
         viewInvalidInput.style.display = "none";
       });
 
       deleteButton.addEventListener("click", () => {
+        document.querySelector("html").classList.add("is-clipped");
         deleteModal.classList.add("is-active");
         deleteModalBg.addEventListener("click", () => {
+          document.querySelector("html").classList.remove("is-clipped");
           deleteModal.classList.remove("is-active");
         });
         deleteAppText.textContent =
@@ -751,6 +818,8 @@ function windowLoad(applications) {
   10 - Notes
   */
 
+  document.getElementById("viewPage").style.display = "block";
+  document.getElementById("viewMap").style.display = "none";
   //Convert applications from database into Strings for displaying
   globalApplications = Object.entries(applications);
   let applicationObject = {};
@@ -774,30 +843,27 @@ function windowLoad(applications) {
 
   if (cookie["sort"] == "az") {
     appsToDisplay = appsToDisplay.sort(sortByAZ);
-  }
-  if (cookie["sort"] == "za") {
+  } else if (cookie["sort"] == "za") {
     appsToDisplay = appsToDisplay.sort(sortByZA);
-  }
-  if (cookie["sort"] == "datemost") {
+  } else if (cookie["sort"] == "datemost") {
     appsToDisplay = appsToDisplay.sort(sortByDateRecent);
-  }
-  if (cookie["sort"] == "dateleast") {
+  } else if (cookie["sort"] == "dateleast") {
     appsToDisplay = appsToDisplay.sort(sortByDateLeastRecent);
-  }
-  if (cookie["sort"] == "salaryhtol") {
+  } else if (cookie["sort"] == "salaryhtol") {
     appsToDisplay = appsToDisplay.sort(sortBySalaryHtoL);
-  }
-  if (cookie["sort"] == "salaryltoh") {
+  } else if (cookie["sort"] == "salaryltoh") {
     appsToDisplay = appsToDisplay.sort(sortBySalaryLtoH);
-  }
-  if (cookie["sort"] == "color") {
+  } else if (cookie["sort"] == "color") {
     appsToDisplay = appsToDisplay.sort(sortByColor);
+  } else {
+    appsToDisplay = appsToDisplay.sort(sortByAZ);
   }
 
   DisplayApplicationCards(appsToDisplay);
 }
 
 settingsButton.addEventListener("click", () => {
+  document.querySelector("html").classList.add("is-clipped");
   settingsModal.classList.add("is-active");
   let check = false;
   (function (a) {
@@ -831,6 +897,7 @@ settingsButton.addEventListener("click", () => {
 });
 
 settingsModalBg.addEventListener("click", () => {
+  document.querySelector("html").classList.remove("is-clipped");
   settingsModal.classList.remove("is-active");
 });
 
@@ -841,6 +908,7 @@ newAppButton.addEventListener("click", () => {
   if (isEmailVerified) {
     applicationForm.addjobtype.value = "";
     applicationForm.addstatus.value = "";
+    document.querySelector("html").classList.add("is-clipped");
     modal.classList.add("is-active");
   } else {
     alert("Please verify your email before adding any applications.");
@@ -852,6 +920,7 @@ newAppButton.addEventListener("click", () => {
  */
 modalBg.addEventListener("click", () => {
   isDuplicate = false;
+  document.querySelector("html").classList.remove("is-clipped");
   modal.classList.remove("is-active");
   applicationForm.reset();
   invalidInput.style.display = "none";
@@ -1482,7 +1551,13 @@ settingsModalDelete.addEventListener("click", () => {
 
 const viewCloseButton = document.querySelector("#viewCloseButton");
 viewCloseButton.addEventListener("click", () => {
+  document.getElementById("viewPage").style.display = "block";
+  document.getElementById("viewMap").style.display = "none";
+  document.getElementById("viewInfoButton").classList.add("is-active");
+  document.getElementById("viewMapButton").classList.remove("is-active");
+  document.getElementById("locationMap").classList.remove("is-active");
   viewModal.classList.remove("is-active");
+  document.querySelector("html").classList.remove("is-clipped");
   const viewInvalidInput = document.getElementById("viewInvalidInput");
   viewInvalidInput.style.display = "none";
 });

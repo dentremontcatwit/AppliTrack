@@ -153,20 +153,20 @@
                 </a>
                 <a onclick="EntryPoint.selectSearch('Date Applied <=')" class="dropdown-item">
                   Date Applied (<=) </a>
-                <a onclick="EntryPoint.selectSearch('Date Applied >')" class="dropdown-item">
-                  Date Applied (>) </a>
-                <a onclick="EntryPoint.selectSearch('Salary <=')" class="dropdown-item">
-                  Salary (<=) </a>
-                <a onclick="EntryPoint.selectSearch('Salary >')" class="dropdown-item">
-                  Salary (>) </a>
-                <a onclick="EntryPoint.selectSearch('Color')" class="dropdown-item">
-                  Color </a>
-                <a onclick="EntryPoint.selectSearch('Followed Up')" class="dropdown-item">
-                  Followed Up
-                </a>
-                <a onclick="EntryPoint.selectSearch('Notes')" class="dropdown-item">
-                  Notes
-                </a>
+                    <a onclick="EntryPoint.selectSearch('Date Applied >')" class="dropdown-item">
+                      Date Applied (>) </a>
+                    <a onclick="EntryPoint.selectSearch('Salary <=')" class="dropdown-item">
+                      Salary (<=) </a>
+                        <a onclick="EntryPoint.selectSearch('Salary >')" class="dropdown-item">
+                          Salary (>) </a>
+                        <a onclick="EntryPoint.selectSearch('Color')" class="dropdown-item">
+                          Color </a>
+                        <a onclick="EntryPoint.selectSearch('Followed Up')" class="dropdown-item">
+                          Followed Up
+                        </a>
+                        <a onclick="EntryPoint.selectSearch('Notes')" class="dropdown-item">
+                          Notes
+                        </a>
               </div>
             </div>
           </div>
@@ -243,25 +243,32 @@
                 <a onclick="EntryPoint.search_applications('None')" class="dropdown-item">
                   None
                 </a>
-                <a onclick="EntryPoint.search_applications('Blue')" class="dropdown-item" style="background-color: #85E3FF">
+                <a onclick="EntryPoint.search_applications('Blue')" class="dropdown-item"
+                  style="background-color: #85E3FF">
                   Blue
                 </a>
-                <a onclick="EntryPoint.search_applications('Red')" class="dropdown-item" style="background-color: #FFABAB">
+                <a onclick="EntryPoint.search_applications('Red')" class="dropdown-item"
+                  style="background-color: #FFABAB">
                   Red
                 </a>
-                <a onclick="EntryPoint.search_applications('Green')" class="dropdown-item" style="background-color: #BFFCC6">
+                <a onclick="EntryPoint.search_applications('Green')" class="dropdown-item"
+                  style="background-color: #BFFCC6">
                   Green
                 </a>
-                <a onclick="EntryPoint.search_applications('Orange')" class="dropdown-item" style="background-color: #FFC8A2">
+                <a onclick="EntryPoint.search_applications('Orange')" class="dropdown-item"
+                  style="background-color: #FFC8A2">
                   Orange
                 </a>
-                <a onclick="EntryPoint.search_applications('Pink')" class="dropdown-item" style="background-color: #FEE1E8">
+                <a onclick="EntryPoint.search_applications('Pink')" class="dropdown-item"
+                  style="background-color: #FEE1E8">
                   Pink
                 </a>
-                <a onclick="EntryPoint.search_applications('Purple')" class="dropdown-item" style="background-color: #CBAACB">
+                <a onclick="EntryPoint.search_applications('Purple')" class="dropdown-item"
+                  style="background-color: #CBAACB">
                   Purple
                 </a>
-                <a onclick="EntryPoint.search_applications('Yellow')" class="dropdown-item" style="background-color: #FFFFB5">
+                <a onclick="EntryPoint.search_applications('Yellow')" class="dropdown-item"
+                  style="background-color: #FFFFB5">
                   Yellow
                 </a>
               </div>
@@ -488,11 +495,12 @@
                 </div>
               </div>
               <div class="field mr-3">
-                <label class="label" style="float:left">Job Listing URL <a title="Go to link" href="" target="_blank" id="viewjoburllink">
-                  <span class="icon is-small">
-                    <i class="fas fa-link"></i>
-                  </span>
-                </a></label>
+                <label class="label" style="float:left">Job Listing URL <a title="Go to link" href="" target="_blank"
+                    id="viewjoburllink">
+                    <span class="icon is-small">
+                      <i class="fas fa-link"></i>
+                    </span>
+                  </a></label>
                 <div class="control">
                   <input class="input is-small" type="text" name="viewjoburl">
                 </div>
@@ -598,9 +606,6 @@
       </table>
     </div>
   </body>
-  <script
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDYQMAPD_zE7hFWXYasvVhTr7m17VL6pH4&libraries=places&callback=initAutocomplete"
-  async defer></script>
   <script type="text/javascript">
     let addAutocomplete;
     let viewAutocomplete;
@@ -620,6 +625,8 @@
       );
     }
   </script>
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCIfvZmx63UjGv6PVhGhSBzYWrgXVSZNK0&libraries=places&callback=initAutocomplete"></script>
   <script type="text/javascript" src="applications.bundle.js"></script>
 
 </html>

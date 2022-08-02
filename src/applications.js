@@ -183,7 +183,7 @@ const searchPType = document.querySelector("#appsearchbarptype");
 const searchPStatus = document.querySelector("#appsearchbarpstatus");
 const searchFUp = document.querySelector("#appsearchbarfup");
 const searchDate = document.querySelector("#appsearchdatebar");
-const searchColor = document.querySelector('#appsearchbarcolor');
+const searchColor = document.querySelector("#appsearchbarcolor");
 searchColor.style.display = "none";
 
 //Settings Menu
@@ -352,7 +352,7 @@ function DisplayApplicationCards(applications) {
         viewModalForm.viewposition.value = currentDisplay[1];
         viewModalForm.viewsalary.value = currentDisplay[2];
         viewModalForm.viewjoburl.value = currentDisplay[3];
-        document.getElementById('viewjoburllink').href = currentDisplay[3];
+        document.getElementById("viewjoburllink").href = currentDisplay[3];
         viewModalForm.viewlocation.value = currentDisplay[4];
         viewModalForm.viewjobtype.value = currentDisplay[5];
         viewModalForm.viewdate.value = currentDisplay[6];
@@ -529,7 +529,7 @@ function DisplayApplicationCards(applications) {
         viewModalForm.viewposition.value = currentDisplay[1];
         viewModalForm.viewsalary.value = currentDisplay[2];
         viewModalForm.viewjoburl.value = currentDisplay[3];
-        document.getElementById('viewjoburllink').href = currentDisplay[3];
+        document.getElementById("viewjoburllink").href = currentDisplay[3];
         viewModalForm.viewlocation.value = currentDisplay[4];
         viewModalForm.viewjobtype.value = currentDisplay[5];
         viewModalForm.viewdate.value = currentDisplay[6];
@@ -608,7 +608,7 @@ function sortByAZ(a, b) {
  * @param {*} b Second title to compare.
  * @returns Comparison result.
  */
- function sortByZA(a, b) {
+function sortByZA(a, b) {
   var aData = a[1];
   var bData = b[1];
 
@@ -648,7 +648,7 @@ function sortByDateRecent(a, b) {
  * @param {*} b Second date to compare.
  * @returns Comparison result.
  */
- function sortByDateLeastRecent(a, b) {
+function sortByDateLeastRecent(a, b) {
   var aData = a[1];
   var bData = b[1];
 
@@ -668,17 +668,17 @@ function sortByDateRecent(a, b) {
  * @param {*} b Second date to compare.
  * @returns Comparison result.
  */
-function sortBySalaryHtoL(a, b){
+function sortBySalaryHtoL(a, b) {
   var aData = a[1];
   var bData = b[1];
 
-  if(aData[2] < bData[2]){
+  if (aData[2] < bData[2]) {
     return 1;
   }
-  if(bData[2] < aData[2]){
+  if (bData[2] < aData[2]) {
     return -1;
   }
-  return 0
+  return 0;
 }
 
 /**
@@ -688,17 +688,17 @@ function sortBySalaryHtoL(a, b){
  * @param {*} b Second date to compare.
  * @returns Comparison result.
  */
- function sortBySalaryLtoH(a, b){
+function sortBySalaryLtoH(a, b) {
   var aData = a[1];
   var bData = b[1];
 
-  if(aData[2] < bData[2]){
+  if (aData[2] < bData[2]) {
     return -1;
   }
-  if(bData[2] < aData[2]){
+  if (bData[2] < aData[2]) {
     return 1;
   }
-  return 0
+  return 0;
 }
 
 /**
@@ -708,23 +708,23 @@ function sortBySalaryHtoL(a, b){
  * @param {*} b Second date to compare.
  * @returns Comparison result.
  */
- function sortByColor(a, b){
+function sortByColor(a, b) {
   var aData = a[1];
   var bData = b[1];
 
-  if(aData[8] == "None"){
+  if (aData[8] == "None") {
     return 1;
   }
-  if(bData[8] == "None"){
+  if (bData[8] == "None") {
     return -1;
   }
-  if(aData[8] < bData[8]){
+  if (aData[8] < bData[8]) {
     return -1;
   }
-  if(bData[8] < aData[8]){
+  if (bData[8] < aData[8]) {
     return 1;
   }
-  return 0
+  return 0;
 }
 
 /**
@@ -775,7 +775,7 @@ function windowLoad(applications) {
   if (cookie["sort"] == "az") {
     appsToDisplay = appsToDisplay.sort(sortByAZ);
   }
-  if(cookie["sort"] == "za") {
+  if (cookie["sort"] == "za") {
     appsToDisplay = appsToDisplay.sort(sortByZA);
   }
   if (cookie["sort"] == "datemost") {
@@ -784,13 +784,13 @@ function windowLoad(applications) {
   if (cookie["sort"] == "dateleast") {
     appsToDisplay = appsToDisplay.sort(sortByDateLeastRecent);
   }
-  if(cookie["sort"] == "salaryhtol"){
+  if (cookie["sort"] == "salaryhtol") {
     appsToDisplay = appsToDisplay.sort(sortBySalaryHtoL);
   }
-  if(cookie["sort"] == "salaryltoh"){
+  if (cookie["sort"] == "salaryltoh") {
     appsToDisplay = appsToDisplay.sort(sortBySalaryLtoH);
   }
-  if(cookie["sort"] == "color"){
+  if (cookie["sort"] == "color") {
     appsToDisplay = appsToDisplay.sort(sortByColor);
   }
 
@@ -870,16 +870,18 @@ function sortCards(method) {
     document.cookie = "sort=az";
   } else if (method == "datemost") {
     document.cookie = "sort=datemost";
-  } else if(method == "salaryhtol"){
+  } else if (method == "salaryhtol") {
     document.cookie = "sort=salaryhtol";
-  } else if(method == "za"){
+  } else if (method == "za") {
     document.cookie = "sort=za";
-  } else if(method == "dateleast"){
+  } else if (method == "dateleast") {
     document.cookie = "sort=dateleast";
-  } else if(method == "salaryltoh"){
+  } else if (method == "salaryltoh") {
     document.cookie = "sort=salaryltoh";
-  } else if(method == "color"){
+  } else if (method == "color") {
     document.cookie = "sort=color";
+  } else {
+    document.cookie = "sort=az";
   }
   location.reload();
 }
@@ -1100,7 +1102,7 @@ function selectSearch(value) {
     searchDate.style.display = "none";
     searchColor.style.display = "none";
     searchTextBar.style.display = "block";
-  } else if(value == "Salary <="){
+  } else if (value == "Salary <=") {
     document.getElementById("appsearchbar").value = "";
     DisplayApplicationCards(appsToDisplay);
     searchBar.type = "text";
@@ -1110,7 +1112,7 @@ function selectSearch(value) {
     searchDate.style.display = "none";
     searchColor.style.display = "none";
     searchTextBar.style.display = "block";
-  } else if(value == "Salary >"){
+  } else if (value == "Salary >") {
     document.getElementById("appsearchbar").value = "";
     DisplayApplicationCards(appsToDisplay);
     searchBar.type = "text";
@@ -1120,10 +1122,8 @@ function selectSearch(value) {
     searchDate.style.display = "none";
     searchColor.style.display = "none";
     searchTextBar.style.display = "block";
-  } else if(value == "Color"){
-    search_applications(
-      document.getElementById("searchColorText").textContent
-    );
+  } else if (value == "Color") {
+    search_applications(document.getElementById("searchColorText").textContent);
     searchPType.style.display = "none";
     searchTextBar.style.display = "none";
     searchFUp.style.display = "none";
@@ -1306,7 +1306,7 @@ function search_applications(selectValue) {
       }
       DisplayApplicationCards(newApplications);
     }
-  } else if(spanText.textContent == "Salary <="){
+  } else if (spanText.textContent == "Salary <=") {
     let input = parseInt(document.getElementById("appsearchbar").value, 10);
     if (input == "") {
       DisplayApplicationCards(appsToDisplay);
@@ -1320,7 +1320,7 @@ function search_applications(selectValue) {
       }
       DisplayApplicationCards(newApplications);
     }
-  } else if(spanText.textContent == "Salary >"){
+  } else if (spanText.textContent == "Salary >") {
     let input = parseInt(document.getElementById("appsearchbar").value, 10);
     if (input == "") {
       DisplayApplicationCards(appsToDisplay);
@@ -1334,10 +1334,9 @@ function search_applications(selectValue) {
       }
       DisplayApplicationCards(newApplications);
     }
-  } else if(spanText.textContent == "Color"){
+  } else if (spanText.textContent == "Color") {
     if (selectValue == "None") {
-      document.getElementById("searchColorText").textContent =
-        "None";
+      document.getElementById("searchColorText").textContent = "None";
       let newApplications = [];
       for (var i = 0, element; (element = appsToDisplay[i++]); ) {
         let temp = element[1];
@@ -1346,9 +1345,8 @@ function search_applications(selectValue) {
         }
       }
       DisplayApplicationCards(newApplications);
-    }else if(selectValue == "Blue"){
-      document.getElementById("searchColorText").textContent =
-        "Blue";
+    } else if (selectValue == "Blue") {
+      document.getElementById("searchColorText").textContent = "Blue";
       let newApplications = [];
       for (var i = 0, element; (element = appsToDisplay[i++]); ) {
         let temp = element[1];
@@ -1357,9 +1355,8 @@ function search_applications(selectValue) {
         }
       }
       DisplayApplicationCards(newApplications);
-    }else if(selectValue == "Red"){
-      document.getElementById("searchColorText").textContent =
-        "Red";
+    } else if (selectValue == "Red") {
+      document.getElementById("searchColorText").textContent = "Red";
       let newApplications = [];
       for (var i = 0, element; (element = appsToDisplay[i++]); ) {
         let temp = element[1];
@@ -1368,9 +1365,8 @@ function search_applications(selectValue) {
         }
       }
       DisplayApplicationCards(newApplications);
-    }else if(selectValue == "Green"){
-      document.getElementById("searchColorText").textContent =
-        "Green";
+    } else if (selectValue == "Green") {
+      document.getElementById("searchColorText").textContent = "Green";
       let newApplications = [];
       for (var i = 0, element; (element = appsToDisplay[i++]); ) {
         let temp = element[1];
@@ -1379,9 +1375,8 @@ function search_applications(selectValue) {
         }
       }
       DisplayApplicationCards(newApplications);
-    }else if(selectValue == "Orange"){
-      document.getElementById("searchColorText").textContent =
-        "Orange";
+    } else if (selectValue == "Orange") {
+      document.getElementById("searchColorText").textContent = "Orange";
       let newApplications = [];
       for (var i = 0, element; (element = appsToDisplay[i++]); ) {
         let temp = element[1];
@@ -1390,9 +1385,8 @@ function search_applications(selectValue) {
         }
       }
       DisplayApplicationCards(newApplications);
-    }else if(selectValue == "Pink"){
-      document.getElementById("searchColorText").textContent =
-        "Pink";
+    } else if (selectValue == "Pink") {
+      document.getElementById("searchColorText").textContent = "Pink";
       let newApplications = [];
       for (var i = 0, element; (element = appsToDisplay[i++]); ) {
         let temp = element[1];
@@ -1401,9 +1395,8 @@ function search_applications(selectValue) {
         }
       }
       DisplayApplicationCards(newApplications);
-    }else if(selectValue == "Purple"){
-      document.getElementById("searchColorText").textContent =
-        "Purple";
+    } else if (selectValue == "Purple") {
+      document.getElementById("searchColorText").textContent = "Purple";
       let newApplications = [];
       for (var i = 0, element; (element = appsToDisplay[i++]); ) {
         let temp = element[1];
@@ -1412,9 +1405,8 @@ function search_applications(selectValue) {
         }
       }
       DisplayApplicationCards(newApplications);
-    }else if(selectValue == "Yellow"){
-      document.getElementById("searchColorText").textContent =
-        "Yellow";
+    } else if (selectValue == "Yellow") {
+      document.getElementById("searchColorText").textContent = "Yellow";
       let newApplications = [];
       for (var i = 0, element; (element = appsToDisplay[i++]); ) {
         let temp = element[1];

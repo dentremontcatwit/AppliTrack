@@ -648,7 +648,6 @@
             .then((data) => {
               const latitude = data.results[0].geometry.location.lat;
               const longitude = data.results[0].geometry.location.lng;
-              console.log({ latitude, longitude });
 
               const loc = { lat: latitude, lng: longitude };
               const map = new google.maps.Map(

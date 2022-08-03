@@ -1,13 +1,6 @@
 renderTheme();
 import { initializeApp } from "firebase/app";
 import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
-import {
-  getFirestore,
-  doc,
-  getDoc,
-  updateDoc,
-  deleteField,
-} from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAvbph3Qpz8w_ZERUZQ-Oh5YEyZI-ulCWQ",
@@ -21,9 +14,6 @@ const firebaseConfig = {
 
 initializeApp(firebaseConfig);
 const auth = getAuth();
-const db = getFirestore();
-
-var userSettings = {};
 
 //Job Site Info
 const AIA = {
@@ -43,8 +33,16 @@ const Angel = {
         "to find the job that fits them. They have opportunities for all sorts of industries and many start-ups " + 
         "that are looking to hire.",
   link: "https://angel.co/jobs",
-  industries: ["Engineering","Computer Science","Digital Design","Product","Operations","Sales","Marketing",
-               "Management"],
+  industries: [
+    "Engineering",
+    "Computer Science",
+    "Digital Design",
+    "Product",
+    "Operations",
+    "Sales",
+    "Marketing",
+    "Management",
+  ],
 };
 
 const Architects = {
@@ -64,15 +62,16 @@ const ASID = {
   title: "American Society of Interior Designers",
   desc: "A job board for those who are in the architecture or design industry.",
   link: "https://www.asid.org/",
-  industries: ["Architecture","Interior Design",],
+  industries: ["Architecture", "Interior Design"],
 };
 
 const Behance = {
   logo: "images/behance.png",
   title: "Behance",
-  desc: "Jobs for designers. The JobList from creative platform Behance showcases opportunities within " +  
-        "some of the top global brands, including Google, Facebook, EA, Sony, Adobe, Apple, Microsoft " + 
-        "and others. You can search via company or category to help refine and narrow your results.",
+  desc:
+    "Jobs for designers. The JobList from creative platform Behance showcases opportunities within " +
+    "some of the top global brands, including Google, Facebook, EA, Sony, Adobe, Apple, Microsoft " +
+    "and others. You can search via company or category to help refine and narrow your results.",
   link: "https://www.behance.net/joblist?tracking_source=nav20",
   industries: ["Everything"],
 };
@@ -83,7 +82,7 @@ const Biopharmguy = {
   desc: "Not a job search engine, but a fairly comprehensive list of biotech and pharma companies " + 
         "in MA broken down by town; great for biomeds doing direct outreach.",
   link: "https://biopharmguy.com/career-by-location.php",
-  industries: ["BioTech","Biology","Chemisty"],
+  industries: ["BioTech", "Biology", "Chemisty"],
 };
 
 const BostonStartups = {
@@ -91,7 +90,7 @@ const BostonStartups = {
   title: "Boston Startups Guide",
   desc: "Boston Startups Guide provides a current, curated list of Boston startups & community resources.",
   link: "https://bostonstartupsguide.com/boston-startup-jobs/",
-  industries: ["Engineering","Computer Science"],
+  industries: ["Engineering", "Computer Science"],
 };
 
 const BIB = {
@@ -99,8 +98,20 @@ const BIB = {
   title: "Built in Boston",
   desc: "Boston area tech jobs; can search by internships.",
   link: "https://www.builtinboston.com/",
-  industries: ["Data Science","Digital Design", "Engineering", "Computer Science","Finance","Human Resources",
-               "Legal","Marketing","Operations","Product","Management","Sales"],
+  industries: [
+    "Data Science",
+    "Digital Design",
+    "Engineering",
+    "Computer Science",
+    "Finance",
+    "Human Resources",
+    "Legal",
+    "Marketing",
+    "Operations",
+    "Product",
+    "Management",
+    "Sales",
+  ],
 };
 
 const CollegeRecruiter = {
@@ -116,7 +127,7 @@ const Coroflot = {
   title: "Coroflot",
   desc: "Jobs for designers. Choose internships in the Job Level menu.",
   link: "https://www.coroflot.com/design-jobs",
-  industries: ["Digital Design","Engineering","Design"],
+  industries: ["Digital Design", "Engineering", "Design"],
 };
 
 const DesignJobs = {
@@ -124,7 +135,7 @@ const DesignJobs = {
   title: "AIGA Design Jobs",
   desc: "Jobs for designers. Users can search for internships or jobs, and narrow by geographic location.",
   link: "https://designjobs.aiga.org/",
-  industries: ["Digital Design","Design"],
+  industries: ["Digital Design", "Design"],
 };
 
 const Dice = {
@@ -132,7 +143,7 @@ const Dice = {
   title: "Dice",
   desc: "Search across 85,762 Tech Jobs in the USA.",
   link: "https://www.dice.com/",
-  industries: ["Computer Science","Data Science", "Management",],
+  industries: ["Computer Science", "Data Science", "Management"],
 };
 
 const EngineerJobs = {
@@ -140,14 +151,15 @@ const EngineerJobs = {
   title: "Engineer Jobs",
   desc: "Engineering specific jobs. You can search by location and job type.",
   link: "https://www.engineerjobs.com/",
-  industries: ["Computer Science","Engineering"],
+  industries: ["Computer Science", "Engineering"],
 };
 
 const GlassDoor = {
   logo: "images/Glassdoor.png",
   title: "Glassdoor",
-  desc: "Search all the open positions on the web. Get your own personalized salary estimate. Read reviews " + 
-        "on over 600,000 companies worldwide. The right job is out there, use Glassdoor to find it.",
+  desc:
+    "Search all the open positions on the web. Get your own personalized salary estimate. Read reviews " +
+    "on over 600,000 companies worldwide. The right job is out there, use Glassdoor to find it.",
   link: "https://www.glassdoor.com/",
   industries: ["Everything"],
 };
@@ -157,8 +169,16 @@ const Greentown = {
   title: "Greentown Labs",
   desc: "Jobs for those working in at the largest clean technology incubator in the US.",
   link: "https://greentownlabs.com/",
-  industries: ["Engineering","Business","Data Science","Digital Design","Marketing","Operations",
-               "Sales","Computer Science"],
+  industries: [
+    "Engineering",
+    "Business",
+    "Data Science",
+    "Digital Design",
+    "Marketing",
+    "Operations",
+    "Sales",
+    "Computer Science",
+  ],
 };
 
 const HackerRank = {
@@ -166,7 +186,7 @@ const HackerRank = {
   title: "Hacker Rank",
   desc: "Great for Software Development and practicing coding.",
   link: "https://www.hackerrank.com/",
-  industries: ["Data Science","Computer Science"],
+  industries: ["Data Science", "Computer Science"],
 };
 
 const InteriorDesign = {
@@ -209,7 +229,7 @@ const Krop = {
         "with new tools and features. You can search by keyword or location to find jobs that match your " + 
         "requirements, and have new jobs that match your criteria emailed to you as they are posted.",
   link: "https://www.krop.com/creative-jobs/",
-  industries: ["Management","Digital Design","Computer Science"],
+  industries: ["Management", "Digital Design", "Computer Science"],
 };
 
 const LinkedIn = {
@@ -228,7 +248,7 @@ const NSF = {
         "exist for many technical disciplines including engineering, but it is most heavily used by " +
         "applied math students; opportunities to conduct collegiate-level research across the US",
   link: "https://nsf.gov/",
-  industries: ["Biology","Computer Science","Engineering","Human Resources"],
+  industries: ["Biology", "Computer Science", "Engineering", "Human Resources"],
 };
 
 const SimplyHired = {
@@ -248,7 +268,12 @@ const TechReview = {
         "broadest context, and unequaled access to leading innovators and researchers. Their in-depth reporting " + 
         "reveals what’s going on now to prepare you for what’s coming next.",
   link: "https://www.technologyreview.com/open-positions/",
-  industries: ["Computer Science","Data Science","Digital Design","Engineering"],
+  industries: [
+    "Computer Science",
+    "Data Science",
+    "Digital Design",
+    "Engineering",
+  ],
 };
 
 const USAJobs = {
@@ -301,174 +326,202 @@ const WayUp = {
   industries: ["Everything"],
 };
 
-const sites = [AIA, Angel, Architects, ASID, Behance, Biopharmguy, BostonStartups, BIB, CollegeRecruiter, 
-               Coroflot, DesignJobs, Dice, EngineerJobs, GlassDoor, Greentown, HackerRank, InteriorDesign, 
-               Indeed, Interships, Krop, LinkedIn, NSF, SimplyHired, TechReview, USAJobs, VentureFizz, 
-               VentureLoop, WayUp];
+const sites = [
+  AIA,
+  Angel,
+  Architects,
+  ASID,
+  Behance,
+  Biopharmguy,
+  BostonStartups,
+  BIB,
+  CollegeRecruiter,
+  Coroflot,
+  DesignJobs,
+  Dice,
+  EngineerJobs,
+  GlassDoor,
+  Greentown,
+  HackerRank,
+  InteriorDesign,
+  Indeed,
+  Interships,
+  Krop,
+  LinkedIn,
+  NSF,
+  SimplyHired,
+  TechReview,
+  USAJobs,
+  VentureFizz,
+  VentureLoop,
+  WayUp,
+];
 
-const industryTags = ["Architecture","Engineering","Computer Science", "Digital Design", "Product","Operations",
-                      "Sales","Marketing","Management","Interior Design","Everything","BioTech","Biology","Chemisty",
-                      "Data Science", "Finance","Human Resources", "Legal", "Economics","Psychology","Business",
-                      "HealthCare", "Education", "Language", "Design"];
+const industryTags = [
+  "Architecture",
+  "Engineering",
+  "Computer Science",
+  "Digital Design",
+  "Product",
+  "Operations",
+  "Sales",
+  "Marketing",
+  "Management",
+  "Interior Design",
+  "Everything",
+  "BioTech",
+  "Biology",
+  "Chemisty",
+  "Data Science",
+  "Finance",
+  "Human Resources",
+  "Legal",
+  "Economics",
+  "Psychology",
+  "Business",
+  "HealthCare",
+  "Education",
+  "Language",
+  "Design",
+];
 
-const verifyEmail = document.querySelector("#verifyemail");
-var isEmailVerified;
-verifyEmail.style.display = "none";
-var globalApplications;
 onAuthStateChanged(auth, async (user) => {
-    if (user) {
-      const userRef = await getDoc(doc(db, "users", user.uid));
-      var applications = userRef.data();
-      userSettings = applications["userSettings"];
-      delete applications["userSettings"];
-      CreateJobSiteTable(); //Create List of Job Sites
-      if (!user.emailVerified) {
-        verifyEmail.style.display = "block";
-        isEmailVerified = false;
-      } else {
-        verifyEmail.style.display = "none";
-        isEmailVerified = true;
-      }
-    } else {
-      window.location.href = "index.html";
-    }
-  });
-
-  //Switch styles of objects to dark theme
-function renderTheme() {
-    let cookie = {};
-    document.cookie.split(";").forEach(function (el) {
-      let [key, value] = el.split("=");
-      cookie[key.trim()] = value;
-    });
-    if (cookie["theme"] == "night") {
-      document.getElementById("nightbutton").style.display = "none";
-      document.getElementById("lightbutton").style.display = "flex";
-      document.getElementById("html").style.backgroundColor = "#243B53";
-      document.getElementById("appTitle").style.color = "#BCCCDC";
-      document.getElementById("newAppTitle").style.color = "#BCCCDC";
-      document.getElementById("settingsTitle").style.color = "#BCCCDC";
-      document.querySelector("nav").style.backgroundColor = "#102A43";
-      var cardContents = document.querySelectorAll(".card-content");
-      for (var i = 0; i < cardContents.length; i++) {
-        cardContents[i].style.backgroundColor = "#334E68";
-      }
-      var cardFooters = document.querySelectorAll(".card-footer-item");
-      for (var i = 0; i < cardFooters.length; i++) {
-        cardFooters[i].style.backgroundColor = "#102A43";
-        cardFooters[i];
-      }
-      var pTexts = document.querySelectorAll("p");
-      for (var i = 0; i < pTexts.length; i++) {
-        pTexts[i].style.color = "#BCCCDC";
-      }
-      var topButtons = document.querySelectorAll(".topbutton");
-      for (var i = 0; i < topButtons.length; i++) {
-        topButtons[i].style.backgroundColor = "#334E68";
-      }
-      var spanTexts = document.querySelectorAll("span");
-      for (var i = 0; i < spanTexts.length; i++) {
-        spanTexts[i].style.color = "#BCCCDC";
-      }
-      var modalBgs = document.querySelectorAll(".modal-content");
-      for (var i = 0; i < modalBgs.length; i++) {
-        modalBgs[i].style.backgroundColor = "#243B53";
-      }
-      var labelTexts = document.querySelectorAll("label");
-      for (var i = 0; i < labelTexts.length; i++) {
-        labelTexts[i].style.color = "#BCCCDC";
-      }
-      var h5Texts = document.querySelectorAll("h5");
-      for (var i = 0; i < h5Texts.length; i++) {
-        h5Texts[i].style.color = "#BCCCDC";
-      }
-      var modalHeaders = document.querySelectorAll("#viewModalHeader");
-      for (var i = 0; i < modalHeaders.length; i++) {
-        modalHeaders[i].style.backgroundColor = "#102A43";
-        modalHeaders[i].style.color = "#BCCCDC";
-      }
-      var tableHeaders = document.querySelectorAll("tr");
-      for (var i = 0; i < tableHeaders.length; i++) {
-        tableHeaders[i].style.backgroundColor = "#102A43";
-        tableHeaders[i].style.color = "#BCCCDC";
-      }
-      var tableText = document.querySelectorAll("td");
-      for (var i = 0; i < tableText.length; i++) {
-        tableText[i].style.color = "#BCCCDC";
-      }
-      var tableTextHeaders = document.querySelectorAll("th");
-      for (var i = 0; i < tableTextHeaders.length; i++) {
-        tableTextHeaders[i].style.color = "#BCCCDC";
-      }
-    } else {
-      document.getElementById("nightbutton").style.display = "flex";
-      document.getElementById("lightbutton").style.display = "none";
-    }
+  if (user) {
+    CreateJobSiteTable(); //Create List of Job Sites
+  } else {
+    window.location.href = "index.html";
   }
+});
+
+//Switch styles of objects to dark theme
+function renderTheme() {
+  let cookie = {};
+  document.cookie.split(";").forEach(function (el) {
+    let [key, value] = el.split("=");
+    cookie[key.trim()] = value;
+  });
+  if (cookie["theme"] == "night") {
+    document.getElementById("nightbutton").style.display = "none";
+    document.getElementById("lightbutton").style.display = "flex";
+    document.getElementById("html").style.backgroundColor = "#243B53";
+    document.getElementById("appTitle").style.color = "#BCCCDC";
+    document.getElementById("newAppTitle").style.color = "#BCCCDC";
+    document.getElementById("settingsTitle").style.color = "#BCCCDC";
+    document.querySelector("nav").style.backgroundColor = "#102A43";
+    var cardContents = document.querySelectorAll(".card-content");
+    for (var i = 0; i < cardContents.length; i++) {
+      cardContents[i].style.backgroundColor = "#334E68";
+    }
+    var cardFooters = document.querySelectorAll(".card-footer-item");
+    for (var i = 0; i < cardFooters.length; i++) {
+      cardFooters[i].style.backgroundColor = "#102A43";
+      cardFooters[i];
+    }
+    var pTexts = document.querySelectorAll("p");
+    for (var i = 0; i < pTexts.length; i++) {
+      pTexts[i].style.color = "#BCCCDC";
+    }
+    var topButtons = document.querySelectorAll(".topbutton");
+    for (var i = 0; i < topButtons.length; i++) {
+      topButtons[i].style.backgroundColor = "#334E68";
+    }
+    var spanTexts = document.querySelectorAll("span");
+    for (var i = 0; i < spanTexts.length; i++) {
+      spanTexts[i].style.color = "#BCCCDC";
+    }
+    var modalBgs = document.querySelectorAll(".modal-content");
+    for (var i = 0; i < modalBgs.length; i++) {
+      modalBgs[i].style.backgroundColor = "#243B53";
+    }
+    var labelTexts = document.querySelectorAll("label");
+    for (var i = 0; i < labelTexts.length; i++) {
+      labelTexts[i].style.color = "#BCCCDC";
+    }
+    var h5Texts = document.querySelectorAll("h5");
+    for (var i = 0; i < h5Texts.length; i++) {
+      h5Texts[i].style.color = "#BCCCDC";
+    }
+    var modalHeaders = document.querySelectorAll("#viewModalHeader");
+    for (var i = 0; i < modalHeaders.length; i++) {
+      modalHeaders[i].style.backgroundColor = "#102A43";
+      modalHeaders[i].style.color = "#BCCCDC";
+    }
+    var tableHeaders = document.querySelectorAll("tr");
+    for (var i = 0; i < tableHeaders.length; i++) {
+      tableHeaders[i].style.backgroundColor = "#102A43";
+      tableHeaders[i].style.color = "#BCCCDC";
+    }
+    var tableText = document.querySelectorAll("td");
+    for (var i = 0; i < tableText.length; i++) {
+      tableText[i].style.color = "#BCCCDC";
+    }
+    var tableTextHeaders = document.querySelectorAll("th");
+    for (var i = 0; i < tableTextHeaders.length; i++) {
+      tableTextHeaders[i].style.color = "#BCCCDC";
+    }
+  } else {
+    document.getElementById("nightbutton").style.display = "flex";
+    document.getElementById("lightbutton").style.display = "none";
+  }
+}
 
 const siteTable = document.querySelector("#sitestable");
 
 function CreateJobSiteTable() {
-    var tableBody = document.createElement("tbody");
-    for(var i = 0; i < sites.length; i++) {
-      var tRow = document.createElement("tr");
-      tRow.setAttribute("id", "sitetablerow");
-      tRow.setAttribute("class","clickable");
-      //Site Link
-      var siteLink = sites[i].link;
-      tRow.setAttribute("onclick","window.open('"+siteLink+"','_blank')");
+  var tableBody = document.createElement("tbody");
+  for (var i = 0; i < sites.length; i++) {
+    var tRow = document.createElement("tr");
+    tRow.setAttribute("id", "sitetablerow");
+    tRow.setAttribute("class", "clickable");
+    //Site Link
+    var siteLink = sites[i].link;
+    tRow.setAttribute("onclick", "window.open('" + siteLink + "','_blank')");
 
-      //Site Logo
-      var siteLogo = document.createElement("td");
-      siteLogo.setAttribute("id","siteLogoTD");
-      var imageFigure = document.createElement("figure");
-      var siteImg = document.createElement("img");
-      siteImg.setAttribute("src", sites[i].logo);
-      siteImg.setAttribute("width","500");
-      siteImg.setAttribute("height","500");
-      imageFigure.appendChild(siteImg);
-      siteLogo.appendChild(imageFigure);
+    //Site Logo
+    var siteLogo = document.createElement("td");
+    siteLogo.setAttribute("id", "siteLogoTD");
+    var imageFigure = document.createElement("figure");
+    var siteImg = document.createElement("img");
+    siteImg.setAttribute("src", sites[i].logo);
+    siteImg.setAttribute("width", "500");
+    siteImg.setAttribute("height", "500");
+    imageFigure.appendChild(siteImg);
+    siteLogo.appendChild(imageFigure);
 
-      //Site Name
-      var siteName = document.createElement("td");
-      siteName.setAttribute("id","siteNameTD");
-      siteName.textContent = sites[i].title;
+    //Site Name
+    var siteName = document.createElement("td");
+    siteName.setAttribute("id", "siteNameTD");
+    siteName.textContent = sites[i].title;
 
-      //Site Description
-      var siteDesc = document.createElement("td");
-      siteDesc.textContent = sites[i].desc;
-      
-      tRow.appendChild(siteLogo);
-      tRow.appendChild(siteName);
-      tRow.appendChild(siteDesc);
+    //Site Description
+    var siteDesc = document.createElement("td");
+    siteDesc.textContent = sites[i].desc;
 
-      tableBody.appendChild(tRow);
-    }
+    tRow.appendChild(siteLogo);
+    tRow.appendChild(siteName);
+    tRow.appendChild(siteDesc);
 
-    siteTable.appendChild(tableBody);
+    tableBody.appendChild(tRow);
+  }
 
-    renderTheme();
+  siteTable.appendChild(tableBody);
+
+  renderTheme();
 }
 
-
-
 function logout() {
-    signOut(auth);
-    window.location.href = "index.html";
-  }
-  
-  function setNightMode() {
-    document.cookie = "theme=night";
-    renderTheme();
-  }
-  
-  function setLightMode() {
-    document.cookie = "theme=light";
-    location.reload();
-  }
+  signOut(auth);
+  window.location.href = "index.html";
+}
 
-export {
-    logout,
-    setLightMode,
-    setNightMode,
-  };
+function setNightMode() {
+  document.cookie = "theme=night";
+  renderTheme();
+}
+
+function setLightMode() {
+  document.cookie = "theme=light";
+  location.reload();
+}
+
+export { logout, setLightMode, setNightMode };

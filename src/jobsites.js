@@ -184,9 +184,9 @@ const InteriorDesign = {
 const Indeed = {
   logo: "images/Indeed.png",
   title: "Indeed",
-  desc: "Indeed is the #1 job site in the world1 with over 250M unique visitors every month. " + 
+  desc: "Indeed is the #1 job site in the world with over 250M unique visitors every month. " + 
         "Indeed strives to put job seekers first, giving them free access to search for jobs, " + 
-        "post resumes, and research companies. Every day, we connect millions of people to new opportunities.",
+        "post resumes, and research companies. Every day, they connect millions of people to new opportunities.",
   link: "https://www.indeed.com/",
   industries: ["Everything"],
 };
@@ -279,7 +279,7 @@ const VentureLoop = {
     logo: "images/VentureFizz.png",
     title: "Venture Fizz",
     desc: "VentureFizz is the leading authority for jobs & careers in the tech industry. They have the top " + 
-          "Job Board focused on our industry featuring thousands of job opportunities across all functional " + 
+          "Job Board featuring thousands of job opportunities across all functional " + 
           "areas. They are also your company discovery platform, where they help you navigate the tech industry to " + 
           "discover what companies align with your interests and values. Their profiles and videos are another key " +
           "resource, as they give you the inside look at a company, its people, and culture.",
